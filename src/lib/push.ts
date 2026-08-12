@@ -2,7 +2,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Lang } from "@/lib/newsTypes";
 
 export const VAPID_PUBLIC_KEY =
-  "BF51J4rK8D1r7tVG5FnujVPaAIN_tG7XuwHha_i94MCgzbjl8HnN5lRLRTSpEaK33P6Txt6ss0_n2UoWa9BMdJc";
+  "BGaCYk8sKS0rRKQTOojWVoo8LDdZoiMCi6_BLeXqAJMFjaH0dekHrdtPQ-ZW3zupydn5JsoyW0N3Ld8Lbqydf5A";
 
 const SW_PATH = "/push-sw.js";
 
