@@ -1,0 +1,149 @@
+import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { createClient } from "npm:@supabase/supabase-js@2";
+import webpush from "npm:web-push@3.6.7";
+
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+
+const slugify = (v: string) => v.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+interface Sub {
+  id: string;
+  endpoint: string;
+  p256dh: string;
+  auth: string;
+  city: string;
+  state: string | null;
+  lang: "hi" | "en";
+  last_article_at: string | null;
+  failure_count: number;
+}
+
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+
+  try {
+    const publicKey = Deno.env.get("VAPID_PUBLIC_KEY");
+    const privateKey = Deno.env.get("VAPID_PRIVATE_KEY");
+    const subject = Deno.env.get("VAPID_SUBJECT") ?? "mailto:news@my-local-news.lovable.app";
+    if (!publicKey || !privateKey) return json({ error: "Push is not configured" }, 500);
+    webpush.setVapidDetails(subject, publicKey, privateKey);
+
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+
+    const { data: subsData, error: subsError } = await supabase
+      .from("push_subscriptions")
+      .select("id, endpoint, p256dh, auth, city, state, lang, last_article_at, failure_count")
+      .lt("failure_count", 5);
+    if (subsError) throw subsError;
+    const subs = (subsData ?? []) as Sub[];
+
+    // Refresh live news hourly for every subscribed city plus every city that
+    // has been read recently, so visitors always land on fresh stories.
+    const cities = new Map<string, string | null>();
+    for (const s of subs) cities.set(s.city, s.state);
+
+    const { data: recent } = await supabase
+      .from("news_articles")
+      .select("city")
+      .gt("published_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
+      .limit(1000);
+    for (const r of (recent ?? []) as { city: string }[]) {
+      if (!cities.has(r.city)) cities.set(r.city, null);
+    }
+
+    await Promise.allSettled(
+      [...cities].map(([city, state]) =>
+        supabase.functions.invoke("fetch-city-news", { body: { city, state: state ?? undefined } }),
+      ),
+    );
+
+    if (subs.length === 0) {
+      return json({ ok: true, sent: 0, refreshed: cities.size, note: "no subscribers" });
+    }
+
+    let sent = 0;
+    let skipped = 0;
+    const removed: string[] = [];
+
+    for (const sub of subs) {
+      const since = sub.last_article_at ?? new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+      const { data: articles } = await supabase
+        .from("news_articles")
+        .select("title_hi, title_en, summary_hi, summary_en, published_at")
+        .eq("city", sub.city)
+        .gt("published_at", since)
+        .order("published_at", { ascending: false })
+        .limit(5);
+
+      const rows = articles ?? [];
+      if (rows.length === 0) {
+        skipped++;
+        continue;
+      }
+
+      const top = rows[0];
+      const hi = sub.lang === "hi";
+      const headline = (hi ? top.title_hi || top.title_en : top.title_en) ?? "";
+      const more = rows.length - 1;
+      const title = hi ? `${sub.city} की ताज़ा ख़बरें` : `${sub.city} local news`;
+      const body =
+        more > 0
+          ? `${headline}${hi ? ` + ${more} और ख़बरें` : ` + ${more} more stories`}`
+          : headline;
+
+      const payload = JSON.stringify({
+        title,
+        body,
+        url: `/news/${slugify(sub.city)}${hi ? "" : "/en"}`,
+        tag: `news-${slugify(sub.city)}`,
+      });
+
+      try {
+        await webpush.sendNotification(
+          { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
+          payload,
+        );
+        sent++;
+        await supabase
+          .from("push_subscriptions")
+          .update({
+            last_sent_at: new Date().toISOString(),
+            last_article_at: top.published_at,
+            failure_count: 0,
+          })
+          .eq("id", sub.id);
+      } catch (e) {
+        const status = (e as { statusCode?: number }).statusCode;
+        console.error(`push failed for ${sub.id} [${status}]:`, e);
+        if (status === 404 || status === 410) {
+          await supabase.from("push_subscriptions").delete().eq("id", sub.id);
+          removed.push(sub.id);
+        } else {
+          await supabase
+            .from("push_subscriptions")
+            .update({ failure_count: sub.failure_count + 1 })
+            .eq("id", sub.id);
+        }
+      }
+    }
+
+    return json({
+      ok: true,
+      refreshed: cities.size,
+      subscribers: subs.length,
+      sent,
+      skipped,
+      removed: removed.length,
+    });
+  } catch (e) {
+    console.error("send-news-digest failed:", e);
+    return json({ error: String(e instanceof Error ? e.message : e) }, 500);
+  }
+});
