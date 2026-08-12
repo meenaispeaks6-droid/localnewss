@@ -1,6 +1,6 @@
 import { indiaCities, type City } from "@/data/indiaCities";
 
-export const SITE_URL = "https://my-local-news.lovable.app";
+export const SITE_URL = "https://localnews.meenai.in";
 export const SITE_NAME = "Local News";
 
 export const slugify = (value: string) =>

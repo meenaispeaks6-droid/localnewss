@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://my-local-news.lovable.app/sitemap.xml
+Sitemap: https://localnews.meenai.in/sitemap.xml

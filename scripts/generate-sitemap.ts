@@ -3,7 +3,7 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { indiaCities } from "../src/data/indiaCities";
 
-const BASE_URL = "https://my-local-news.lovable.app";
+const BASE_URL = "https://localnews.meenai.in";
 
 const slugify = (value: string) =>
   value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
