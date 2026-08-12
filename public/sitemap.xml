@@ -1,3442 +1,3442 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://my-local-news.lovable.app/</loc>
+    <loc>https://localnews.meenai.in/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/en</loc>
+    <loc>https://localnews.meenai.in/en</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/andaman-and-nicobar-islands</loc>
+    <loc>https://localnews.meenai.in/state/andaman-and-nicobar-islands</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/andaman-and-nicobar-islands/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/andhra-pradesh</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/andhra-pradesh/en</loc>
+    <loc>https://localnews.meenai.in/state/andaman-and-nicobar-islands/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/arunachal-pradesh</loc>
+    <loc>https://localnews.meenai.in/state/andhra-pradesh</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/arunachal-pradesh/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/assam</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/assam/en</loc>
+    <loc>https://localnews.meenai.in/state/andhra-pradesh/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/bihar</loc>
+    <loc>https://localnews.meenai.in/state/arunachal-pradesh</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/bihar/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/chandigarh</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/chandigarh/en</loc>
+    <loc>https://localnews.meenai.in/state/arunachal-pradesh/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/chhattisgarh</loc>
+    <loc>https://localnews.meenai.in/state/assam</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/chhattisgarh/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/dadra-and-nagar-haveli-and-daman-and-diu</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/dadra-and-nagar-haveli-and-daman-and-diu/en</loc>
+    <loc>https://localnews.meenai.in/state/assam/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/delhi</loc>
+    <loc>https://localnews.meenai.in/state/bihar</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/delhi/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/goa</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/goa/en</loc>
+    <loc>https://localnews.meenai.in/state/bihar/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/gujarat</loc>
+    <loc>https://localnews.meenai.in/state/chandigarh</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/gujarat/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/haryana</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/haryana/en</loc>
+    <loc>https://localnews.meenai.in/state/chandigarh/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/himachal-pradesh</loc>
+    <loc>https://localnews.meenai.in/state/chhattisgarh</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/himachal-pradesh/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/jammu-and-kashmir</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/jammu-and-kashmir/en</loc>
+    <loc>https://localnews.meenai.in/state/chhattisgarh/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/jharkhand</loc>
+    <loc>https://localnews.meenai.in/state/dadra-and-nagar-haveli-and-daman-and-diu</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/jharkhand/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/karnataka</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/karnataka/en</loc>
+    <loc>https://localnews.meenai.in/state/dadra-and-nagar-haveli-and-daman-and-diu/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/kerala</loc>
+    <loc>https://localnews.meenai.in/state/delhi</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/kerala/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/ladakh</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/ladakh/en</loc>
+    <loc>https://localnews.meenai.in/state/delhi/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/lakshadweep</loc>
+    <loc>https://localnews.meenai.in/state/goa</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/lakshadweep/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/madhya-pradesh</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/madhya-pradesh/en</loc>
+    <loc>https://localnews.meenai.in/state/goa/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/maharashtra</loc>
+    <loc>https://localnews.meenai.in/state/gujarat</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/maharashtra/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/manipur</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/manipur/en</loc>
+    <loc>https://localnews.meenai.in/state/gujarat/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/meghalaya</loc>
+    <loc>https://localnews.meenai.in/state/haryana</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/meghalaya/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/mizoram</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/mizoram/en</loc>
+    <loc>https://localnews.meenai.in/state/haryana/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/nagaland</loc>
+    <loc>https://localnews.meenai.in/state/himachal-pradesh</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/nagaland/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/odisha</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/odisha/en</loc>
+    <loc>https://localnews.meenai.in/state/himachal-pradesh/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/puducherry</loc>
+    <loc>https://localnews.meenai.in/state/jammu-and-kashmir</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/puducherry/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/punjab</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/punjab/en</loc>
+    <loc>https://localnews.meenai.in/state/jammu-and-kashmir/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/rajasthan</loc>
+    <loc>https://localnews.meenai.in/state/jharkhand</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/rajasthan/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/sikkim</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/sikkim/en</loc>
+    <loc>https://localnews.meenai.in/state/jharkhand/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/tamil-nadu</loc>
+    <loc>https://localnews.meenai.in/state/karnataka</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/tamil-nadu/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/telangana</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/telangana/en</loc>
+    <loc>https://localnews.meenai.in/state/karnataka/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/tripura</loc>
+    <loc>https://localnews.meenai.in/state/kerala</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/tripura/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/uttar-pradesh</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/uttar-pradesh/en</loc>
+    <loc>https://localnews.meenai.in/state/kerala/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/uttarakhand</loc>
+    <loc>https://localnews.meenai.in/state/ladakh</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/state/uttarakhand/en</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/west-bengal</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://my-local-news.lovable.app/state/west-bengal/en</loc>
+    <loc>https://localnews.meenai.in/state/ladakh/en</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/port-blair</loc>
+    <loc>https://localnews.meenai.in/state/lakshadweep</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/lakshadweep/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/madhya-pradesh</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/madhya-pradesh/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/maharashtra</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/maharashtra/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/manipur</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/manipur/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/meghalaya</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/meghalaya/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/mizoram</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/mizoram/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/nagaland</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/nagaland/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/odisha</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/odisha/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/puducherry</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/puducherry/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/punjab</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/punjab/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/rajasthan</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/rajasthan/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/sikkim</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/sikkim/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/tamil-nadu</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/tamil-nadu/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/telangana</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/telangana/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/tripura</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/tripura/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/uttar-pradesh</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/uttar-pradesh/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/uttarakhand</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/uttarakhand/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/west-bengal</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/state/west-bengal/en</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/news/port-blair</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/port-blair/en</loc>
+    <loc>https://localnews.meenai.in/news/port-blair/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/visakhapatnam</loc>
+    <loc>https://localnews.meenai.in/news/visakhapatnam</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/visakhapatnam/en</loc>
+    <loc>https://localnews.meenai.in/news/visakhapatnam/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vijayawada</loc>
+    <loc>https://localnews.meenai.in/news/vijayawada</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vijayawada/en</loc>
+    <loc>https://localnews.meenai.in/news/vijayawada/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/guntur</loc>
+    <loc>https://localnews.meenai.in/news/guntur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/guntur/en</loc>
+    <loc>https://localnews.meenai.in/news/guntur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nellore</loc>
+    <loc>https://localnews.meenai.in/news/nellore</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nellore/en</loc>
+    <loc>https://localnews.meenai.in/news/nellore/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kurnool</loc>
+    <loc>https://localnews.meenai.in/news/kurnool</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kurnool/en</loc>
+    <loc>https://localnews.meenai.in/news/kurnool/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rajahmundry</loc>
+    <loc>https://localnews.meenai.in/news/rajahmundry</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rajahmundry/en</loc>
+    <loc>https://localnews.meenai.in/news/rajahmundry/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tirupati</loc>
+    <loc>https://localnews.meenai.in/news/tirupati</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tirupati/en</loc>
+    <loc>https://localnews.meenai.in/news/tirupati/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kakinada</loc>
+    <loc>https://localnews.meenai.in/news/kakinada</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kakinada/en</loc>
+    <loc>https://localnews.meenai.in/news/kakinada/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/anantapur</loc>
+    <loc>https://localnews.meenai.in/news/anantapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/anantapur/en</loc>
+    <loc>https://localnews.meenai.in/news/anantapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kadapa</loc>
+    <loc>https://localnews.meenai.in/news/kadapa</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kadapa/en</loc>
+    <loc>https://localnews.meenai.in/news/kadapa/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/itanagar</loc>
+    <loc>https://localnews.meenai.in/news/itanagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/itanagar/en</loc>
+    <loc>https://localnews.meenai.in/news/itanagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/naharlagun</loc>
+    <loc>https://localnews.meenai.in/news/naharlagun</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/naharlagun/en</loc>
+    <loc>https://localnews.meenai.in/news/naharlagun/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pasighat</loc>
+    <loc>https://localnews.meenai.in/news/pasighat</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pasighat/en</loc>
+    <loc>https://localnews.meenai.in/news/pasighat/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tawang</loc>
+    <loc>https://localnews.meenai.in/news/tawang</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tawang/en</loc>
+    <loc>https://localnews.meenai.in/news/tawang/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/guwahati</loc>
+    <loc>https://localnews.meenai.in/news/guwahati</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/guwahati/en</loc>
+    <loc>https://localnews.meenai.in/news/guwahati/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/silchar</loc>
+    <loc>https://localnews.meenai.in/news/silchar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/silchar/en</loc>
+    <loc>https://localnews.meenai.in/news/silchar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dibrugarh</loc>
+    <loc>https://localnews.meenai.in/news/dibrugarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dibrugarh/en</loc>
+    <loc>https://localnews.meenai.in/news/dibrugarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jorhat</loc>
+    <loc>https://localnews.meenai.in/news/jorhat</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jorhat/en</loc>
+    <loc>https://localnews.meenai.in/news/jorhat/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagaon</loc>
+    <loc>https://localnews.meenai.in/news/nagaon</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagaon/en</loc>
+    <loc>https://localnews.meenai.in/news/nagaon/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tezpur</loc>
+    <loc>https://localnews.meenai.in/news/tezpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tezpur/en</loc>
+    <loc>https://localnews.meenai.in/news/tezpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tinsukia</loc>
+    <loc>https://localnews.meenai.in/news/tinsukia</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tinsukia/en</loc>
+    <loc>https://localnews.meenai.in/news/tinsukia/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/patna</loc>
+    <loc>https://localnews.meenai.in/news/patna</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/patna/en</loc>
+    <loc>https://localnews.meenai.in/news/patna/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gaya</loc>
+    <loc>https://localnews.meenai.in/news/gaya</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gaya/en</loc>
+    <loc>https://localnews.meenai.in/news/gaya/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhagalpur</loc>
+    <loc>https://localnews.meenai.in/news/bhagalpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhagalpur/en</loc>
+    <loc>https://localnews.meenai.in/news/bhagalpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/muzaffarpur</loc>
+    <loc>https://localnews.meenai.in/news/muzaffarpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/muzaffarpur/en</loc>
+    <loc>https://localnews.meenai.in/news/muzaffarpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/darbhanga</loc>
+    <loc>https://localnews.meenai.in/news/darbhanga</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/darbhanga/en</loc>
+    <loc>https://localnews.meenai.in/news/darbhanga/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/purnia</loc>
+    <loc>https://localnews.meenai.in/news/purnia</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/purnia/en</loc>
+    <loc>https://localnews.meenai.in/news/purnia/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ara</loc>
+    <loc>https://localnews.meenai.in/news/ara</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ara/en</loc>
+    <loc>https://localnews.meenai.in/news/ara/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/begusarai</loc>
+    <loc>https://localnews.meenai.in/news/begusarai</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/begusarai/en</loc>
+    <loc>https://localnews.meenai.in/news/begusarai/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/katihar</loc>
+    <loc>https://localnews.meenai.in/news/katihar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/katihar/en</loc>
+    <loc>https://localnews.meenai.in/news/katihar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chapra</loc>
+    <loc>https://localnews.meenai.in/news/chapra</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chapra/en</loc>
+    <loc>https://localnews.meenai.in/news/chapra/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bihar-sharif</loc>
+    <loc>https://localnews.meenai.in/news/bihar-sharif</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bihar-sharif/en</loc>
+    <loc>https://localnews.meenai.in/news/bihar-sharif/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sasaram</loc>
+    <loc>https://localnews.meenai.in/news/sasaram</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sasaram/en</loc>
+    <loc>https://localnews.meenai.in/news/sasaram/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/motihari</loc>
+    <loc>https://localnews.meenai.in/news/motihari</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/motihari/en</loc>
+    <loc>https://localnews.meenai.in/news/motihari/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/siwan</loc>
+    <loc>https://localnews.meenai.in/news/siwan</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/siwan/en</loc>
+    <loc>https://localnews.meenai.in/news/siwan/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chandigarh</loc>
+    <loc>https://localnews.meenai.in/news/chandigarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chandigarh/en</loc>
+    <loc>https://localnews.meenai.in/news/chandigarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/raipur</loc>
+    <loc>https://localnews.meenai.in/news/raipur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/raipur/en</loc>
+    <loc>https://localnews.meenai.in/news/raipur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhilai</loc>
+    <loc>https://localnews.meenai.in/news/bhilai</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhilai/en</loc>
+    <loc>https://localnews.meenai.in/news/bhilai/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bilaspur</loc>
+    <loc>https://localnews.meenai.in/news/bilaspur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bilaspur/en</loc>
+    <loc>https://localnews.meenai.in/news/bilaspur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/korba</loc>
+    <loc>https://localnews.meenai.in/news/korba</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/korba/en</loc>
+    <loc>https://localnews.meenai.in/news/korba/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/durg</loc>
+    <loc>https://localnews.meenai.in/news/durg</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/durg/en</loc>
+    <loc>https://localnews.meenai.in/news/durg/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/raigarh</loc>
+    <loc>https://localnews.meenai.in/news/raigarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/raigarh/en</loc>
+    <loc>https://localnews.meenai.in/news/raigarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jagdalpur</loc>
+    <loc>https://localnews.meenai.in/news/jagdalpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jagdalpur/en</loc>
+    <loc>https://localnews.meenai.in/news/jagdalpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ambikapur</loc>
+    <loc>https://localnews.meenai.in/news/ambikapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ambikapur/en</loc>
+    <loc>https://localnews.meenai.in/news/ambikapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/silvassa</loc>
+    <loc>https://localnews.meenai.in/news/silvassa</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/silvassa/en</loc>
+    <loc>https://localnews.meenai.in/news/silvassa/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/daman</loc>
+    <loc>https://localnews.meenai.in/news/daman</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/daman/en</loc>
+    <loc>https://localnews.meenai.in/news/daman/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/diu</loc>
+    <loc>https://localnews.meenai.in/news/diu</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/diu/en</loc>
+    <loc>https://localnews.meenai.in/news/diu/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/new-delhi</loc>
+    <loc>https://localnews.meenai.in/news/new-delhi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/new-delhi/en</loc>
+    <loc>https://localnews.meenai.in/news/new-delhi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/delhi</loc>
+    <loc>https://localnews.meenai.in/news/delhi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/delhi/en</loc>
+    <loc>https://localnews.meenai.in/news/delhi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dwarka</loc>
+    <loc>https://localnews.meenai.in/news/dwarka</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dwarka/en</loc>
+    <loc>https://localnews.meenai.in/news/dwarka/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rohini</loc>
+    <loc>https://localnews.meenai.in/news/rohini</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rohini/en</loc>
+    <loc>https://localnews.meenai.in/news/rohini/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/panaji</loc>
+    <loc>https://localnews.meenai.in/news/panaji</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/panaji/en</loc>
+    <loc>https://localnews.meenai.in/news/panaji/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/margao</loc>
+    <loc>https://localnews.meenai.in/news/margao</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/margao/en</loc>
+    <loc>https://localnews.meenai.in/news/margao/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vasco-da-gama</loc>
+    <loc>https://localnews.meenai.in/news/vasco-da-gama</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vasco-da-gama/en</loc>
+    <loc>https://localnews.meenai.in/news/vasco-da-gama/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mapusa</loc>
+    <loc>https://localnews.meenai.in/news/mapusa</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mapusa/en</loc>
+    <loc>https://localnews.meenai.in/news/mapusa/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ahmedabad</loc>
+    <loc>https://localnews.meenai.in/news/ahmedabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ahmedabad/en</loc>
+    <loc>https://localnews.meenai.in/news/ahmedabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/surat</loc>
+    <loc>https://localnews.meenai.in/news/surat</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/surat/en</loc>
+    <loc>https://localnews.meenai.in/news/surat/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vadodara</loc>
+    <loc>https://localnews.meenai.in/news/vadodara</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vadodara/en</loc>
+    <loc>https://localnews.meenai.in/news/vadodara/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rajkot</loc>
+    <loc>https://localnews.meenai.in/news/rajkot</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rajkot/en</loc>
+    <loc>https://localnews.meenai.in/news/rajkot/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhavnagar</loc>
+    <loc>https://localnews.meenai.in/news/bhavnagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhavnagar/en</loc>
+    <loc>https://localnews.meenai.in/news/bhavnagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jamnagar</loc>
+    <loc>https://localnews.meenai.in/news/jamnagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jamnagar/en</loc>
+    <loc>https://localnews.meenai.in/news/jamnagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gandhinagar</loc>
+    <loc>https://localnews.meenai.in/news/gandhinagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gandhinagar/en</loc>
+    <loc>https://localnews.meenai.in/news/gandhinagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/junagadh</loc>
+    <loc>https://localnews.meenai.in/news/junagadh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/junagadh/en</loc>
+    <loc>https://localnews.meenai.in/news/junagadh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/anand</loc>
+    <loc>https://localnews.meenai.in/news/anand</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/anand/en</loc>
+    <loc>https://localnews.meenai.in/news/anand/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bharuch</loc>
+    <loc>https://localnews.meenai.in/news/bharuch</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bharuch/en</loc>
+    <loc>https://localnews.meenai.in/news/bharuch/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nadiad</loc>
+    <loc>https://localnews.meenai.in/news/nadiad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nadiad/en</loc>
+    <loc>https://localnews.meenai.in/news/nadiad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mehsana</loc>
+    <loc>https://localnews.meenai.in/news/mehsana</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mehsana/en</loc>
+    <loc>https://localnews.meenai.in/news/mehsana/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/morbi</loc>
+    <loc>https://localnews.meenai.in/news/morbi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/morbi/en</loc>
+    <loc>https://localnews.meenai.in/news/morbi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhuj</loc>
+    <loc>https://localnews.meenai.in/news/bhuj</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhuj/en</loc>
+    <loc>https://localnews.meenai.in/news/bhuj/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/navsari</loc>
+    <loc>https://localnews.meenai.in/news/navsari</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/navsari/en</loc>
+    <loc>https://localnews.meenai.in/news/navsari/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/valsad</loc>
+    <loc>https://localnews.meenai.in/news/valsad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/valsad/en</loc>
+    <loc>https://localnews.meenai.in/news/valsad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gurugram</loc>
+    <loc>https://localnews.meenai.in/news/gurugram</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gurugram/en</loc>
+    <loc>https://localnews.meenai.in/news/gurugram/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/faridabad</loc>
+    <loc>https://localnews.meenai.in/news/faridabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/faridabad/en</loc>
+    <loc>https://localnews.meenai.in/news/faridabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/panipat</loc>
+    <loc>https://localnews.meenai.in/news/panipat</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/panipat/en</loc>
+    <loc>https://localnews.meenai.in/news/panipat/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ambala</loc>
+    <loc>https://localnews.meenai.in/news/ambala</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ambala/en</loc>
+    <loc>https://localnews.meenai.in/news/ambala/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karnal</loc>
+    <loc>https://localnews.meenai.in/news/karnal</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karnal/en</loc>
+    <loc>https://localnews.meenai.in/news/karnal/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hisar</loc>
+    <loc>https://localnews.meenai.in/news/hisar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hisar/en</loc>
+    <loc>https://localnews.meenai.in/news/hisar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rohtak</loc>
+    <loc>https://localnews.meenai.in/news/rohtak</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rohtak/en</loc>
+    <loc>https://localnews.meenai.in/news/rohtak/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sonipat</loc>
+    <loc>https://localnews.meenai.in/news/sonipat</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sonipat/en</loc>
+    <loc>https://localnews.meenai.in/news/sonipat/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/yamunanagar</loc>
+    <loc>https://localnews.meenai.in/news/yamunanagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/yamunanagar/en</loc>
+    <loc>https://localnews.meenai.in/news/yamunanagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/panchkula</loc>
+    <loc>https://localnews.meenai.in/news/panchkula</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/panchkula/en</loc>
+    <loc>https://localnews.meenai.in/news/panchkula/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhiwani</loc>
+    <loc>https://localnews.meenai.in/news/bhiwani</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhiwani/en</loc>
+    <loc>https://localnews.meenai.in/news/bhiwani/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sirsa</loc>
+    <loc>https://localnews.meenai.in/news/sirsa</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sirsa/en</loc>
+    <loc>https://localnews.meenai.in/news/sirsa/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rewari</loc>
+    <loc>https://localnews.meenai.in/news/rewari</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rewari/en</loc>
+    <loc>https://localnews.meenai.in/news/rewari/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kurukshetra</loc>
+    <loc>https://localnews.meenai.in/news/kurukshetra</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kurukshetra/en</loc>
+    <loc>https://localnews.meenai.in/news/kurukshetra/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shimla</loc>
+    <loc>https://localnews.meenai.in/news/shimla</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shimla/en</loc>
+    <loc>https://localnews.meenai.in/news/shimla/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dharamshala</loc>
+    <loc>https://localnews.meenai.in/news/dharamshala</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dharamshala/en</loc>
+    <loc>https://localnews.meenai.in/news/dharamshala/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mandi</loc>
+    <loc>https://localnews.meenai.in/news/mandi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mandi/en</loc>
+    <loc>https://localnews.meenai.in/news/mandi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/solan</loc>
+    <loc>https://localnews.meenai.in/news/solan</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/solan/en</loc>
+    <loc>https://localnews.meenai.in/news/solan/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kullu</loc>
+    <loc>https://localnews.meenai.in/news/kullu</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kullu/en</loc>
+    <loc>https://localnews.meenai.in/news/kullu/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/manali</loc>
+    <loc>https://localnews.meenai.in/news/manali</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/manali/en</loc>
+    <loc>https://localnews.meenai.in/news/manali/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bilaspur-hp</loc>
+    <loc>https://localnews.meenai.in/news/bilaspur-hp</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bilaspur-hp/en</loc>
+    <loc>https://localnews.meenai.in/news/bilaspur-hp/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hamirpur-hp</loc>
+    <loc>https://localnews.meenai.in/news/hamirpur-hp</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hamirpur-hp/en</loc>
+    <loc>https://localnews.meenai.in/news/hamirpur-hp/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/una</loc>
+    <loc>https://localnews.meenai.in/news/una</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/una/en</loc>
+    <loc>https://localnews.meenai.in/news/una/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/srinagar</loc>
+    <loc>https://localnews.meenai.in/news/srinagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/srinagar/en</loc>
+    <loc>https://localnews.meenai.in/news/srinagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jammu</loc>
+    <loc>https://localnews.meenai.in/news/jammu</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jammu/en</loc>
+    <loc>https://localnews.meenai.in/news/jammu/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/anantnag</loc>
+    <loc>https://localnews.meenai.in/news/anantnag</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/anantnag/en</loc>
+    <loc>https://localnews.meenai.in/news/anantnag/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/baramulla</loc>
+    <loc>https://localnews.meenai.in/news/baramulla</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/baramulla/en</loc>
+    <loc>https://localnews.meenai.in/news/baramulla/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udhampur</loc>
+    <loc>https://localnews.meenai.in/news/udhampur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udhampur/en</loc>
+    <loc>https://localnews.meenai.in/news/udhampur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ranchi</loc>
+    <loc>https://localnews.meenai.in/news/ranchi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ranchi/en</loc>
+    <loc>https://localnews.meenai.in/news/ranchi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jamshedpur</loc>
+    <loc>https://localnews.meenai.in/news/jamshedpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jamshedpur/en</loc>
+    <loc>https://localnews.meenai.in/news/jamshedpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dhanbad</loc>
+    <loc>https://localnews.meenai.in/news/dhanbad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dhanbad/en</loc>
+    <loc>https://localnews.meenai.in/news/dhanbad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bokaro</loc>
+    <loc>https://localnews.meenai.in/news/bokaro</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bokaro/en</loc>
+    <loc>https://localnews.meenai.in/news/bokaro/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/deoghar</loc>
+    <loc>https://localnews.meenai.in/news/deoghar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/deoghar/en</loc>
+    <loc>https://localnews.meenai.in/news/deoghar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hazaribagh</loc>
+    <loc>https://localnews.meenai.in/news/hazaribagh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hazaribagh/en</loc>
+    <loc>https://localnews.meenai.in/news/hazaribagh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/giridih</loc>
+    <loc>https://localnews.meenai.in/news/giridih</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/giridih/en</loc>
+    <loc>https://localnews.meenai.in/news/giridih/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ramgarh</loc>
+    <loc>https://localnews.meenai.in/news/ramgarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ramgarh/en</loc>
+    <loc>https://localnews.meenai.in/news/ramgarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bengaluru</loc>
+    <loc>https://localnews.meenai.in/news/bengaluru</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bengaluru/en</loc>
+    <loc>https://localnews.meenai.in/news/bengaluru/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mysuru</loc>
+    <loc>https://localnews.meenai.in/news/mysuru</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mysuru/en</loc>
+    <loc>https://localnews.meenai.in/news/mysuru/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hubballi</loc>
+    <loc>https://localnews.meenai.in/news/hubballi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hubballi/en</loc>
+    <loc>https://localnews.meenai.in/news/hubballi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mangaluru</loc>
+    <loc>https://localnews.meenai.in/news/mangaluru</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mangaluru/en</loc>
+    <loc>https://localnews.meenai.in/news/mangaluru/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/belagavi</loc>
+    <loc>https://localnews.meenai.in/news/belagavi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/belagavi/en</loc>
+    <loc>https://localnews.meenai.in/news/belagavi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kalaburagi</loc>
+    <loc>https://localnews.meenai.in/news/kalaburagi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kalaburagi/en</loc>
+    <loc>https://localnews.meenai.in/news/kalaburagi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/davanagere</loc>
+    <loc>https://localnews.meenai.in/news/davanagere</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/davanagere/en</loc>
+    <loc>https://localnews.meenai.in/news/davanagere/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ballari</loc>
+    <loc>https://localnews.meenai.in/news/ballari</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ballari/en</loc>
+    <loc>https://localnews.meenai.in/news/ballari/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shivamogga</loc>
+    <loc>https://localnews.meenai.in/news/shivamogga</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shivamogga/en</loc>
+    <loc>https://localnews.meenai.in/news/shivamogga/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tumakuru</loc>
+    <loc>https://localnews.meenai.in/news/tumakuru</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tumakuru/en</loc>
+    <loc>https://localnews.meenai.in/news/tumakuru/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udupi</loc>
+    <loc>https://localnews.meenai.in/news/udupi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udupi/en</loc>
+    <loc>https://localnews.meenai.in/news/udupi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hassan</loc>
+    <loc>https://localnews.meenai.in/news/hassan</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hassan/en</loc>
+    <loc>https://localnews.meenai.in/news/hassan/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thiruvananthapuram</loc>
+    <loc>https://localnews.meenai.in/news/thiruvananthapuram</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thiruvananthapuram/en</loc>
+    <loc>https://localnews.meenai.in/news/thiruvananthapuram/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kochi</loc>
+    <loc>https://localnews.meenai.in/news/kochi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kochi/en</loc>
+    <loc>https://localnews.meenai.in/news/kochi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kozhikode</loc>
+    <loc>https://localnews.meenai.in/news/kozhikode</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kozhikode/en</loc>
+    <loc>https://localnews.meenai.in/news/kozhikode/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thrissur</loc>
+    <loc>https://localnews.meenai.in/news/thrissur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thrissur/en</loc>
+    <loc>https://localnews.meenai.in/news/thrissur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kollam</loc>
+    <loc>https://localnews.meenai.in/news/kollam</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kollam/en</loc>
+    <loc>https://localnews.meenai.in/news/kollam/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/alappuzha</loc>
+    <loc>https://localnews.meenai.in/news/alappuzha</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/alappuzha/en</loc>
+    <loc>https://localnews.meenai.in/news/alappuzha/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kannur</loc>
+    <loc>https://localnews.meenai.in/news/kannur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kannur/en</loc>
+    <loc>https://localnews.meenai.in/news/kannur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/palakkad</loc>
+    <loc>https://localnews.meenai.in/news/palakkad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/palakkad/en</loc>
+    <loc>https://localnews.meenai.in/news/palakkad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kottayam</loc>
+    <loc>https://localnews.meenai.in/news/kottayam</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kottayam/en</loc>
+    <loc>https://localnews.meenai.in/news/kottayam/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/malappuram</loc>
+    <loc>https://localnews.meenai.in/news/malappuram</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/malappuram/en</loc>
+    <loc>https://localnews.meenai.in/news/malappuram/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/leh</loc>
+    <loc>https://localnews.meenai.in/news/leh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/leh/en</loc>
+    <loc>https://localnews.meenai.in/news/leh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kargil</loc>
+    <loc>https://localnews.meenai.in/news/kargil</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kargil/en</loc>
+    <loc>https://localnews.meenai.in/news/kargil/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kavaratti</loc>
+    <loc>https://localnews.meenai.in/news/kavaratti</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kavaratti/en</loc>
+    <loc>https://localnews.meenai.in/news/kavaratti/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhopal</loc>
+    <loc>https://localnews.meenai.in/news/bhopal</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhopal/en</loc>
+    <loc>https://localnews.meenai.in/news/bhopal/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/indore</loc>
+    <loc>https://localnews.meenai.in/news/indore</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/indore/en</loc>
+    <loc>https://localnews.meenai.in/news/indore/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jabalpur</loc>
+    <loc>https://localnews.meenai.in/news/jabalpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jabalpur/en</loc>
+    <loc>https://localnews.meenai.in/news/jabalpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gwalior</loc>
+    <loc>https://localnews.meenai.in/news/gwalior</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gwalior/en</loc>
+    <loc>https://localnews.meenai.in/news/gwalior/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ujjain</loc>
+    <loc>https://localnews.meenai.in/news/ujjain</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ujjain/en</loc>
+    <loc>https://localnews.meenai.in/news/ujjain/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sagar</loc>
+    <loc>https://localnews.meenai.in/news/sagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sagar/en</loc>
+    <loc>https://localnews.meenai.in/news/sagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/satna</loc>
+    <loc>https://localnews.meenai.in/news/satna</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/satna/en</loc>
+    <loc>https://localnews.meenai.in/news/satna/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rewa</loc>
+    <loc>https://localnews.meenai.in/news/rewa</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rewa/en</loc>
+    <loc>https://localnews.meenai.in/news/rewa/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ratlam</loc>
+    <loc>https://localnews.meenai.in/news/ratlam</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ratlam/en</loc>
+    <loc>https://localnews.meenai.in/news/ratlam/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dewas</loc>
+    <loc>https://localnews.meenai.in/news/dewas</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dewas/en</loc>
+    <loc>https://localnews.meenai.in/news/dewas/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/katni</loc>
+    <loc>https://localnews.meenai.in/news/katni</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/katni/en</loc>
+    <loc>https://localnews.meenai.in/news/katni/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chhindwara</loc>
+    <loc>https://localnews.meenai.in/news/chhindwara</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chhindwara/en</loc>
+    <loc>https://localnews.meenai.in/news/chhindwara/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/singrauli</loc>
+    <loc>https://localnews.meenai.in/news/singrauli</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/singrauli/en</loc>
+    <loc>https://localnews.meenai.in/news/singrauli/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/khandwa</loc>
+    <loc>https://localnews.meenai.in/news/khandwa</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/khandwa/en</loc>
+    <loc>https://localnews.meenai.in/news/khandwa/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shivpuri</loc>
+    <loc>https://localnews.meenai.in/news/shivpuri</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shivpuri/en</loc>
+    <loc>https://localnews.meenai.in/news/shivpuri/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mumbai</loc>
+    <loc>https://localnews.meenai.in/news/mumbai</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mumbai/en</loc>
+    <loc>https://localnews.meenai.in/news/mumbai/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pune</loc>
+    <loc>https://localnews.meenai.in/news/pune</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pune/en</loc>
+    <loc>https://localnews.meenai.in/news/pune/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagpur</loc>
+    <loc>https://localnews.meenai.in/news/nagpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagpur/en</loc>
+    <loc>https://localnews.meenai.in/news/nagpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nashik</loc>
+    <loc>https://localnews.meenai.in/news/nashik</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nashik/en</loc>
+    <loc>https://localnews.meenai.in/news/nashik/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thane</loc>
+    <loc>https://localnews.meenai.in/news/thane</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thane/en</loc>
+    <loc>https://localnews.meenai.in/news/thane/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/aurangabad</loc>
+    <loc>https://localnews.meenai.in/news/aurangabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/aurangabad/en</loc>
+    <loc>https://localnews.meenai.in/news/aurangabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/solapur</loc>
+    <loc>https://localnews.meenai.in/news/solapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/solapur/en</loc>
+    <loc>https://localnews.meenai.in/news/solapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kolhapur</loc>
+    <loc>https://localnews.meenai.in/news/kolhapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kolhapur/en</loc>
+    <loc>https://localnews.meenai.in/news/kolhapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/amravati</loc>
+    <loc>https://localnews.meenai.in/news/amravati</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/amravati/en</loc>
+    <loc>https://localnews.meenai.in/news/amravati/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/navi-mumbai</loc>
+    <loc>https://localnews.meenai.in/news/navi-mumbai</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/navi-mumbai/en</loc>
+    <loc>https://localnews.meenai.in/news/navi-mumbai/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sangli</loc>
+    <loc>https://localnews.meenai.in/news/sangli</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sangli/en</loc>
+    <loc>https://localnews.meenai.in/news/sangli/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jalgaon</loc>
+    <loc>https://localnews.meenai.in/news/jalgaon</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jalgaon/en</loc>
+    <loc>https://localnews.meenai.in/news/jalgaon/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/akola</loc>
+    <loc>https://localnews.meenai.in/news/akola</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/akola/en</loc>
+    <loc>https://localnews.meenai.in/news/akola/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/latur</loc>
+    <loc>https://localnews.meenai.in/news/latur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/latur/en</loc>
+    <loc>https://localnews.meenai.in/news/latur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nanded</loc>
+    <loc>https://localnews.meenai.in/news/nanded</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nanded/en</loc>
+    <loc>https://localnews.meenai.in/news/nanded/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ahmednagar</loc>
+    <loc>https://localnews.meenai.in/news/ahmednagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ahmednagar/en</loc>
+    <loc>https://localnews.meenai.in/news/ahmednagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chandrapur</loc>
+    <loc>https://localnews.meenai.in/news/chandrapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chandrapur/en</loc>
+    <loc>https://localnews.meenai.in/news/chandrapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/satara</loc>
+    <loc>https://localnews.meenai.in/news/satara</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/satara/en</loc>
+    <loc>https://localnews.meenai.in/news/satara/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ratnagiri</loc>
+    <loc>https://localnews.meenai.in/news/ratnagiri</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ratnagiri/en</loc>
+    <loc>https://localnews.meenai.in/news/ratnagiri/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/imphal</loc>
+    <loc>https://localnews.meenai.in/news/imphal</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/imphal/en</loc>
+    <loc>https://localnews.meenai.in/news/imphal/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thoubal</loc>
+    <loc>https://localnews.meenai.in/news/thoubal</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thoubal/en</loc>
+    <loc>https://localnews.meenai.in/news/thoubal/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/churachandpur</loc>
+    <loc>https://localnews.meenai.in/news/churachandpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/churachandpur/en</loc>
+    <loc>https://localnews.meenai.in/news/churachandpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shillong</loc>
+    <loc>https://localnews.meenai.in/news/shillong</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shillong/en</loc>
+    <loc>https://localnews.meenai.in/news/shillong/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tura</loc>
+    <loc>https://localnews.meenai.in/news/tura</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tura/en</loc>
+    <loc>https://localnews.meenai.in/news/tura/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jowai</loc>
+    <loc>https://localnews.meenai.in/news/jowai</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jowai/en</loc>
+    <loc>https://localnews.meenai.in/news/jowai/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/aizawl</loc>
+    <loc>https://localnews.meenai.in/news/aizawl</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/aizawl/en</loc>
+    <loc>https://localnews.meenai.in/news/aizawl/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/lunglei</loc>
+    <loc>https://localnews.meenai.in/news/lunglei</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/lunglei/en</loc>
+    <loc>https://localnews.meenai.in/news/lunglei/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kohima</loc>
+    <loc>https://localnews.meenai.in/news/kohima</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kohima/en</loc>
+    <loc>https://localnews.meenai.in/news/kohima/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dimapur</loc>
+    <loc>https://localnews.meenai.in/news/dimapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dimapur/en</loc>
+    <loc>https://localnews.meenai.in/news/dimapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mokokchung</loc>
+    <loc>https://localnews.meenai.in/news/mokokchung</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mokokchung/en</loc>
+    <loc>https://localnews.meenai.in/news/mokokchung/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhubaneswar</loc>
+    <loc>https://localnews.meenai.in/news/bhubaneswar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhubaneswar/en</loc>
+    <loc>https://localnews.meenai.in/news/bhubaneswar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/cuttack</loc>
+    <loc>https://localnews.meenai.in/news/cuttack</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/cuttack/en</loc>
+    <loc>https://localnews.meenai.in/news/cuttack/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rourkela</loc>
+    <loc>https://localnews.meenai.in/news/rourkela</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rourkela/en</loc>
+    <loc>https://localnews.meenai.in/news/rourkela/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/berhampur</loc>
+    <loc>https://localnews.meenai.in/news/berhampur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/berhampur/en</loc>
+    <loc>https://localnews.meenai.in/news/berhampur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sambalpur</loc>
+    <loc>https://localnews.meenai.in/news/sambalpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sambalpur/en</loc>
+    <loc>https://localnews.meenai.in/news/sambalpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/puri</loc>
+    <loc>https://localnews.meenai.in/news/puri</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/puri/en</loc>
+    <loc>https://localnews.meenai.in/news/puri/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/balasore</loc>
+    <loc>https://localnews.meenai.in/news/balasore</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/balasore/en</loc>
+    <loc>https://localnews.meenai.in/news/balasore/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/angul</loc>
+    <loc>https://localnews.meenai.in/news/angul</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/angul/en</loc>
+    <loc>https://localnews.meenai.in/news/angul/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/puducherry</loc>
+    <loc>https://localnews.meenai.in/news/puducherry</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/puducherry/en</loc>
+    <loc>https://localnews.meenai.in/news/puducherry/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karaikal</loc>
+    <loc>https://localnews.meenai.in/news/karaikal</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karaikal/en</loc>
+    <loc>https://localnews.meenai.in/news/karaikal/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ludhiana</loc>
+    <loc>https://localnews.meenai.in/news/ludhiana</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ludhiana/en</loc>
+    <loc>https://localnews.meenai.in/news/ludhiana/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/amritsar</loc>
+    <loc>https://localnews.meenai.in/news/amritsar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/amritsar/en</loc>
+    <loc>https://localnews.meenai.in/news/amritsar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jalandhar</loc>
+    <loc>https://localnews.meenai.in/news/jalandhar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jalandhar/en</loc>
+    <loc>https://localnews.meenai.in/news/jalandhar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/patiala</loc>
+    <loc>https://localnews.meenai.in/news/patiala</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/patiala/en</loc>
+    <loc>https://localnews.meenai.in/news/patiala/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bathinda</loc>
+    <loc>https://localnews.meenai.in/news/bathinda</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bathinda/en</loc>
+    <loc>https://localnews.meenai.in/news/bathinda/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mohali</loc>
+    <loc>https://localnews.meenai.in/news/mohali</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mohali/en</loc>
+    <loc>https://localnews.meenai.in/news/mohali/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pathankot</loc>
+    <loc>https://localnews.meenai.in/news/pathankot</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pathankot/en</loc>
+    <loc>https://localnews.meenai.in/news/pathankot/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hoshiarpur</loc>
+    <loc>https://localnews.meenai.in/news/hoshiarpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hoshiarpur/en</loc>
+    <loc>https://localnews.meenai.in/news/hoshiarpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/moga</loc>
+    <loc>https://localnews.meenai.in/news/moga</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/moga/en</loc>
+    <loc>https://localnews.meenai.in/news/moga/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/firozpur</loc>
+    <loc>https://localnews.meenai.in/news/firozpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/firozpur/en</loc>
+    <loc>https://localnews.meenai.in/news/firozpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jaipur</loc>
+    <loc>https://localnews.meenai.in/news/jaipur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jaipur/en</loc>
+    <loc>https://localnews.meenai.in/news/jaipur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jodhpur</loc>
+    <loc>https://localnews.meenai.in/news/jodhpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jodhpur/en</loc>
+    <loc>https://localnews.meenai.in/news/jodhpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udaipur</loc>
+    <loc>https://localnews.meenai.in/news/udaipur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udaipur/en</loc>
+    <loc>https://localnews.meenai.in/news/udaipur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kota</loc>
+    <loc>https://localnews.meenai.in/news/kota</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kota/en</loc>
+    <loc>https://localnews.meenai.in/news/kota/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ajmer</loc>
+    <loc>https://localnews.meenai.in/news/ajmer</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ajmer/en</loc>
+    <loc>https://localnews.meenai.in/news/ajmer/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bikaner</loc>
+    <loc>https://localnews.meenai.in/news/bikaner</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bikaner/en</loc>
+    <loc>https://localnews.meenai.in/news/bikaner/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/alwar</loc>
+    <loc>https://localnews.meenai.in/news/alwar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/alwar/en</loc>
+    <loc>https://localnews.meenai.in/news/alwar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bharatpur</loc>
+    <loc>https://localnews.meenai.in/news/bharatpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bharatpur/en</loc>
+    <loc>https://localnews.meenai.in/news/bharatpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sikar</loc>
+    <loc>https://localnews.meenai.in/news/sikar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sikar/en</loc>
+    <loc>https://localnews.meenai.in/news/sikar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pali</loc>
+    <loc>https://localnews.meenai.in/news/pali</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pali/en</loc>
+    <loc>https://localnews.meenai.in/news/pali/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhilwara</loc>
+    <loc>https://localnews.meenai.in/news/bhilwara</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bhilwara/en</loc>
+    <loc>https://localnews.meenai.in/news/bhilwara/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sri-ganganagar</loc>
+    <loc>https://localnews.meenai.in/news/sri-ganganagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sri-ganganagar/en</loc>
+    <loc>https://localnews.meenai.in/news/sri-ganganagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hanumangarh</loc>
+    <loc>https://localnews.meenai.in/news/hanumangarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hanumangarh/en</loc>
+    <loc>https://localnews.meenai.in/news/hanumangarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/churu</loc>
+    <loc>https://localnews.meenai.in/news/churu</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/churu/en</loc>
+    <loc>https://localnews.meenai.in/news/churu/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jhunjhunu</loc>
+    <loc>https://localnews.meenai.in/news/jhunjhunu</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jhunjhunu/en</loc>
+    <loc>https://localnews.meenai.in/news/jhunjhunu/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagaur</loc>
+    <loc>https://localnews.meenai.in/news/nagaur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagaur/en</loc>
+    <loc>https://localnews.meenai.in/news/nagaur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/barmer</loc>
+    <loc>https://localnews.meenai.in/news/barmer</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/barmer/en</loc>
+    <loc>https://localnews.meenai.in/news/barmer/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jaisalmer</loc>
+    <loc>https://localnews.meenai.in/news/jaisalmer</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jaisalmer/en</loc>
+    <loc>https://localnews.meenai.in/news/jaisalmer/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jalore</loc>
+    <loc>https://localnews.meenai.in/news/jalore</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jalore/en</loc>
+    <loc>https://localnews.meenai.in/news/jalore/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sirohi</loc>
+    <loc>https://localnews.meenai.in/news/sirohi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sirohi/en</loc>
+    <loc>https://localnews.meenai.in/news/sirohi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rajsamand</loc>
+    <loc>https://localnews.meenai.in/news/rajsamand</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rajsamand/en</loc>
+    <loc>https://localnews.meenai.in/news/rajsamand/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chittorgarh</loc>
+    <loc>https://localnews.meenai.in/news/chittorgarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chittorgarh/en</loc>
+    <loc>https://localnews.meenai.in/news/chittorgarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pratapgarh</loc>
+    <loc>https://localnews.meenai.in/news/pratapgarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/pratapgarh/en</loc>
+    <loc>https://localnews.meenai.in/news/pratapgarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/banswara</loc>
+    <loc>https://localnews.meenai.in/news/banswara</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/banswara/en</loc>
+    <loc>https://localnews.meenai.in/news/banswara/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dungarpur</loc>
+    <loc>https://localnews.meenai.in/news/dungarpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dungarpur/en</loc>
+    <loc>https://localnews.meenai.in/news/dungarpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bundi</loc>
+    <loc>https://localnews.meenai.in/news/bundi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bundi/en</loc>
+    <loc>https://localnews.meenai.in/news/bundi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/baran</loc>
+    <loc>https://localnews.meenai.in/news/baran</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/baran/en</loc>
+    <loc>https://localnews.meenai.in/news/baran/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jhalawar</loc>
+    <loc>https://localnews.meenai.in/news/jhalawar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jhalawar/en</loc>
+    <loc>https://localnews.meenai.in/news/jhalawar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tonk</loc>
+    <loc>https://localnews.meenai.in/news/tonk</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tonk/en</loc>
+    <loc>https://localnews.meenai.in/news/tonk/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sawai-madhopur</loc>
+    <loc>https://localnews.meenai.in/news/sawai-madhopur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sawai-madhopur/en</loc>
+    <loc>https://localnews.meenai.in/news/sawai-madhopur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karauli</loc>
+    <loc>https://localnews.meenai.in/news/karauli</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karauli/en</loc>
+    <loc>https://localnews.meenai.in/news/karauli/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dholpur</loc>
+    <loc>https://localnews.meenai.in/news/dholpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dholpur/en</loc>
+    <loc>https://localnews.meenai.in/news/dholpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dausa</loc>
+    <loc>https://localnews.meenai.in/news/dausa</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dausa/en</loc>
+    <loc>https://localnews.meenai.in/news/dausa/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/beawar</loc>
+    <loc>https://localnews.meenai.in/news/beawar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/beawar/en</loc>
+    <loc>https://localnews.meenai.in/news/beawar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kishangarh</loc>
+    <loc>https://localnews.meenai.in/news/kishangarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kishangarh/en</loc>
+    <loc>https://localnews.meenai.in/news/kishangarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mount-abu</loc>
+    <loc>https://localnews.meenai.in/news/mount-abu</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mount-abu/en</loc>
+    <loc>https://localnews.meenai.in/news/mount-abu/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nathdwara</loc>
+    <loc>https://localnews.meenai.in/news/nathdwara</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nathdwara/en</loc>
+    <loc>https://localnews.meenai.in/news/nathdwara/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/abu-road</loc>
+    <loc>https://localnews.meenai.in/news/abu-road</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/abu-road/en</loc>
+    <loc>https://localnews.meenai.in/news/abu-road/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gangtok</loc>
+    <loc>https://localnews.meenai.in/news/gangtok</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gangtok/en</loc>
+    <loc>https://localnews.meenai.in/news/gangtok/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/namchi</loc>
+    <loc>https://localnews.meenai.in/news/namchi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/namchi/en</loc>
+    <loc>https://localnews.meenai.in/news/namchi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chennai</loc>
+    <loc>https://localnews.meenai.in/news/chennai</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/chennai/en</loc>
+    <loc>https://localnews.meenai.in/news/chennai/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/coimbatore</loc>
+    <loc>https://localnews.meenai.in/news/coimbatore</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/coimbatore/en</loc>
+    <loc>https://localnews.meenai.in/news/coimbatore/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/madurai</loc>
+    <loc>https://localnews.meenai.in/news/madurai</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/madurai/en</loc>
+    <loc>https://localnews.meenai.in/news/madurai/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tiruchirappalli</loc>
+    <loc>https://localnews.meenai.in/news/tiruchirappalli</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tiruchirappalli/en</loc>
+    <loc>https://localnews.meenai.in/news/tiruchirappalli/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/salem</loc>
+    <loc>https://localnews.meenai.in/news/salem</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/salem/en</loc>
+    <loc>https://localnews.meenai.in/news/salem/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tirunelveli</loc>
+    <loc>https://localnews.meenai.in/news/tirunelveli</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tirunelveli/en</loc>
+    <loc>https://localnews.meenai.in/news/tirunelveli/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/erode</loc>
+    <loc>https://localnews.meenai.in/news/erode</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/erode/en</loc>
+    <loc>https://localnews.meenai.in/news/erode/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vellore</loc>
+    <loc>https://localnews.meenai.in/news/vellore</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/vellore/en</loc>
+    <loc>https://localnews.meenai.in/news/vellore/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thoothukudi</loc>
+    <loc>https://localnews.meenai.in/news/thoothukudi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thoothukudi/en</loc>
+    <loc>https://localnews.meenai.in/news/thoothukudi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thanjavur</loc>
+    <loc>https://localnews.meenai.in/news/thanjavur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/thanjavur/en</loc>
+    <loc>https://localnews.meenai.in/news/thanjavur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dindigul</loc>
+    <loc>https://localnews.meenai.in/news/dindigul</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dindigul/en</loc>
+    <loc>https://localnews.meenai.in/news/dindigul/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tiruppur</loc>
+    <loc>https://localnews.meenai.in/news/tiruppur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/tiruppur/en</loc>
+    <loc>https://localnews.meenai.in/news/tiruppur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kanchipuram</loc>
+    <loc>https://localnews.meenai.in/news/kanchipuram</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kanchipuram/en</loc>
+    <loc>https://localnews.meenai.in/news/kanchipuram/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagercoil</loc>
+    <loc>https://localnews.meenai.in/news/nagercoil</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nagercoil/en</loc>
+    <loc>https://localnews.meenai.in/news/nagercoil/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hyderabad</loc>
+    <loc>https://localnews.meenai.in/news/hyderabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/hyderabad/en</loc>
+    <loc>https://localnews.meenai.in/news/hyderabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/warangal</loc>
+    <loc>https://localnews.meenai.in/news/warangal</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/warangal/en</loc>
+    <loc>https://localnews.meenai.in/news/warangal/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nizamabad</loc>
+    <loc>https://localnews.meenai.in/news/nizamabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nizamabad/en</loc>
+    <loc>https://localnews.meenai.in/news/nizamabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karimnagar</loc>
+    <loc>https://localnews.meenai.in/news/karimnagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/karimnagar/en</loc>
+    <loc>https://localnews.meenai.in/news/karimnagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/khammam</loc>
+    <loc>https://localnews.meenai.in/news/khammam</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/khammam/en</loc>
+    <loc>https://localnews.meenai.in/news/khammam/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ramagundam</loc>
+    <loc>https://localnews.meenai.in/news/ramagundam</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ramagundam/en</loc>
+    <loc>https://localnews.meenai.in/news/ramagundam/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mahbubnagar</loc>
+    <loc>https://localnews.meenai.in/news/mahbubnagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mahbubnagar/en</loc>
+    <loc>https://localnews.meenai.in/news/mahbubnagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/secunderabad</loc>
+    <loc>https://localnews.meenai.in/news/secunderabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/secunderabad/en</loc>
+    <loc>https://localnews.meenai.in/news/secunderabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/agartala</loc>
+    <loc>https://localnews.meenai.in/news/agartala</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/agartala/en</loc>
+    <loc>https://localnews.meenai.in/news/agartala/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udaipur-tripura</loc>
+    <loc>https://localnews.meenai.in/news/udaipur-tripura</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/udaipur-tripura/en</loc>
+    <loc>https://localnews.meenai.in/news/udaipur-tripura/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dharmanagar</loc>
+    <loc>https://localnews.meenai.in/news/dharmanagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dharmanagar/en</loc>
+    <loc>https://localnews.meenai.in/news/dharmanagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/lucknow</loc>
+    <loc>https://localnews.meenai.in/news/lucknow</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/lucknow/en</loc>
+    <loc>https://localnews.meenai.in/news/lucknow/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kanpur</loc>
+    <loc>https://localnews.meenai.in/news/kanpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kanpur/en</loc>
+    <loc>https://localnews.meenai.in/news/kanpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/varanasi</loc>
+    <loc>https://localnews.meenai.in/news/varanasi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/varanasi/en</loc>
+    <loc>https://localnews.meenai.in/news/varanasi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/agra</loc>
+    <loc>https://localnews.meenai.in/news/agra</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/agra/en</loc>
+    <loc>https://localnews.meenai.in/news/agra/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/prayagraj</loc>
+    <loc>https://localnews.meenai.in/news/prayagraj</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/prayagraj/en</loc>
+    <loc>https://localnews.meenai.in/news/prayagraj/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/meerut</loc>
+    <loc>https://localnews.meenai.in/news/meerut</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/meerut/en</loc>
+    <loc>https://localnews.meenai.in/news/meerut/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ghaziabad</loc>
+    <loc>https://localnews.meenai.in/news/ghaziabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ghaziabad/en</loc>
+    <loc>https://localnews.meenai.in/news/ghaziabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/noida</loc>
+    <loc>https://localnews.meenai.in/news/noida</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/noida/en</loc>
+    <loc>https://localnews.meenai.in/news/noida/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bareilly</loc>
+    <loc>https://localnews.meenai.in/news/bareilly</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bareilly/en</loc>
+    <loc>https://localnews.meenai.in/news/bareilly/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/aligarh</loc>
+    <loc>https://localnews.meenai.in/news/aligarh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/aligarh/en</loc>
+    <loc>https://localnews.meenai.in/news/aligarh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/moradabad</loc>
+    <loc>https://localnews.meenai.in/news/moradabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/moradabad/en</loc>
+    <loc>https://localnews.meenai.in/news/moradabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gorakhpur</loc>
+    <loc>https://localnews.meenai.in/news/gorakhpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/gorakhpur/en</loc>
+    <loc>https://localnews.meenai.in/news/gorakhpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/saharanpur</loc>
+    <loc>https://localnews.meenai.in/news/saharanpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/saharanpur/en</loc>
+    <loc>https://localnews.meenai.in/news/saharanpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jhansi</loc>
+    <loc>https://localnews.meenai.in/news/jhansi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/jhansi/en</loc>
+    <loc>https://localnews.meenai.in/news/jhansi/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mathura</loc>
+    <loc>https://localnews.meenai.in/news/mathura</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mathura/en</loc>
+    <loc>https://localnews.meenai.in/news/mathura/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ayodhya</loc>
+    <loc>https://localnews.meenai.in/news/ayodhya</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/ayodhya/en</loc>
+    <loc>https://localnews.meenai.in/news/ayodhya/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/firozabad</loc>
+    <loc>https://localnews.meenai.in/news/firozabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/firozabad/en</loc>
+    <loc>https://localnews.meenai.in/news/firozabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/muzaffarnagar</loc>
+    <loc>https://localnews.meenai.in/news/muzaffarnagar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/muzaffarnagar/en</loc>
+    <loc>https://localnews.meenai.in/news/muzaffarnagar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rampur</loc>
+    <loc>https://localnews.meenai.in/news/rampur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rampur/en</loc>
+    <loc>https://localnews.meenai.in/news/rampur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shahjahanpur</loc>
+    <loc>https://localnews.meenai.in/news/shahjahanpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/shahjahanpur/en</loc>
+    <loc>https://localnews.meenai.in/news/shahjahanpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/faizabad</loc>
+    <loc>https://localnews.meenai.in/news/faizabad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/faizabad/en</loc>
+    <loc>https://localnews.meenai.in/news/faizabad/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/etawah</loc>
+    <loc>https://localnews.meenai.in/news/etawah</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/etawah/en</loc>
+    <loc>https://localnews.meenai.in/news/etawah/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mirzapur</loc>
+    <loc>https://localnews.meenai.in/news/mirzapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/mirzapur/en</loc>
+    <loc>https://localnews.meenai.in/news/mirzapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bulandshahr</loc>
+    <loc>https://localnews.meenai.in/news/bulandshahr</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bulandshahr/en</loc>
+    <loc>https://localnews.meenai.in/news/bulandshahr/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sultanpur</loc>
+    <loc>https://localnews.meenai.in/news/sultanpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/sultanpur/en</loc>
+    <loc>https://localnews.meenai.in/news/sultanpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/banda</loc>
+    <loc>https://localnews.meenai.in/news/banda</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/banda/en</loc>
+    <loc>https://localnews.meenai.in/news/banda/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dehradun</loc>
+    <loc>https://localnews.meenai.in/news/dehradun</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/dehradun/en</loc>
+    <loc>https://localnews.meenai.in/news/dehradun/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/haridwar</loc>
+    <loc>https://localnews.meenai.in/news/haridwar</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/haridwar/en</loc>
+    <loc>https://localnews.meenai.in/news/haridwar/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rishikesh</loc>
+    <loc>https://localnews.meenai.in/news/rishikesh</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rishikesh/en</loc>
+    <loc>https://localnews.meenai.in/news/rishikesh/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/haldwani</loc>
+    <loc>https://localnews.meenai.in/news/haldwani</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/haldwani/en</loc>
+    <loc>https://localnews.meenai.in/news/haldwani/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/roorkee</loc>
+    <loc>https://localnews.meenai.in/news/roorkee</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/roorkee/en</loc>
+    <loc>https://localnews.meenai.in/news/roorkee/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nainital</loc>
+    <loc>https://localnews.meenai.in/news/nainital</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/nainital/en</loc>
+    <loc>https://localnews.meenai.in/news/nainital/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rudrapur</loc>
+    <loc>https://localnews.meenai.in/news/rudrapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/rudrapur/en</loc>
+    <loc>https://localnews.meenai.in/news/rudrapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kashipur</loc>
+    <loc>https://localnews.meenai.in/news/kashipur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kashipur/en</loc>
+    <loc>https://localnews.meenai.in/news/kashipur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kolkata</loc>
+    <loc>https://localnews.meenai.in/news/kolkata</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kolkata/en</loc>
+    <loc>https://localnews.meenai.in/news/kolkata/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/howrah</loc>
+    <loc>https://localnews.meenai.in/news/howrah</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/howrah/en</loc>
+    <loc>https://localnews.meenai.in/news/howrah/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/durgapur</loc>
+    <loc>https://localnews.meenai.in/news/durgapur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/durgapur/en</loc>
+    <loc>https://localnews.meenai.in/news/durgapur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/asansol</loc>
+    <loc>https://localnews.meenai.in/news/asansol</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/asansol/en</loc>
+    <loc>https://localnews.meenai.in/news/asansol/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/siliguri</loc>
+    <loc>https://localnews.meenai.in/news/siliguri</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/siliguri/en</loc>
+    <loc>https://localnews.meenai.in/news/siliguri/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/darjeeling</loc>
+    <loc>https://localnews.meenai.in/news/darjeeling</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/darjeeling/en</loc>
+    <loc>https://localnews.meenai.in/news/darjeeling/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/malda</loc>
+    <loc>https://localnews.meenai.in/news/malda</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/malda/en</loc>
+    <loc>https://localnews.meenai.in/news/malda/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kharagpur</loc>
+    <loc>https://localnews.meenai.in/news/kharagpur</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/kharagpur/en</loc>
+    <loc>https://localnews.meenai.in/news/kharagpur/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bardhaman</loc>
+    <loc>https://localnews.meenai.in/news/bardhaman</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/bardhaman/en</loc>
+    <loc>https://localnews.meenai.in/news/bardhaman/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/haldia</loc>
+    <loc>https://localnews.meenai.in/news/haldia</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://my-local-news.lovable.app/news/haldia/en</loc>
+    <loc>https://localnews.meenai.in/news/haldia/en</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
