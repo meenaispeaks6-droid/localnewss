@@ -421,6 +421,23 @@ const CityNews = ({ lang }: { lang: Lang }) => {
           </ul>
         )}
 
+        <section className="mt-12 border-t border-border pt-8">
+          <h2 className="font-heading text-lg font-semibold tracking-tight">
+            {lang === "hi"
+              ? `${cityLabel} की ख़बरों के बारे में सवाल-जवाब`
+              : `${city.name} news — frequently asked questions`}
+          </h2>
+          <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+            {faqs.map((f) => (
+              <div key={f.q} className="rounded-2xl border border-border bg-card p-4">
+                <dt className="font-heading text-sm font-semibold">{f.q}</dt>
+                <dd className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{f.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+
         {siblings.length > 0 && stateInfo && (
           <section className="mt-12 border-t border-border pt-8">
             <h2 className="font-heading text-lg font-semibold tracking-tight">
