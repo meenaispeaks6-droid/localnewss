@@ -12,6 +12,7 @@ export interface NewsArticle {
   image_url: string | null;
   category: string;
   published_at: string;
+  slug?: string | null;
 }
 
 export const categoryHi: Record<string, string> = {

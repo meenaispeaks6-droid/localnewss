@@ -51,3 +51,16 @@ export const statePath = (slug: string, lang: "hi" | "en") =>
   `/state/${slug}${lang === "en" ? "/en" : ""}`;
 
 export const homePath = (lang: "hi" | "en") => (lang === "en" ? "/en" : "/");
+
+export const articlePath = (
+  city: City | string,
+  articleSlug: string,
+  lang: "hi" | "en",
+) => `/news/${citySlug(city)}/${articleSlug}${lang === "en" ? "/en" : ""}`;
+
+export const cityCategoryPath = (
+  city: City | string,
+  category: string,
+  lang: "hi" | "en",
+) =>
+  `/news/${citySlug(city)}/category/${slugify(category)}${lang === "en" ? "/en" : ""}`;

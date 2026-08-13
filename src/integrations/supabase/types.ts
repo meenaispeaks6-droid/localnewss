@@ -22,6 +22,7 @@ export type Database = {
           id: string
           image_url: string | null
           published_at: string
+          slug: string | null
           source_name: string | null
           source_url: string
           summary_en: string | null
@@ -37,6 +38,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           published_at?: string
+          slug?: string | null
           source_name?: string | null
           source_url: string
           summary_en?: string | null
@@ -52,6 +54,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           published_at?: string
+          slug?: string | null
           source_name?: string | null
           source_url?: string
           summary_en?: string | null
@@ -112,7 +115,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      news_article_slug: {
+        Args: { _id: string; _title: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

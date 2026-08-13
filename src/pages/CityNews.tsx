@@ -11,10 +11,12 @@ import NotifyButton from "@/components/NotifyButton";
 import SiteFooter from "@/components/SiteFooter";
 import NotFound from "@/pages/NotFound";
 import { supabase } from "@/integrations/supabase/client";
-import type { Lang, NewsArticle } from "@/lib/newsTypes";
+import { categoryHi, type Lang, type NewsArticle } from "@/lib/newsTypes";
+import { NEWS_CATEGORIES } from "@/pages/CityCategory";
 import {
   SITE_NAME,
   SITE_URL,
+  cityCategoryPath,
   cityPath,
   findCityBySlug,
   findStateOf,
@@ -183,6 +185,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
   const busy = loading || (fetching && articles.length === 0);
   const siblings = (stateInfo?.cities ?? []).filter((x) => x.name !== city.name).slice(0, 12);
   const unreadCount = articles.filter((a) => !readIds.has(a.id)).length;
+  const lastUpdated = articles[0]?.published_at ?? null;
 
   const title =
     lang === "hi"
@@ -263,6 +266,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
             description,
             url: `${SITE_URL}${path}`,
             inLanguage: lang === "hi" ? "hi-IN" : "en-IN",
+            dateModified: lastUpdated ?? undefined,
             about: { "@type": "City", name: city.name, containedInPlace: { "@type": "AdministrativeArea", name: city.state } },
             mainEntity: {
               "@type": "ItemList",
@@ -397,6 +401,30 @@ const CityNews = ({ lang }: { lang: Lang }) => {
         <p className="sr-only" role="status" aria-live="polite">
           {busy ? c.loading : c.count(articles.length)}
         </p>
+
+        <nav aria-label={lang === "hi" ? "श्रेणियाँ" : "Categories"} className="mb-6">
+          <ul className="flex flex-wrap gap-2">
+            {NEWS_CATEGORIES.map((x) => (
+              <li key={x}>
+                <Link
+                  to={cityCategoryPath(city, x, lang)}
+                  className="inline-flex min-h-9 items-center rounded-full border border-border bg-card px-3.5 text-sm transition-colors hover:border-primary/40 hover:text-primary"
+                >
+                  {lang === "hi" ? `${cityLabel} ${categoryHi[x] ?? x}` : `${city.name} ${x}`}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {lastUpdated && (
+          <p className="mb-4 text-xs text-muted-foreground">
+            {lang === "hi" ? "अंतिम अपडेट: " : "Last updated: "}
+            <time dateTime={lastUpdated}>
+              {new Date(lastUpdated).toLocaleString(lang === "hi" ? "hi-IN" : "en-IN")}
+            </time>
+          </p>
+        )}
 
         {busy ? (
           <NewsSkeleton />
