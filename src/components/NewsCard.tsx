@@ -62,18 +62,30 @@ const NewsCard = ({
       </div>
 
       <h3 className="font-heading text-base font-semibold leading-snug tracking-tight sm:text-lg">
-        <a
-          href={article.source_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => onToggleRead?.(article.id, true)}
-          className="outline-none transition-colors group-hover:text-primary"
-        >
-          {/* full-card click target */}
-          <span className="absolute inset-0 rounded-2xl" aria-hidden="true" />
-          {title}
-        </a>
+        {article.slug ? (
+          <Link
+            to={articlePath(article.city, article.slug, lang)}
+            onClick={() => onToggleRead?.(article.id, true)}
+            className="outline-none transition-colors group-hover:text-primary"
+          >
+            {/* full-card click target */}
+            <span className="absolute inset-0 rounded-2xl" aria-hidden="true" />
+            {title}
+          </Link>
+        ) : (
+          <a
+            href={article.source_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => onToggleRead?.(article.id, true)}
+            className="outline-none transition-colors group-hover:text-primary"
+          >
+            <span className="absolute inset-0 rounded-2xl" aria-hidden="true" />
+            {title}
+          </a>
+        )}
       </h3>
+
 
       {summary && (
         <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
