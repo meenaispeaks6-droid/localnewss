@@ -185,6 +185,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
   const busy = loading || (fetching && articles.length === 0);
   const siblings = (stateInfo?.cities ?? []).filter((x) => x.name !== city.name).slice(0, 12);
   const unreadCount = articles.filter((a) => !readIds.has(a.id)).length;
+  const lastUpdated = articles[0]?.published_at ?? null;
 
   const title =
     lang === "hi"
