@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ArrowUpRight, Check, Clock, Undo2 } from "lucide-react";
 import { categoryHi, type Lang, type NewsArticle } from "@/lib/newsTypes";
+import { articlePath } from "@/lib/geo";
 
 const timeAgo = (iso: string, lang: Lang) => {
   const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
