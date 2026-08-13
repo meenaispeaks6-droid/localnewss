@@ -263,6 +263,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
             description,
             url: `${SITE_URL}${path}`,
             inLanguage: lang === "hi" ? "hi-IN" : "en-IN",
+            dateModified: lastUpdated ?? undefined,
             about: { "@type": "City", name: city.name, containedInPlace: { "@type": "AdministrativeArea", name: city.state } },
             mainEntity: {
               "@type": "ItemList",
