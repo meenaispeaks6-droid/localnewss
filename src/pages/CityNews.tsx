@@ -11,10 +11,12 @@ import NotifyButton from "@/components/NotifyButton";
 import SiteFooter from "@/components/SiteFooter";
 import NotFound from "@/pages/NotFound";
 import { supabase } from "@/integrations/supabase/client";
-import type { Lang, NewsArticle } from "@/lib/newsTypes";
+import { categoryHi, type Lang, type NewsArticle } from "@/lib/newsTypes";
+import { NEWS_CATEGORIES } from "@/pages/CityCategory";
 import {
   SITE_NAME,
   SITE_URL,
+  cityCategoryPath,
   cityPath,
   findCityBySlug,
   findStateOf,
