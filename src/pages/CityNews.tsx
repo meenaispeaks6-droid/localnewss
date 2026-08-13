@@ -186,12 +186,52 @@ const CityNews = ({ lang }: { lang: Lang }) => {
 
   const title =
     lang === "hi"
-      ? `${cityLabel} की ताज़ा ख़बरें — ${city.name} Local News`
-      : `${city.name} Local News Today — ${city.state}`;
+      ? `${cityLabel} न्यूज़ — आज का ${cityLabel} समाचार`
+      : `${city.name} News Today — Local News, ${city.state}`;
   const description =
     lang === "hi"
-      ? `${cityLabel}, ${stateLabel} की आज की स्थानीय ख़बरें — प्रशासन, अपराध, मौसम, कारोबार और खेल की ताज़ा अपडेट हिंदी में।`
-      : `Today's local news from ${city.name}, ${city.state} — civic, crime, weather, business and sport updates gathered from trusted sources.`;
+      ? `${cityLabel}, ${stateLabel} की आज की ताज़ा ख़बरें — प्रशासन, अपराध, मौसम, कारोबार और खेल के लोकल समाचार हिंदी में, दिन भर अपडेट।`
+      : `Today's local news from ${city.name}, ${city.state} — civic, crime, weather, business and sport updates from trusted sources, refreshed through the day.`;
+
+  const faqs =
+    lang === "hi"
+      ? [
+          {
+            q: `${cityLabel} की आज की ताज़ा ख़बरें कहाँ पढ़ें?`,
+            a: `इसी पेज पर ${cityLabel} की ताज़ा लोकल ख़बरें दिन भर अपडेट होती रहती हैं। हर ख़बर उसके मूल समाचार स्रोत से जुड़ी है, ताकि आप पूरी रिपोर्ट वहीं पढ़ सकें।`,
+          },
+          {
+            q: `${cityLabel} समाचार कितनी बार अपडेट होते हैं?`,
+            a: `ख़बरें लगातार जुटाई जाती हैं और पेज खुला रहने पर नई ख़बरें अपने आप दिखती हैं। आप "नई ख़बरें लाएँ" बटन दबाकर भी तुरंत ताज़ा अपडेट ला सकते हैं।`,
+          },
+          {
+            q: `क्या ${cityLabel} की ख़बरें अंग्रेज़ी में भी मिलेंगी?`,
+            a: `हाँ। ऊपर भाषा बदलकर आप ${city.name} की वही ख़बरें अंग्रेज़ी में पढ़ सकते हैं।`,
+          },
+          {
+            q: `${stateLabel} के दूसरे शहरों की ख़बरें कैसे देखें?`,
+            a: `नीचे दिए गए शहरों के लिंक पर जाएँ या ${stateLabel} पेज खोलें, जहाँ राज्य के सभी शहरों की सूची है।`,
+          },
+        ]
+      : [
+          {
+            q: `Where can I read today's ${city.name} local news?`,
+            a: `This page collects the latest ${city.name} news through the day. Every story links back to the publisher that reported it, so you can read the full report at the source.`,
+          },
+          {
+            q: `How often is ${city.name} news updated?`,
+            a: `Stories are gathered continuously and new ones appear automatically while the page is open. You can also tap "Fetch fresh news" for an immediate update.`,
+          },
+          {
+            q: `Is ${city.name} news available in Hindi?`,
+            a: `Yes. Switch the language at the top to read the same ${city.name} coverage in Hindi.`,
+          },
+          {
+            q: `How do I see news from other cities in ${city.state}?`,
+            a: `Use the city links below, or open the ${city.state} page for a full list of cities we cover.`,
+          },
+        ];
+
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
