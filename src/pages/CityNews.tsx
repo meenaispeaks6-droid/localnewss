@@ -398,6 +398,30 @@ const CityNews = ({ lang }: { lang: Lang }) => {
           {busy ? c.loading : c.count(articles.length)}
         </p>
 
+        <nav aria-label={lang === "hi" ? "श्रेणियाँ" : "Categories"} className="mb-6">
+          <ul className="flex flex-wrap gap-2">
+            {NEWS_CATEGORIES.map((x) => (
+              <li key={x}>
+                <Link
+                  to={cityCategoryPath(city, x, lang)}
+                  className="inline-flex min-h-9 items-center rounded-full border border-border bg-card px-3.5 text-sm transition-colors hover:border-primary/40 hover:text-primary"
+                >
+                  {lang === "hi" ? `${cityLabel} ${categoryHi[x] ?? x}` : `${city.name} ${x}`}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {lastUpdated && (
+          <p className="mb-4 text-xs text-muted-foreground">
+            {lang === "hi" ? "अंतिम अपडेट: " : "Last updated: "}
+            <time dateTime={lastUpdated}>
+              {new Date(lastUpdated).toLocaleString(lang === "hi" ? "hi-IN" : "en-IN")}
+            </time>
+          </p>
+        )}
+
         {busy ? (
           <NewsSkeleton />
         ) : articles.length === 0 ? (
