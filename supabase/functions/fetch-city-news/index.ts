@@ -3,8 +3,8 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { streamText } from "npm:ai";
 import { z } from "npm:zod";
 import { createLovableAiGatewayProvider } from "../_shared/ai-gateway.ts";
+import { firecrawl } from "../_shared/firecrawl.ts";
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/firecrawl/v2";
 
 const BodySchema = z.object({
   city: z.string().min(1).max(80),
