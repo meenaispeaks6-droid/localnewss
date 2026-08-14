@@ -92,7 +92,8 @@ Deno.serve(async (req) => {
     }
 
     // 2. Turn raw results into clean bilingual news items
-    const gateway = createLovableAiGatewayProvider(LOVABLE_API_KEY);
+    const gateway = createLovableAiGatewayProvider(LOVABLE_API_KEY ?? "");
+
     const stream = streamText({
       model: gateway("google/gemini-3.6-flash"),
       system:
