@@ -179,7 +179,7 @@ Deno.serve(async (req) => {
       .order("published_at", { ascending: false })
       .limit(30);
 
-    return json({ articles: stored ?? [], inserted }, 200);
+    return json({ articles: stored ?? [], inserted, notice: aiError }, 200);
   } catch (e) {
     console.error("fetch-city-news error:", e);
     return json({ error: e instanceof Error ? e.message : "Unexpected error" }, 500);
