@@ -147,10 +147,7 @@ Deno.serve(async (req) => {
     articles = articles.filter((a) => a.source_url?.startsWith("http"));
 
     // 3. Cache in the database
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
+
 
     let inserted = 0;
     if (articles.length > 0) {
