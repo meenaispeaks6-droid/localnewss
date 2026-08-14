@@ -74,7 +74,7 @@ const Admin = () => {
   if (!authed) {
     return (
       <main className="min-h-screen flex items-center justify-center p-6">
-        <Seo title="Admin — Local News" description="Admin panel" noindex />
+        <Seo title="Admin — Local News" description="Admin panel" path="/admin" lang="en" noindex />
         <Card className="w-full max-w-sm p-6 space-y-4">
           <h1 className="text-xl font-semibold">Admin sign in</h1>
           <Input
@@ -94,7 +94,7 @@ const Admin = () => {
 
   return (
     <main className="min-h-screen p-6 max-w-3xl mx-auto space-y-6">
-      <Seo title="Admin — Firecrawl accounts" description="Manage Firecrawl accounts" noindex />
+      <Seo title="Admin — Firecrawl accounts" description="Manage Firecrawl accounts" path="/admin" lang="en" noindex />
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Firecrawl accounts</h1>
         <Button
