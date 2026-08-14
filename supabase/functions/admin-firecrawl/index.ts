@@ -38,7 +38,12 @@ function mask(key: string) {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", {
-      headers: { ...corsHeaders, "Access-Control-Allow-Headers": "content-type, x-admin-passcode, authorization, apikey" },
+      headers: {
+        ...corsHeaders,
+        "Access-Control-Allow-Headers":
+          "authorization, x-client-info, apikey, content-type, x-admin-passcode, x-retry-count, traceparent, tracestate, baggage",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+      },
     });
   }
 
