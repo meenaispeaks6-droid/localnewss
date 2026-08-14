@@ -72,13 +72,12 @@ Deno.serve(async (req) => {
       }, 200);
     }
 
-    const searchJson = search.body as {
-      data?: { web?: unknown[] } | unknown[];
-    };
+    const searchJson = search.body as any;
 
     const raw = (searchJson?.data?.web ?? searchJson?.data ?? []) as Array<
       { url?: string; title?: string; description?: string; snippet?: string }
     >;
+
     const results = raw
       .filter((r) => r?.url && r?.title)
       .slice(0, 10)
