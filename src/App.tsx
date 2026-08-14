@@ -8,6 +8,7 @@ import CityNews from "./pages/CityNews";
 import CityCategory from "./pages/CityCategory";
 import ArticleNews from "./pages/ArticleNews";
 import StateNews from "./pages/StateNews";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/news/:citySlug/:articleSlug/en" element={<ArticleNews lang="en" />} />
           <Route path="/state/:stateSlug" element={<StateNews lang="hi" />} />
           <Route path="/state/:stateSlug/en" element={<StateNews lang="en" />} />
+          <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
