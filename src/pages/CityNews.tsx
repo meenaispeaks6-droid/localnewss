@@ -65,7 +65,7 @@ const t = {
   },
 };
 
-const STALE_MS = 60 * 60 * 1000;
+const STALE_MS = 15 * 60 * 1000;
 const LIVE_POLL_MS = 60 * 1000;
 
 const CityNews = ({ lang }: { lang: Lang }) => {
