@@ -106,7 +106,19 @@ Deno.serve(async (req) => {
       }`,
     });
 
-    const rawText = (await stream.text).trim();
+    let rawText = "";
+    let aiError: string | null = null;
+    try {
+      rawText = (await stream.text).trim();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const status = (err as { statusCode?: number })?.statusCode;
+      aiError = status === 403 || /credit limit/i.test(msg)
+        ? "AI credits exhausted — showing saved news"
+        : "AI summarisation unavailable — showing saved news";
+      console.error("AI summarisation failed:", msg);
+    }
+
     const jsonText = rawText
       .replace(/^```(?:json)?/i, "")
       .replace(/```$/, "")
@@ -123,9 +135,10 @@ Deno.serve(async (req) => {
       } else {
         console.error("AI output did not match schema:", parsedOut.error.message, rawText.slice(0, 500));
       }
-    } else {
+    } else if (!aiError) {
       console.error("AI output was not JSON:", rawText.slice(0, 500));
     }
+
 
     articles = articles.filter((a) => a.source_url?.startsWith("http"));
 
@@ -166,7 +179,7 @@ Deno.serve(async (req) => {
       .order("published_at", { ascending: false })
       .limit(30);
 
-    return json({ articles: stored ?? [], inserted }, 200);
+    return json({ articles: stored ?? [], inserted, notice: aiError }, 200);
   } catch (e) {
     console.error("fetch-city-news error:", e);
     return json({ error: e instanceof Error ? e.message : "Unexpected error" }, 500);
