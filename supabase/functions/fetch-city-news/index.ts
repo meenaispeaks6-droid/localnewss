@@ -3,8 +3,8 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { streamText } from "npm:ai";
 import { z } from "npm:zod";
 import { createLovableAiGatewayProvider } from "../_shared/ai-gateway.ts";
+import { firecrawl } from "../_shared/firecrawl.ts";
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/firecrawl/v2";
 
 const BodySchema = z.object({
   city: z.string().min(1).max(80),
@@ -32,10 +32,6 @@ Deno.serve(async (req) => {
 
   try {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
-    if (!LOVABLE_API_KEY || !FIRECRAWL_API_KEY) {
-      return json({ error: "News service is not configured" }, 500);
-    }
 
     const parsed = BodySchema.safeParse(await req.json().catch(() => ({})));
     if (!parsed.success) {
@@ -45,36 +41,43 @@ Deno.serve(async (req) => {
     const state = parsed.data.state?.trim() ?? "";
     const place = state ? `${city}, ${state}` : city;
 
-    // 1. Live web search for this city's news
-    const searchRes = await fetch(`${GATEWAY_URL}/search`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "X-Connection-Api-Key": FIRECRAWL_API_KEY,
-      },
-      body: JSON.stringify({
-        query: `${place} India latest local news today समाचार`,
-        limit: 10,
-        tbs: "qdr:w",
-        lang: "hi",
-        country: "in",
-      }),
-    });
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
 
-    if (!searchRes.ok) {
-      const details = await searchRes.text();
-      console.error(`Firecrawl search failed [${searchRes.status}]: ${details}`);
-      return json(
-        { error: "News search failed", status: searchRes.status, details },
-        searchRes.status,
-      );
+    // 1. Live web search for this city's news (auto-rotates Firecrawl accounts)
+    const search = await firecrawl("/search", {
+      query: `${place} India latest local news today समाचार`,
+      limit: 10,
+      tbs: "qdr:w",
+      lang: "hi",
+      country: "in",
+    }, supabase);
+
+    if (!search.ok) {
+      const { data: cached } = await supabase
+        .from("news_articles")
+        .select("*")
+        .eq("city", city)
+        .order("published_at", { ascending: false })
+        .limit(30);
+      console.error(`Firecrawl search failed [${search.status}]`, search.body);
+      return json({
+        articles: cached ?? [],
+        inserted: 0,
+        notice: search.status === 402 || search.status === 429
+          ? "Firecrawl limit reached — showing saved news. Add another Firecrawl account in the admin panel."
+          : "News search unavailable — showing saved news",
+      }, 200);
     }
 
-    const searchJson = await searchRes.json();
+    const searchJson = search.body as any;
+
     const raw = (searchJson?.data?.web ?? searchJson?.data ?? []) as Array<
       { url?: string; title?: string; description?: string; snippet?: string }
     >;
+
     const results = raw
       .filter((r) => r?.url && r?.title)
       .slice(0, 10)
@@ -89,7 +92,8 @@ Deno.serve(async (req) => {
     }
 
     // 2. Turn raw results into clean bilingual news items
-    const gateway = createLovableAiGatewayProvider(LOVABLE_API_KEY);
+    const gateway = createLovableAiGatewayProvider(LOVABLE_API_KEY ?? "");
+
     const stream = streamText({
       model: gateway("google/gemini-3.6-flash"),
       system:
@@ -143,10 +147,7 @@ Deno.serve(async (req) => {
     articles = articles.filter((a) => a.source_url?.startsWith("http"));
 
     // 3. Cache in the database
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
+
 
     let inserted = 0;
     if (articles.length > 0) {
