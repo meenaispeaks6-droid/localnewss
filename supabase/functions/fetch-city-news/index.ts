@@ -149,17 +149,20 @@ Deno.serve(async (req) => {
     // Fallback: if the AI step failed or returned nothing, still publish the
     // live search results as-is so readers get fresh news without AI credits.
     if (articles.length === 0 && results.length > 0) {
-      articles = results.map((r) => ({
-        title_en: r.title.slice(0, 200),
-        title_hi: null,
-        summary_en: r.description ? r.description.slice(0, 500) : null,
-        summary_hi: null,
-        category: "general",
-        source_url: r.url,
-        source_name: null,
-      }));
-      aiError = aiError ?? null;
+      const SOCIAL = /(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com)/i;
+      articles = results
+        .filter((r) => !SOCIAL.test(r.url))
+        .map((r) => ({
+          title_en: r.title.slice(0, 200),
+          title_hi: null,
+          summary_en: r.description ? r.description.slice(0, 500) : null,
+          summary_hi: null,
+          category: "general",
+          source_url: r.url,
+          source_name: null,
+        }));
     }
+
 
 
     // 3. Cache in the database
