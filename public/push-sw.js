@@ -18,8 +18,10 @@ self.addEventListener("push", (event) => {
       body: data.body || "",
       tag: data.tag || "local-news",
       renotify: true,
-      icon: "/favicon.ico",
-      badge: "/favicon.ico",
+      icon: "/favicon.png",
+      badge: "/favicon.png",
+      requireInteraction: false,
+      actions: [{ action: "open", title: data.actionLabel || "Read full story" }],
       data: { url: data.url || "/" },
     }),
   );

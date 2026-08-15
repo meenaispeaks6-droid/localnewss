@@ -76,13 +76,20 @@ Deno.serve(async (req) => {
       const since = sub.last_article_at ?? new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
       const { data: articles } = await supabase
         .from("news_articles")
-        .select("title_hi, title_en, summary_hi, summary_en, published_at")
+        .select("title_hi, title_en, summary_hi, summary_en, published_at, slug")
         .eq("city", sub.city)
         .gt("published_at", since)
         .order("published_at", { ascending: false })
         .limit(5);
 
-      const rows = articles ?? [];
+      const rows = (articles ?? []) as {
+        title_hi: string | null;
+        title_en: string | null;
+        summary_hi: string | null;
+        summary_en: string | null;
+        published_at: string;
+        slug: string | null;
+      }[];
       if (rows.length === 0) {
         skipped++;
         continue;
@@ -90,20 +97,27 @@ Deno.serve(async (req) => {
 
       const top = rows[0];
       const hi = sub.lang === "hi";
-      const headline = (hi ? top.title_hi || top.title_en : top.title_en) ?? "";
+      const headline = (hi ? top.title_hi || top.title_en : top.title_en || top.title_hi) ?? "";
+      const summary = (hi ? top.summary_hi || top.summary_en : top.summary_en || top.summary_hi) ?? "";
       const more = rows.length - 1;
-      const title = hi ? `${sub.city} की ताज़ा ख़बरें` : `${sub.city} local news`;
-      const body =
-        more > 0
-          ? `${headline}${hi ? ` + ${more} और ख़बरें` : ` + ${more} more stories`}`
-          : headline;
+      // Headline is the notification title so the user sees the actual story.
+      const title = headline || (hi ? `${sub.city} की ताज़ा ख़बरें` : `${sub.city} local news`);
+      const trimmed = summary.length > 140 ? `${summary.slice(0, 137)}…` : summary;
+      const extra = more > 0 ? (hi ? ` · ${more} और ख़बरें` : ` · ${more} more stories`) : "";
+      const body = `${sub.city}${extra}${trimmed ? ` — ${trimmed}` : ""}`;
+
+      const citySlug = slugify(sub.city);
+      const url = top.slug
+        ? `/news/${citySlug}/${top.slug}${hi ? "" : "/en"}`
+        : `/news/${citySlug}${hi ? "" : "/en"}`;
 
       const payload = JSON.stringify({
         title,
         body,
-        url: `/news/${slugify(sub.city)}${hi ? "" : "/en"}`,
-        tag: `news-${slugify(sub.city)}`,
+        url,
+        tag: `news-${citySlug}-${top.published_at}`,
       });
+
 
       try {
         await webpush.sendNotification(
