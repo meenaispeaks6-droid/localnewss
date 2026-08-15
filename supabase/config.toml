@@ -1,3 +1,6 @@
 project_id = "fwummhpxwwelpoqtjpiw"
 [functions.news-sitemap]
 verify_jwt = false
+
+[functions.send-news-digest]
+verify_jwt = false
