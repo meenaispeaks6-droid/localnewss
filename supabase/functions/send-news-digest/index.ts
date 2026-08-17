@@ -108,8 +108,8 @@ Deno.serve(async (req) => {
 
       const citySlug = slugify(sub.city);
       const url = top.slug
-        ? `/news/${citySlug}/${top.slug}${hi ? "" : "/en"}`
-        : `/news/${citySlug}${hi ? "" : "/en"}`;
+        ? `/news/${citySlug}/${top.slug}${hi ? "/hi" : ""}`
+        : `/news/${citySlug}${hi ? "/hi" : ""}`;
 
       const payload = JSON.stringify({
         title,
