@@ -46,8 +46,8 @@ Deno.serve(async (req) => {
   const urls = rows.flatMap((r) => {
     const base = `${SITE_URL}/news/${slugify(r.city)}/${r.slug}`;
     return [
-      { loc: base, lang: "hi", title: r.title_hi || r.title_en, date: r.published_at },
-      { loc: `${base}/en`, lang: "en", title: r.title_en, date: r.published_at },
+      { loc: base, lang: "en", title: r.title_en, date: r.published_at },
+      { loc: `${base}/hi`, lang: "hi", title: r.title_hi || r.title_en, date: r.published_at },
     ];
   });
 
