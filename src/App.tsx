@@ -20,16 +20,16 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home lang="hi" />} />
-          <Route path="/en" element={<Home lang="en" />} />
-          <Route path="/news/:citySlug" element={<CityNews lang="hi" />} />
-          <Route path="/news/:citySlug/en" element={<CityNews lang="en" />} />
-          <Route path="/news/:citySlug/category/:category" element={<CityCategory lang="hi" />} />
-          <Route path="/news/:citySlug/category/:category/en" element={<CityCategory lang="en" />} />
-          <Route path="/news/:citySlug/:articleSlug" element={<ArticleNews lang="hi" />} />
-          <Route path="/news/:citySlug/:articleSlug/en" element={<ArticleNews lang="en" />} />
-          <Route path="/state/:stateSlug" element={<StateNews lang="hi" />} />
-          <Route path="/state/:stateSlug/en" element={<StateNews lang="en" />} />
+          <Route path="/" element={<Home lang="en" />} />
+          <Route path="/hi" element={<Home lang="hi" />} />
+          <Route path="/news/:citySlug" element={<CityNews lang="en" />} />
+          <Route path="/news/:citySlug/hi" element={<CityNews lang="hi" />} />
+          <Route path="/news/:citySlug/category/:category" element={<CityCategory lang="en" />} />
+          <Route path="/news/:citySlug/category/:category/hi" element={<CityCategory lang="hi" />} />
+          <Route path="/news/:citySlug/:articleSlug" element={<ArticleNews lang="en" />} />
+          <Route path="/news/:citySlug/:articleSlug/hi" element={<ArticleNews lang="hi" />} />
+          <Route path="/state/:stateSlug" element={<StateNews lang="en" />} />
+          <Route path="/state/:stateSlug/hi" element={<StateNews lang="hi" />} />
           <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
