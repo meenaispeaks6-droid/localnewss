@@ -17,7 +17,7 @@ const Header = ({ city, onCityChange, lang, onLangChange }: HeaderProps) => {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between gap-2 sm:gap-3">
         <a
-          href={lang === "en" ? "/en" : "/"}
+          href={lang === "hi" ? "/hi" : "/"}
           className="flex shrink-0 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary/10 text-primary">

@@ -45,22 +45,22 @@ export const findStateOf = (city: City) =>
   indiaStates.find((s) => s.state === city.state);
 
 export const cityPath = (city: City | string, lang: "hi" | "en") =>
-  `/news/${citySlug(city)}${lang === "en" ? "/en" : ""}`;
+  `/news/${citySlug(city)}${lang === "hi" ? "/hi" : ""}`;
 
 export const statePath = (slug: string, lang: "hi" | "en") =>
-  `/state/${slug}${lang === "en" ? "/en" : ""}`;
+  `/state/${slug}${lang === "hi" ? "/hi" : ""}`;
 
-export const homePath = (lang: "hi" | "en") => (lang === "en" ? "/en" : "/");
+export const homePath = (lang: "hi" | "en") => (lang === "hi" ? "/hi" : "/");
 
 export const articlePath = (
   city: City | string,
   articleSlug: string,
   lang: "hi" | "en",
-) => `/news/${citySlug(city)}/${articleSlug}${lang === "en" ? "/en" : ""}`;
+) => `/news/${citySlug(city)}/${articleSlug}${lang === "hi" ? "/hi" : ""}`;
 
 export const cityCategoryPath = (
   city: City | string,
   category: string,
   lang: "hi" | "en",
 ) =>
-  `/news/${citySlug(city)}/category/${slugify(category)}${lang === "en" ? "/en" : ""}`;
+  `/news/${citySlug(city)}/category/${slugify(category)}${lang === "hi" ? "/hi" : ""}`;

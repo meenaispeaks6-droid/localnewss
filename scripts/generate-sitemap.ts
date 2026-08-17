@@ -16,18 +16,18 @@ interface SitemapEntry {
 
 const entries: SitemapEntry[] = [
   { path: "/", changefreq: "daily", priority: "1.0" },
-  { path: "/en", changefreq: "daily", priority: "0.9" },
+  { path: "/hi", changefreq: "daily", priority: "0.9" },
 ];
 
 const states = [...new Set(indiaCities.map((c) => c.state))].sort();
 for (const state of states) {
   entries.push({ path: `/state/${slugify(state)}`, changefreq: "weekly", priority: "0.7" });
-  entries.push({ path: `/state/${slugify(state)}/en`, changefreq: "weekly", priority: "0.6" });
+  entries.push({ path: `/state/${slugify(state)}/hi`, changefreq: "weekly", priority: "0.6" });
 }
 
 for (const city of indiaCities) {
   entries.push({ path: `/news/${slugify(city.name)}`, changefreq: "hourly", priority: "0.8" });
-  entries.push({ path: `/news/${slugify(city.name)}/en`, changefreq: "hourly", priority: "0.7" });
+  entries.push({ path: `/news/${slugify(city.name)}/hi`, changefreq: "hourly", priority: "0.7" });
 }
 
 const xml = [
