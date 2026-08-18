@@ -18,8 +18,10 @@ export type Database = {
         Row: {
           api_key: string
           base_url: string
+          cooldown_until: string | null
           created_at: string
           exhausted_at: string | null
+          failure_count: number
           id: string
           is_active: boolean
           label: string
@@ -35,8 +37,10 @@ export type Database = {
         Insert: {
           api_key: string
           base_url?: string
+          cooldown_until?: string | null
           created_at?: string
           exhausted_at?: string | null
+          failure_count?: number
           id?: string
           is_active?: boolean
           label: string
@@ -52,8 +56,10 @@ export type Database = {
         Update: {
           api_key?: string
           base_url?: string
+          cooldown_until?: string | null
           created_at?: string
           exhausted_at?: string | null
+          failure_count?: number
           id?: string
           is_active?: boolean
           label?: string
@@ -71,8 +77,10 @@ export type Database = {
       firecrawl_keys: {
         Row: {
           api_key: string
+          cooldown_until: string | null
           created_at: string
           exhausted_at: string | null
+          failure_count: number
           id: string
           is_active: boolean
           label: string
@@ -87,8 +95,10 @@ export type Database = {
         }
         Insert: {
           api_key: string
+          cooldown_until?: string | null
           created_at?: string
           exhausted_at?: string | null
+          failure_count?: number
           id?: string
           is_active?: boolean
           label: string
@@ -103,8 +113,10 @@ export type Database = {
         }
         Update: {
           api_key?: string
+          cooldown_until?: string | null
           created_at?: string
           exhausted_at?: string | null
+          failure_count?: number
           id?: string
           is_active?: boolean
           label?: string
