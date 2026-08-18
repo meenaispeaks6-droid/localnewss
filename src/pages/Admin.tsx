@@ -18,11 +18,33 @@ type Account = {
   last_used_at: string | null;
   last_error: string | null;
   exhausted_at: string | null;
+  last_checked_at?: string | null;
+  last_success_at?: string | null;
 };
 
 type AiKey = Account & { base_url: string; model: string };
 
 const PASS_KEY = "admin_passcode";
+
+const HEALTH_INTERVAL_MS = 15 * 60 * 1000;
+
+const timeAgo = (iso: string) => {
+  const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins} min ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs} h ago`;
+  return `${Math.round(hrs / 24)} d ago`;
+};
+
+const HealthLine = ({ item }: { item: Account }) => (
+  <div className="text-xs text-muted-foreground">
+    {item.last_success_at
+      ? `Last verified ${timeAgo(item.last_success_at)} (${new Date(item.last_success_at).toLocaleString()})`
+      : "Never verified"}
+    {item.last_checked_at && ` · last checked ${timeAgo(item.last_checked_at)}`}
+  </div>
+);
 
 const Admin = () => {
   const [passcode, setPasscode] = useState(() => sessionStorage.getItem(PASS_KEY) ?? "");
@@ -95,6 +117,29 @@ const Admin = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const runHealthCheck = async (manual = false) => {
+    try {
+      await Promise.all([
+        callAi({ action: "check_all" }),
+        call({ action: "check_all" }),
+      ]);
+      if (manual) toast.success("Health check finished");
+    } catch {
+      /* errors already toasted */
+    }
+  };
+
+  // Verify every key/model periodically while the panel is open.
+  useEffect(() => {
+    if (!authed) return;
+    runHealthCheck();
+    const id = setInterval(() => runHealthCheck(), HEALTH_INTERVAL_MS);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authed]);
+
+
+
   const addAccount = async () => {
     if (!label.trim() || !apiKey.trim()) return toast.error("Add a name and API key");
     await call({ action: "add", label: label.trim(), api_key: apiKey.trim() });
@@ -141,17 +186,22 @@ const Admin = () => {
   return (
     <main className="min-h-screen p-6 max-w-3xl mx-auto space-y-6">
       <Seo title="Admin — API accounts" description="Manage API accounts" path="/admin" lang="en" noindex />
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between gap-2">
         <h1 className="text-2xl font-semibold">Admin panel</h1>
-        <Button
-          variant="ghost"
-          onClick={() => {
-            sessionStorage.removeItem(PASS_KEY);
-            setAuthed(false);
-          }}
-        >
-          Sign out
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="secondary" disabled={loading} onClick={() => runHealthCheck(true)}>
+            {loading ? "Checking…" : "Check all keys"}
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              sessionStorage.removeItem(PASS_KEY);
+              setAuthed(false);
+            }}
+          >
+            Sign out
+          </Button>
+        </div>
       </header>
 
       <Tabs defaultValue="ai">
@@ -195,6 +245,7 @@ const Admin = () => {
                     {k.last_error ? k.last_error : k.is_active ? "Active" : "Paused"}
                     {k.last_used_at && ` · last used ${new Date(k.last_used_at).toLocaleString()}`}
                   </div>
+                  <HealthLine item={k} />
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-muted-foreground">{k.is_active ? "On" : "Off"}</span>
@@ -261,6 +312,7 @@ const Admin = () => {
                       : "Paused"}
                   {a.last_used_at && ` · last used ${new Date(a.last_used_at).toLocaleString()}`}
                 </div>
+                <HealthLine item={a} />
               </div>
               <div className="flex flex-wrap gap-2">
                 <Button size="sm" variant="secondary" disabled={loading}

@@ -2,6 +2,7 @@
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { z } from "npm:zod";
 import { admin } from "../_shared/firecrawl.ts";
+import { checkAiKey, runHealthChecks } from "../_shared/key-health.ts";
 
 const ActionSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("list") }),
@@ -17,6 +18,7 @@ const ActionSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("reset"), id: z.string().uuid() }),
   z.object({ action: z.literal("delete"), id: z.string().uuid() }),
   z.object({ action: z.literal("test"), id: z.string().uuid() }),
+  z.object({ action: z.literal("check_all") }),
 ]);
 
 function json(body: unknown, status: number) {
@@ -96,30 +98,18 @@ Deno.serve(async (req) => {
       const { data: row } = await supabase
         .from("ai_keys").select("id, api_key, base_url, model").eq("id", input.id).maybeSingle();
       if (!row) return json({ error: "Account not found" }, 404);
+      const { ok, details } = await checkAiKey(supabase, row);
+      testResult = { tested: ok, details };
+    }
 
-      const res = await fetch(`${row.base_url.replace(/\/$/, "")}/chat/completions`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${row.api_key}` },
-        body: JSON.stringify({
-          model: row.model,
-          messages: [{ role: "user", content: "Reply with OK" }],
-          max_tokens: 5,
-        }),
-      });
-      const details = (await res.text()).slice(0, 300);
-      testResult = { tested: res.ok, details };
-      await supabase
-        .from("ai_keys")
-        .update({
-          last_error: res.ok ? null : `HTTP ${res.status}: ${details.slice(0, 200)}`,
-          exhausted_at: res.ok ? null : new Date().toISOString(),
-        })
-        .eq("id", row.id);
+    if (input.action === "check_all") {
+      await runHealthChecks(supabase);
+      testResult = { tested: true, details: "Health check complete" };
     }
 
     const { data, error } = await supabase
       .from("ai_keys")
-      .select("id, label, api_key, base_url, model, is_active, priority, last_used_at, last_error, exhausted_at, created_at")
+      .select("id, label, api_key, base_url, model, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, created_at")
       .order("priority", { ascending: true })
       .order("created_at", { ascending: true });
     if (error) return json({ error: error.message }, 400);
