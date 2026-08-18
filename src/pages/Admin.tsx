@@ -186,17 +186,22 @@ const Admin = () => {
   return (
     <main className="min-h-screen p-6 max-w-3xl mx-auto space-y-6">
       <Seo title="Admin — API accounts" description="Manage API accounts" path="/admin" lang="en" noindex />
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between gap-2">
         <h1 className="text-2xl font-semibold">Admin panel</h1>
-        <Button
-          variant="ghost"
-          onClick={() => {
-            sessionStorage.removeItem(PASS_KEY);
-            setAuthed(false);
-          }}
-        >
-          Sign out
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="secondary" disabled={loading} onClick={() => runHealthCheck(true)}>
+            {loading ? "Checking…" : "Check all keys"}
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              sessionStorage.removeItem(PASS_KEY);
+              setAuthed(false);
+            }}
+          >
+            Sign out
+          </Button>
+        </div>
       </header>
 
       <Tabs defaultValue="ai">
@@ -240,6 +245,7 @@ const Admin = () => {
                     {k.last_error ? k.last_error : k.is_active ? "Active" : "Paused"}
                     {k.last_used_at && ` · last used ${new Date(k.last_used_at).toLocaleString()}`}
                   </div>
+                  <HealthLine item={k} />
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-muted-foreground">{k.is_active ? "On" : "Off"}</span>
@@ -306,6 +312,7 @@ const Admin = () => {
                       : "Paused"}
                   {a.last_used_at && ` · last used ${new Date(a.last_used_at).toLocaleString()}`}
                 </div>
+                <HealthLine item={a} />
               </div>
               <div className="flex flex-wrap gap-2">
                 <Button size="sm" variant="secondary" disabled={loading}
