@@ -2,7 +2,7 @@ import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { streamText } from "npm:ai";
 import { z } from "npm:zod";
-import { createLovableAiGatewayProvider } from "../_shared/ai-gateway.ts";
+import { createNewsModel } from "../_shared/ai-gateway.ts";
 import { firecrawl } from "../_shared/firecrawl.ts";
 
 
