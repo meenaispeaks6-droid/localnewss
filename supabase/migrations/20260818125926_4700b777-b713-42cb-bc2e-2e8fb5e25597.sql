@@ -1,0 +1,2 @@
+ALTER TABLE public.ai_keys ALTER COLUMN model SET DEFAULT 'gemini-3.6-flash';
+UPDATE public.ai_keys SET model = 'gemini-3.6-flash', exhausted_at = NULL, last_error = NULL WHERE model = 'gemini-2.0-flash';
