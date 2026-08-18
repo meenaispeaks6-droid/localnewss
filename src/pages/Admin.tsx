@@ -22,6 +22,8 @@ type Account = {
   last_success_at?: string | null;
   last_status?: number | null;
   last_latency_ms?: number | null;
+  failure_count?: number | null;
+  cooldown_until?: string | null;
 };
 
 type AiKey = Account & { base_url: string; model: string };
