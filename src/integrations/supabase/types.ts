@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_keys: {
+        Row: {
+          api_key: string
+          base_url: string
+          created_at: string
+          exhausted_at: string | null
+          id: string
+          is_active: boolean
+          label: string
+          last_error: string | null
+          last_used_at: string | null
+          model: string
+          priority: number
+        }
+        Insert: {
+          api_key: string
+          base_url?: string
+          created_at?: string
+          exhausted_at?: string | null
+          id?: string
+          is_active?: boolean
+          label: string
+          last_error?: string | null
+          last_used_at?: string | null
+          model?: string
+          priority?: number
+        }
+        Update: {
+          api_key?: string
+          base_url?: string
+          created_at?: string
+          exhausted_at?: string | null
+          id?: string
+          is_active?: boolean
+          label?: string
+          last_error?: string | null
+          last_used_at?: string | null
+          model?: string
+          priority?: number
+        }
+        Relationships: []
+      }
       firecrawl_keys: {
         Row: {
           api_key: string
