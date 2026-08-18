@@ -92,10 +92,10 @@ Deno.serve(async (req) => {
     }
 
     // 2. Turn raw results into clean bilingual news items
-    const gateway = createLovableAiGatewayProvider(LOVABLE_API_KEY ?? "");
+    const { model } = createNewsModel();
 
     const stream = streamText({
-      model: gateway("google/gemini-3.6-flash"),
+      model,
       system:
         "You are a bilingual (Hindi + English) local news editor for India. " +
         "From the given search results, keep only genuine news items about the requested city. " +
