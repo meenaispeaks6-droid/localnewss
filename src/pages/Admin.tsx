@@ -36,7 +36,7 @@ const Admin = () => {
   const [aiLabel, setAiLabel] = useState("");
   const [aiApiKey, setAiApiKey] = useState("");
   const [aiBaseUrl, setAiBaseUrl] = useState("https://generativelanguage.googleapis.com/v1beta/openai");
-  const [aiModel, setAiModel] = useState("gemini-2.0-flash");
+  const [aiModel, setAiModel] = useState("gemini-3.6-flash");
 
   const call = async (body: Record<string, unknown>, code = passcode) => {
     setLoading(true);

@@ -67,7 +67,7 @@ Deno.serve(async (req) => {
         label: input.label.trim(),
         api_key: input.api_key.trim(),
         base_url: input.base_url?.trim() || "https://generativelanguage.googleapis.com/v1beta/openai",
-        model: input.model?.trim() || "gemini-2.0-flash",
+        model: input.model?.trim() || "gemini-3.6-flash",
         priority: input.priority ?? 100,
       });
       if (error) return json({ error: error.message }, 400);
