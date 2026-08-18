@@ -63,6 +63,9 @@ Deno.serve(async (req) => {
 
     const supabase = admin();
     const input = parsed.data;
+    let testResult:
+      | { tested: boolean; details?: string; status?: number; latencyMs?: number }
+      | null = null;
 
     if (input.action === "add") {
       const { error } = await supabase.from("firecrawl_keys").insert({
@@ -101,8 +104,8 @@ Deno.serve(async (req) => {
         .eq("id", input.id)
         .maybeSingle();
       if (!row) return json({ error: "Account not found" }, 404);
-      const { ok, details } = await checkFirecrawlKey(supabase, row);
-      if (!ok) return json({ tested: false, details }, 200);
+      const r = await checkFirecrawlKey(supabase, row);
+      testResult = { tested: r.ok, details: r.details, status: r.status, latencyMs: r.latencyMs };
     }
 
     if (input.action === "check_all") {
@@ -111,13 +114,14 @@ Deno.serve(async (req) => {
 
     const { data, error } = await supabase
       .from("firecrawl_keys")
-      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, created_at")
+      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, last_status, last_latency_ms, created_at")
       .order("priority", { ascending: true })
       .order("created_at", { ascending: true });
     if (error) return json({ error: error.message }, 400);
 
     return json({
       accounts: (data ?? []).map(({ api_key, ...rest }) => ({ ...rest, key_preview: mask(api_key) })),
+      ...(testResult ?? {}),
     }, 200);
   } catch (e) {
     console.error("admin-firecrawl error:", e);

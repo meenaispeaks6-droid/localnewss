@@ -62,7 +62,9 @@ Deno.serve(async (req) => {
 
     const supabase = admin();
     const input = parsed.data;
-    let testResult: { tested: boolean; details?: string } | null = null;
+    let testResult:
+      | { tested: boolean; details?: string; status?: number; latencyMs?: number }
+      | null = null;
 
     if (input.action === "add") {
       const { error } = await supabase.from("ai_keys").insert({
@@ -98,8 +100,8 @@ Deno.serve(async (req) => {
       const { data: row } = await supabase
         .from("ai_keys").select("id, api_key, base_url, model").eq("id", input.id).maybeSingle();
       if (!row) return json({ error: "Account not found" }, 404);
-      const { ok, details } = await checkAiKey(supabase, row);
-      testResult = { tested: ok, details };
+      const r = await checkAiKey(supabase, row);
+      testResult = { tested: r.ok, details: r.details, status: r.status, latencyMs: r.latencyMs };
     }
 
     if (input.action === "check_all") {
@@ -109,7 +111,7 @@ Deno.serve(async (req) => {
 
     const { data, error } = await supabase
       .from("ai_keys")
-      .select("id, label, api_key, base_url, model, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, created_at")
+      .select("id, label, api_key, base_url, model, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, last_status, last_latency_ms, created_at")
       .order("priority", { ascending: true })
       .order("created_at", { ascending: true });
     if (error) return json({ error: error.message }, 400);

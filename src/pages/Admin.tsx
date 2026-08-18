@@ -20,6 +20,8 @@ type Account = {
   exhausted_at: string | null;
   last_checked_at?: string | null;
   last_success_at?: string | null;
+  last_status?: number | null;
+  last_latency_ms?: number | null;
 };
 
 type AiKey = Account & { base_url: string; model: string };
@@ -37,12 +39,37 @@ const timeAgo = (iso: string) => {
   return `${Math.round(hrs / 24)} d ago`;
 };
 
+const statusTone = (status?: number | null) => {
+  if (status == null || status === 0) return "destructive" as const;
+  if (status < 300) return "secondary" as const;
+  return "destructive" as const;
+};
+
 const HealthLine = ({ item }: { item: Account }) => (
-  <div className="text-xs text-muted-foreground">
-    {item.last_success_at
-      ? `Last verified ${timeAgo(item.last_success_at)} (${new Date(item.last_success_at).toLocaleString()})`
-      : "Never verified"}
-    {item.last_checked_at && ` · last checked ${timeAgo(item.last_checked_at)}`}
+  <div className="space-y-1">
+    <div className="flex flex-wrap items-center gap-2 text-xs">
+      <Badge variant={statusTone(item.last_status)}>
+        {item.last_status == null
+          ? "Not checked"
+          : item.last_status === 0
+            ? "Network error"
+            : `HTTP ${item.last_status}`}
+      </Badge>
+      {item.last_latency_ms != null && (
+        <span className="text-muted-foreground">{item.last_latency_ms} ms</span>
+      )}
+      <span className="text-muted-foreground">
+        {item.last_success_at
+          ? `Last verified ${timeAgo(item.last_success_at)} (${new Date(item.last_success_at).toLocaleString()})`
+          : "Never verified"}
+      </span>
+      {item.last_checked_at && (
+        <span className="text-muted-foreground">· last checked {timeAgo(item.last_checked_at)}</span>
+      )}
+    </div>
+    {item.last_error && (
+      <p className="text-xs text-destructive break-words">{item.last_error}</p>
+    )}
   </div>
 );
 
@@ -242,7 +269,7 @@ const Admin = () => {
                     {k.model} · {k.base_url}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {k.last_error ? k.last_error : k.is_active ? "Active" : "Paused"}
+                    {k.is_active ? "Active" : "Paused"}
                     {k.last_used_at && ` · last used ${new Date(k.last_used_at).toLocaleString()}`}
                   </div>
                   <HealthLine item={k} />
@@ -259,9 +286,14 @@ const Admin = () => {
               <div className="flex flex-wrap gap-2">
                 <Button size="sm" variant="secondary" disabled={loading}
                   onClick={async () => {
-                    const res = await callAi({ action: "test", id: k.id });
-                    toast[(res as { tested?: boolean })?.tested ? "success" : "error"](
-                      (res as { tested?: boolean })?.tested ? "Key works" : "Key failed",
+                    const res = (await callAi({ action: "test", id: k.id })) as {
+                      tested?: boolean; status?: number; latencyMs?: number; details?: string;
+                    };
+                    toast[res?.tested ? "success" : "error"](
+                      res?.tested
+                        ? `Key works · HTTP ${res.status} · ${res.latencyMs} ms`
+                        : `Key failed · HTTP ${res?.status ?? 0}`,
+                      { description: res?.tested ? undefined : res?.details },
                     );
                   }}>
                   Test
@@ -305,11 +337,7 @@ const Admin = () => {
                   {a.label} <span className="text-xs text-muted-foreground">{a.key_preview}</span>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  {a.exhausted_at
-                    ? `Limit reached / failed${a.last_error ? ` (${a.last_error})` : ""}`
-                    : a.is_active
-                      ? "Active"
-                      : "Paused"}
+                  {a.exhausted_at ? "Limit reached / failed" : a.is_active ? "Active" : "Paused"}
                   {a.last_used_at && ` · last used ${new Date(a.last_used_at).toLocaleString()}`}
                 </div>
                 <HealthLine item={a} />
@@ -317,9 +345,14 @@ const Admin = () => {
               <div className="flex flex-wrap gap-2">
                 <Button size="sm" variant="secondary" disabled={loading}
                   onClick={async () => {
-                    const res = await call({ action: "test", id: a.id });
-                    toast[(res as { tested?: boolean })?.tested === false ? "error" : "success"](
-                      (res as { tested?: boolean })?.tested === false ? "Key failed" : "Key works",
+                    const res = (await call({ action: "test", id: a.id })) as {
+                      tested?: boolean; status?: number; latencyMs?: number; details?: string;
+                    };
+                    toast[res?.tested ? "success" : "error"](
+                      res?.tested
+                        ? `Key works · HTTP ${res.status} · ${res.latencyMs} ms`
+                        : `Key failed · HTTP ${res?.status ?? 0}`,
+                      { description: res?.tested ? undefined : res?.details },
                     );
                   }}>
                   Test
