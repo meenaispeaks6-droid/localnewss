@@ -111,7 +111,7 @@ Deno.serve(async (req) => {
 
     const { data, error } = await supabase
       .from("firecrawl_keys")
-      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, created_at")
+      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, last_status, last_latency_ms, created_at")
       .order("priority", { ascending: true })
       .order("created_at", { ascending: true });
     if (error) return json({ error: error.message }, 400);
