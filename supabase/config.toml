@@ -7,3 +7,5 @@ project_id = "fwummhpxwwelpoqtjpiw"
     verify_jwt = false
   [functions.send-news-digest]
     verify_jwt = false
+  [functions.key-health]
+    verify_jwt = false
