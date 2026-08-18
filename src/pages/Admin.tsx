@@ -47,9 +47,20 @@ const statusTone = (status?: number | null) => {
   return "destructive" as const;
 };
 
+const cooldownLeft = (iso?: string | null) => {
+  if (!iso) return 0;
+  return Math.max(0, Math.ceil((new Date(iso).getTime() - Date.now()) / 60000));
+};
+
 const HealthLine = ({ item }: { item: Account }) => (
   <div className="space-y-1">
     <div className="flex flex-wrap items-center gap-2 text-xs">
+      {cooldownLeft(item.cooldown_until) > 0 && (
+        <Badge variant="destructive">
+          Paused {cooldownLeft(item.cooldown_until)} min
+          {item.failure_count ? ` · ${item.failure_count} fails` : ""}
+        </Badge>
+      )}
       <Badge variant={statusTone(item.last_status)}>
         {item.last_status == null
           ? "Not checked"
