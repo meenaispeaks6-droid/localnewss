@@ -25,6 +25,8 @@ export type Database = {
           label: string
           last_checked_at: string | null
           last_error: string | null
+          last_latency_ms: number | null
+          last_status: number | null
           last_success_at: string | null
           last_used_at: string | null
           model: string
@@ -40,6 +42,8 @@ export type Database = {
           label: string
           last_checked_at?: string | null
           last_error?: string | null
+          last_latency_ms?: number | null
+          last_status?: number | null
           last_success_at?: string | null
           last_used_at?: string | null
           model?: string
@@ -55,6 +59,8 @@ export type Database = {
           label?: string
           last_checked_at?: string | null
           last_error?: string | null
+          last_latency_ms?: number | null
+          last_status?: number | null
           last_success_at?: string | null
           last_used_at?: string | null
           model?: string
@@ -72,6 +78,8 @@ export type Database = {
           label: string
           last_checked_at: string | null
           last_error: string | null
+          last_latency_ms: number | null
+          last_status: number | null
           last_success_at: string | null
           last_used_at: string | null
           priority: number
@@ -86,6 +94,8 @@ export type Database = {
           label: string
           last_checked_at?: string | null
           last_error?: string | null
+          last_latency_ms?: number | null
+          last_status?: number | null
           last_success_at?: string | null
           last_used_at?: string | null
           priority?: number
@@ -100,6 +110,8 @@ export type Database = {
           label?: string
           last_checked_at?: string | null
           last_error?: string | null
+          last_latency_ms?: number | null
+          last_status?: number | null
           last_success_at?: string | null
           last_used_at?: string | null
           priority?: number
