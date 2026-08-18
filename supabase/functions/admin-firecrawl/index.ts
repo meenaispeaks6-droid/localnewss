@@ -2,6 +2,7 @@
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { z } from "npm:zod";
 import { admin } from "../_shared/firecrawl.ts";
+import { checkFirecrawlKey, runHealthChecks } from "../_shared/key-health.ts";
 
 const ActionSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("list") }),
@@ -15,6 +16,7 @@ const ActionSchema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("reset"), id: z.string().uuid() }),
   z.object({ action: z.literal("delete"), id: z.string().uuid() }),
   z.object({ action: z.literal("test"), id: z.string().uuid() }),
+  z.object({ action: z.literal("check_all") }),
 ]);
 
 function json(body: unknown, status: number) {
@@ -99,26 +101,17 @@ Deno.serve(async (req) => {
         .eq("id", input.id)
         .maybeSingle();
       if (!row) return json({ error: "Account not found" }, 404);
+      const { ok, details } = await checkFirecrawlKey(supabase, row);
+      if (!ok) return json({ tested: false, details }, 200);
+    }
 
-      const res = await fetch("https://api.firecrawl.dev/v2/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${row.api_key}` },
-        body: JSON.stringify({ query: "india news", limit: 1 }),
-      });
-      const ok = res.ok;
-      await supabase
-        .from("firecrawl_keys")
-        .update({
-          last_error: ok ? null : `HTTP ${res.status}`,
-          exhausted_at: ok ? null : new Date().toISOString(),
-        })
-        .eq("id", row.id);
-      if (!ok) return json({ tested: false, status: res.status, details: await res.text() }, 200);
+    if (input.action === "check_all") {
+      await runHealthChecks(supabase);
     }
 
     const { data, error } = await supabase
       .from("firecrawl_keys")
-      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, created_at")
+      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, created_at")
       .order("priority", { ascending: true })
       .order("created_at", { ascending: true });
     if (error) return json({ error: error.message }, 400);
