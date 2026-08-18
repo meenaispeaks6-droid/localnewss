@@ -23,7 +23,9 @@ export type Database = {
           id: string
           is_active: boolean
           label: string
+          last_checked_at: string | null
           last_error: string | null
+          last_success_at: string | null
           last_used_at: string | null
           model: string
           priority: number
@@ -36,7 +38,9 @@ export type Database = {
           id?: string
           is_active?: boolean
           label: string
+          last_checked_at?: string | null
           last_error?: string | null
+          last_success_at?: string | null
           last_used_at?: string | null
           model?: string
           priority?: number
@@ -49,7 +53,9 @@ export type Database = {
           id?: string
           is_active?: boolean
           label?: string
+          last_checked_at?: string | null
           last_error?: string | null
+          last_success_at?: string | null
           last_used_at?: string | null
           model?: string
           priority?: number
@@ -64,7 +70,9 @@ export type Database = {
           id: string
           is_active: boolean
           label: string
+          last_checked_at: string | null
           last_error: string | null
+          last_success_at: string | null
           last_used_at: string | null
           priority: number
           updated_at: string
@@ -76,7 +84,9 @@ export type Database = {
           id?: string
           is_active?: boolean
           label: string
+          last_checked_at?: string | null
           last_error?: string | null
+          last_success_at?: string | null
           last_used_at?: string | null
           priority?: number
           updated_at?: string
@@ -88,7 +98,9 @@ export type Database = {
           id?: string
           is_active?: boolean
           label?: string
+          last_checked_at?: string | null
           last_error?: string | null
+          last_success_at?: string | null
           last_used_at?: string | null
           priority?: number
           updated_at?: string
