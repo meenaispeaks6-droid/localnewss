@@ -87,7 +87,7 @@ Deno.serve(async (req) => {
     if (input.action === "reset") {
       const { error } = await supabase
         .from("firecrawl_keys")
-        .update({ exhausted_at: null, last_error: null, is_active: true })
+        .update({ exhausted_at: null, last_error: null, is_active: true, failure_count: 0, cooldown_until: null })
         .eq("id", input.id);
       if (error) return json({ error: error.message }, 400);
     }
@@ -100,7 +100,7 @@ Deno.serve(async (req) => {
     if (input.action === "test") {
       const { data: row } = await supabase
         .from("firecrawl_keys")
-        .select("id, api_key")
+        .select("id, api_key, failure_count")
         .eq("id", input.id)
         .maybeSingle();
       if (!row) return json({ error: "Account not found" }, 404);
@@ -114,7 +114,7 @@ Deno.serve(async (req) => {
 
     const { data, error } = await supabase
       .from("firecrawl_keys")
-      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, last_status, last_latency_ms, created_at")
+      .select("id, label, api_key, is_active, priority, last_used_at, last_error, exhausted_at, last_checked_at, last_success_at, last_status, last_latency_ms, failure_count, cooldown_until, created_at")
       .order("priority", { ascending: true })
       .order("created_at", { ascending: true });
     if (error) return json({ error: error.message }, 400);

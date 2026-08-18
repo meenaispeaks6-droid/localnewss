@@ -1,5 +1,6 @@
 // Shared health-check logic for AI and Firecrawl keys.
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { cooldownFor } from "./circuit-breaker.ts";
 
 const EXHAUSTED = new Set([401, 402, 403, 429]);
 
@@ -75,7 +76,7 @@ function updatePayload(r: CheckResult, now: string, failureCount = 0) {
 
 export async function checkAiKey(
   supabase: SupabaseClient,
-  row: { id: string; api_key: string; base_url: string; model: string },
+  row: { id: string; api_key: string; base_url: string; model: string; failure_count?: number | null },
 ): Promise<CheckResult> {
   const result = await probe(`${row.base_url.replace(/\/$/, "")}/chat/completions`, {
     method: "POST",
@@ -89,7 +90,7 @@ export async function checkAiKey(
 
   await supabase
     .from("ai_keys")
-    .update(updatePayload(result, new Date().toISOString()))
+    .update(updatePayload(result, new Date().toISOString(), row.failure_count ?? 0))
     .eq("id", row.id);
 
   return result;
@@ -97,7 +98,7 @@ export async function checkAiKey(
 
 export async function checkFirecrawlKey(
   supabase: SupabaseClient,
-  row: { id: string; api_key: string },
+  row: { id: string; api_key: string; failure_count?: number | null },
 ): Promise<CheckResult> {
   const result = await probe("https://api.firecrawl.dev/v2/search", {
     method: "POST",
@@ -107,7 +108,7 @@ export async function checkFirecrawlKey(
 
   await supabase
     .from("firecrawl_keys")
-    .update(updatePayload(result, new Date().toISOString()))
+    .update(updatePayload(result, new Date().toISOString(), row.failure_count ?? 0))
     .eq("id", row.id);
 
   return result;
@@ -116,8 +117,8 @@ export async function checkFirecrawlKey(
 /** Checks every enabled key (including ones previously marked exhausted, so they can recover). */
 export async function runHealthChecks(supabase: SupabaseClient) {
   const [{ data: aiKeys }, { data: fcKeys }] = await Promise.all([
-    supabase.from("ai_keys").select("id, api_key, base_url, model").eq("is_active", true),
-    supabase.from("firecrawl_keys").select("id, api_key").eq("is_active", true),
+    supabase.from("ai_keys").select("id, api_key, base_url, model, failure_count").eq("is_active", true),
+    supabase.from("firecrawl_keys").select("id, api_key, failure_count").eq("is_active", true),
   ]);
 
   const ai = await Promise.all(
