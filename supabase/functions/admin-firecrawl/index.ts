@@ -63,6 +63,9 @@ Deno.serve(async (req) => {
 
     const supabase = admin();
     const input = parsed.data;
+    let testResult:
+      | { tested: boolean; details?: string; status?: number; latencyMs?: number }
+      | null = null;
 
     if (input.action === "add") {
       const { error } = await supabase.from("firecrawl_keys").insert({
@@ -118,6 +121,7 @@ Deno.serve(async (req) => {
 
     return json({
       accounts: (data ?? []).map(({ api_key, ...rest }) => ({ ...rest, key_preview: mask(api_key) })),
+      ...(testResult ?? {}),
     }, 200);
   } catch (e) {
     console.error("admin-firecrawl error:", e);
