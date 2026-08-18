@@ -1,6 +1,13 @@
 import { createOpenAICompatible } from "npm:@ai-sdk/openai-compatible";
 import { streamText } from "npm:ai";
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2";
+import {
+  activeKeys,
+  isRetryableError,
+  recordFailure,
+  recordSuccess,
+  withRetry,
+} from "./circuit-breaker.ts";
 
 export function createLovableAiGatewayProvider(apiKey: string) {
   return createOpenAICompatible({
@@ -16,18 +23,15 @@ export type AiKeyRow = {
   api_key: string;
   base_url: string;
   model: string;
+  failure_count?: number | null;
+  cooldown_until?: string | null;
 };
-
-function isExhausted(msg: string, status?: number) {
-  if (status && [401, 402, 403, 429].includes(status)) return true;
-  return /quota|rate limit|credit|exhaust|unauthor|forbidden|invalid api key/i.test(msg);
-}
 
 /**
  * Runs a text generation, rotating through the admin-managed AI keys
- * (ai_keys table, highest priority first). A key that hits a quota/auth error
- * is marked exhausted and skipped until an admin resets it. Falls back to the
- * Lovable AI Gateway when no key works.
+ * (ai_keys table, highest priority first). Transient errors are retried with
+ * backoff; a key that keeps failing is put in a growing cooldown (circuit
+ * breaker) and skipped until it expires. Falls back to the Lovable AI Gateway.
  */
 export async function generateNewsText(
   supabase: SupabaseClient,
@@ -35,7 +39,7 @@ export async function generateNewsText(
 ): Promise<{ text: string; usedAccount: string; error: string | null }> {
   const { data: keys } = await supabase
     .from("ai_keys")
-    .select("id, label, api_key, base_url, model")
+    .select("id, label, api_key, base_url, model, failure_count, cooldown_until")
     .eq("is_active", true)
     .is("exhausted_at", null)
     .order("priority", { ascending: true })
@@ -43,33 +47,43 @@ export async function generateNewsText(
 
   let lastError: string | null = null;
 
-  for (const key of (keys ?? []) as AiKeyRow[]) {
-    try {
-      const provider = createOpenAICompatible({
-        name: "admin-ai-key",
-        baseURL: key.base_url,
-        headers: { Authorization: `Bearer ${key.api_key}` },
-      });
-      const stream = streamText({ model: provider(key.model), ...opts });
-      const text = (await stream.text).trim();
-      await supabase
-        .from("ai_keys")
-        .update({ last_used_at: new Date().toISOString(), last_error: null })
-        .eq("id", key.id);
-      return { text, usedAccount: key.label, error: null };
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      const status = (err as { statusCode?: number })?.statusCode;
-      console.error(`AI key "${key.label}" failed:`, msg);
-      lastError = msg;
-      await supabase
-        .from("ai_keys")
-        .update({
-          last_error: msg.slice(0, 300),
-          exhausted_at: isExhausted(msg, status) ? new Date().toISOString() : null,
-        })
-        .eq("id", key.id);
+  for (const key of activeKeys((keys ?? []) as AiKeyRow[])) {
+    const outcome = await withRetry(
+      async () => {
+        try {
+          const provider = createOpenAICompatible({
+            name: "admin-ai-key",
+            baseURL: key.base_url,
+            headers: { Authorization: `Bearer ${key.api_key}` },
+          });
+          const stream = streamText({ model: provider(key.model), ...opts });
+          return { text: (await stream.text).trim(), error: null as string | null, status: 200 };
+        } catch (err) {
+          const message = err instanceof Error ? err.message : String(err);
+          const status = (err as { statusCode?: number })?.statusCode ?? 0;
+          return { text: "", error: message, status };
+        }
+      },
+      {
+        tries: 3,
+        shouldRetry: (r) => !!r.error && isRetryableError(r.error, r.status || undefined),
+      },
+    );
+
+    if (!outcome.error) {
+      await recordSuccess(supabase, "ai_keys", key.id);
+      return { text: outcome.text, usedAccount: key.label, error: null };
     }
+
+    lastError = outcome.error;
+    const { cooldownMinutes } = await recordFailure(supabase, "ai_keys", key, {
+      status: outcome.status || undefined,
+      message: outcome.error,
+    });
+    console.error(
+      `AI key "${key.label}" failed (${outcome.status}), paused ${cooldownMinutes}m:`,
+      outcome.error,
+    );
   }
 
   // Fallback: Lovable AI Gateway
