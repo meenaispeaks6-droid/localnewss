@@ -101,8 +101,8 @@ Deno.serve(async (req) => {
         .eq("id", input.id)
         .maybeSingle();
       if (!row) return json({ error: "Account not found" }, 404);
-      const { ok, details } = await checkFirecrawlKey(supabase, row);
-      if (!ok) return json({ tested: false, details }, 200);
+      const r = await checkFirecrawlKey(supabase, row);
+      testResult = { tested: r.ok, details: r.details, status: r.status, latencyMs: r.latencyMs };
     }
 
     if (input.action === "check_all") {
