@@ -117,6 +117,29 @@ const Admin = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const runHealthCheck = async (manual = false) => {
+    try {
+      await Promise.all([
+        callAi({ action: "check_all" }),
+        call({ action: "check_all" }),
+      ]);
+      if (manual) toast.success("Health check finished");
+    } catch {
+      /* errors already toasted */
+    }
+  };
+
+  // Verify every key/model periodically while the panel is open.
+  useEffect(() => {
+    if (!authed) return;
+    runHealthCheck();
+    const id = setInterval(() => runHealthCheck(), HEALTH_INTERVAL_MS);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authed]);
+
+
+
   const addAccount = async () => {
     if (!label.trim() || !apiKey.trim()) return toast.error("Add a name and API key");
     await call({ action: "add", label: label.trim(), api_key: apiKey.trim() });
