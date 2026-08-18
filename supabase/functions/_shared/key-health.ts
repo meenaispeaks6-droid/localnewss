@@ -46,17 +46,30 @@ async function probe(
   }
 }
 
-function updatePayload(r: CheckResult, now: string) {
+function updatePayload(r: CheckResult, now: string, failureCount = 0) {
+  if (r.ok) {
+    return {
+      last_checked_at: now,
+      last_status: r.status,
+      last_latency_ms: r.latencyMs,
+      last_success_at: now,
+      last_error: null,
+      exhausted_at: null,
+      // A healthy probe closes the circuit again.
+      failure_count: 0,
+      cooldown_until: null,
+    };
+  }
+  const failures = failureCount + 1;
+  const minutes = cooldownFor(failures);
   return {
     last_checked_at: now,
     last_status: r.status,
     last_latency_ms: r.latencyMs,
-    ...(r.ok
-      ? { last_success_at: now, last_error: null, exhausted_at: null }
-      : {
-        last_error: r.details || `HTTP ${r.status || 0}`,
-        ...(EXHAUSTED.has(r.status) ? { exhausted_at: now } : {}),
-      }),
+    last_error: r.details || `HTTP ${r.status || 0}`,
+    failure_count: failures,
+    cooldown_until: new Date(Date.parse(now) + minutes * 60_000).toISOString(),
+    ...(EXHAUSTED.has(r.status) ? { exhausted_at: now } : {}),
   };
 }
 
