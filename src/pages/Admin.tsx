@@ -345,9 +345,14 @@ const Admin = () => {
               <div className="flex flex-wrap gap-2">
                 <Button size="sm" variant="secondary" disabled={loading}
                   onClick={async () => {
-                    const res = await call({ action: "test", id: a.id });
-                    toast[(res as { tested?: boolean })?.tested === false ? "error" : "success"](
-                      (res as { tested?: boolean })?.tested === false ? "Key failed" : "Key works",
+                    const res = (await call({ action: "test", id: a.id })) as {
+                      tested?: boolean; status?: number; latencyMs?: number; details?: string;
+                    };
+                    toast[res?.tested ? "success" : "error"](
+                      res?.tested
+                        ? `Key works · HTTP ${res.status} · ${res.latencyMs} ms`
+                        : `Key failed · HTTP ${res?.status ?? 0}`,
+                      { description: res?.tested ? undefined : res?.details },
                     );
                   }}>
                   Test
