@@ -90,11 +90,8 @@ Deno.serve(async (req) => {
       return json({ articles: [], message: "No fresh news found" }, 200);
     }
 
-    // 2. Turn raw results into clean bilingual news items
-    const { model } = createNewsModel();
-
-    const stream = streamText({
-      model,
+    // 2. Turn raw results into clean bilingual news items (rotates AI keys)
+    const ai = await generateNewsText(supabase, {
       system:
         "You are a bilingual (Hindi + English) local news editor for India. " +
         "From the given search results, keep only genuine news items about the requested city. " +
@@ -109,18 +106,9 @@ Deno.serve(async (req) => {
       }`,
     });
 
-    let rawText = "";
-    let aiError: string | null = null;
-    try {
-      rawText = (await stream.text).trim();
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      const status = (err as { statusCode?: number })?.statusCode;
-      aiError = status === 403 || /credit limit/i.test(msg)
-        ? "AI credits exhausted — showing saved news"
-        : "AI summarisation unavailable — showing saved news";
-      console.error("AI summarisation failed:", msg);
-    }
+    const rawText = ai.text;
+    const aiError = ai.error ? "AI summarisation unavailable — showing live search results" : null;
+
 
     const jsonText = rawText
       .replace(/^```(?:json)?/i, "")
