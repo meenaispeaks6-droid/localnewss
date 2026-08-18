@@ -18,11 +18,33 @@ type Account = {
   last_used_at: string | null;
   last_error: string | null;
   exhausted_at: string | null;
+  last_checked_at?: string | null;
+  last_success_at?: string | null;
 };
 
 type AiKey = Account & { base_url: string; model: string };
 
 const PASS_KEY = "admin_passcode";
+
+const HEALTH_INTERVAL_MS = 15 * 60 * 1000;
+
+const timeAgo = (iso: string) => {
+  const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins} min ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs} h ago`;
+  return `${Math.round(hrs / 24)} d ago`;
+};
+
+const HealthLine = ({ item }: { item: Account }) => (
+  <div className="text-xs text-muted-foreground">
+    {item.last_success_at
+      ? `Last verified ${timeAgo(item.last_success_at)} (${new Date(item.last_success_at).toLocaleString()})`
+      : "Never verified"}
+    {item.last_checked_at && ` · last checked ${timeAgo(item.last_checked_at)}`}
+  </div>
+);
 
 const Admin = () => {
   const [passcode, setPasscode] = useState(() => sessionStorage.getItem(PASS_KEY) ?? "");
