@@ -125,6 +125,9 @@ const ArticleNews = ({ lang }: { lang: Lang }) => {
         lang={lang}
         altPath={articlePath(city, articleSlug ?? "", lang === "hi" ? "en" : "hi")}
         image={article?.image_url ?? undefined}
+        type="article"
+        publishedTime={article?.published_at ?? undefined}
+        section={categoryLabel || undefined}
         noindex={!loading && !article}
         jsonLd={
           article
