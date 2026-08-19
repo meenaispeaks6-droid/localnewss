@@ -162,7 +162,7 @@ Deno.serve(async (req) => {
 
     return json({
       ok: true,
-      refreshed: cities.size,
+      refreshed: targets.length,
       subscribers: subs.length,
       sent,
       skipped,
