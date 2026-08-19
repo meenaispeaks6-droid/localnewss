@@ -45,14 +45,30 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    // 1. Live web search for this city's news (auto-rotates Firecrawl accounts)
-    const search = await firecrawl("/search", {
-      query: `${place} India latest local news today समाचार`,
-      limit: 10,
-      tbs: "qdr:w",
-      lang: "hi",
-      country: "in",
-    }, supabase);
+    // 1. Live web search for this city's news (auto-rotates Firecrawl accounts).
+    // Look at the last 24h first so readers get genuinely fresh stories; only
+    // widen to the past week when today has nothing.
+    const runSearch = (tbs: string) =>
+      firecrawl("/search", {
+        query: `${place} India latest local news today समाचार`,
+        limit: 10,
+        tbs,
+        lang: "hi",
+        country: "in",
+      }, supabase);
+
+    let search = await runSearch("qdr:d");
+    let widened = false;
+    if (search.ok) {
+      const d = (search.body as any)?.data;
+      const hits = (d?.web ?? d ?? []) as unknown[];
+      if (!Array.isArray(hits) || hits.length === 0) {
+        widened = true;
+        search = await runSearch("qdr:w");
+      }
+    }
+    void widened;
+
 
     if (!search.ok) {
       const { data: cached } = await supabase
