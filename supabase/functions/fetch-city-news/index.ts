@@ -106,46 +106,52 @@ Deno.serve(async (req) => {
       }, 200);
     }
 
-
-    // 2. Turn raw results into clean bilingual news items (rotates AI keys)
-    const ai = await generateNewsText(supabase, {
-      system:
-        "You are a bilingual (Hindi + English) local news editor for India. " +
-        "From the given search results, keep only genuine news items about the requested city. " +
-        'Reply with ONLY raw JSON of the shape {"articles":[{"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_url":"","source_name":""}]} ' +
-        "with no markdown fences and no commentary. Summaries are 2-3 sentences; Hindi must be Devanagari. " +
-        "category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health. " +
-        "source_url must be copied exactly from the input. Never invent facts beyond the given text.",
-      prompt: `City: ${place}\n\nSearch results:\n${
-        results
-          .map((r, i) => `${i + 1}. TITLE: ${r.title}\nURL: ${r.url}\nTEXT: ${r.description}`)
-          .join("\n\n")
-      }`,
-    });
-
-    const rawText = ai.text;
-    const aiError = ai.error ? "AI summarisation unavailable — showing live search results" : null;
-
-
-    const jsonText = rawText
-      .replace(/^```(?:json)?/i, "")
-      .replace(/```$/, "")
-      .trim();
-    const start = jsonText.indexOf("{");
-    const end = jsonText.lastIndexOf("}");
+    // 2. Turn raw results into clean bilingual news items (rotates AI keys).
+    // Google News RSS already gives clean headlines + real publish times, so
+    // when RSS covered the city we publish straight away — faster and free.
+    const rssOnly = results.every((r) => !!r.publishedAt);
     let articles: z.infer<typeof ArticlesSchema>["articles"] = [];
-    if (start !== -1 && end > start) {
-      const parsedOut = ArticlesSchema.safeParse(
-        JSON.parse(jsonText.slice(start, end + 1)),
-      );
-      if (parsedOut.success) {
-        articles = parsedOut.data.articles;
-      } else {
-        console.error("AI output did not match schema:", parsedOut.error.message, rawText.slice(0, 500));
+    let aiError: string | null = null;
+
+    if (!rssOnly) {
+      const ai = await generateNewsText(supabase, {
+        system:
+          "You are a bilingual (Hindi + English) local news editor for India. " +
+          "From the given search results, keep only genuine news items about the requested city. " +
+          'Reply with ONLY raw JSON of the shape {"articles":[{"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_url":"","source_name":""}]} ' +
+          "with no markdown fences and no commentary. Summaries are 2-3 sentences; Hindi must be Devanagari. " +
+          "category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health. " +
+          "source_url must be copied exactly from the input. Never invent facts beyond the given text.",
+        prompt: `City: ${place}\n\nSearch results:\n${
+          results
+            .map((r, i) => `${i + 1}. TITLE: ${r.title}\nURL: ${r.url}\nTEXT: ${r.description}`)
+            .join("\n\n")
+        }`,
+      });
+
+      const rawText = ai.text;
+      aiError = ai.error ? "AI summarisation unavailable — showing live search results" : null;
+
+      const jsonText = rawText
+        .replace(/^```(?:json)?/i, "")
+        .replace(/```$/, "")
+        .trim();
+      const start = jsonText.indexOf("{");
+      const end = jsonText.lastIndexOf("}");
+      if (start !== -1 && end > start) {
+        const parsedOut = ArticlesSchema.safeParse(
+          JSON.parse(jsonText.slice(start, end + 1)),
+        );
+        if (parsedOut.success) {
+          articles = parsedOut.data.articles;
+        } else {
+          console.error("AI output did not match schema:", parsedOut.error.message, rawText.slice(0, 500));
+        }
+      } else if (!aiError) {
+        console.error("AI output was not JSON:", rawText.slice(0, 500));
       }
-    } else if (!aiError) {
-      console.error("AI output was not JSON:", rawText.slice(0, 500));
     }
+
 
 
     articles = articles.filter((a) => a.source_url?.startsWith("http"));
