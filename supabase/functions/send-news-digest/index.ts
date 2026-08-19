@@ -76,8 +76,9 @@ Deno.serve(async (req) => {
 
 
     if (subs.length === 0) {
-      return json({ ok: true, sent: 0, refreshed: cities.size, note: "no subscribers" });
+      return json({ ok: true, sent: 0, refreshed: targets.length, note: "no subscribers" });
     }
+
 
     let sent = 0;
     let skipped = 0;
