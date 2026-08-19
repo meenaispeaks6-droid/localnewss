@@ -3,6 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { z } from "npm:zod";
 import { generateNewsText } from "../_shared/ai-gateway.ts";
 import { firecrawl } from "../_shared/firecrawl.ts";
+import { googleNewsSearch } from "../_shared/google-news.ts";
 
 
 const BodySchema = z.object({
@@ -45,66 +46,66 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    // 1. Live web search for this city's news (auto-rotates Firecrawl accounts).
-    // Look at the last 24h first so readers get genuinely fresh stories; only
-    // widen to the past week when today has nothing.
-    const runSearch = (tbs: string) =>
-      firecrawl("/search", {
-        query: `${place} India latest local news today समाचार`,
-        limit: 10,
-        tbs,
-        lang: "hi",
-        country: "in",
-      }, supabase);
+    // 1. Live news. Google News RSS first (free, unlimited), then Firecrawl
+    // as a fallback for places RSS doesn't cover.
+    let results: Array<
+      { url: string; title: string; description: string; sourceName?: string; publishedAt?: string }
+    > = await googleNewsSearch(place, 48);
+    let notice: string | null = null;
 
-    let search = await runSearch("qdr:d");
-    let widened = false;
-    if (search.ok) {
-      const d = (search.body as any)?.data;
-      const hits = (d?.web ?? d ?? []) as unknown[];
-      if (!Array.isArray(hits) || hits.length === 0) {
-        widened = true;
-        search = await runSearch("qdr:w");
+    if (results.length < 3) {
+      const runSearch = (tbs: string) =>
+        firecrawl("/search", {
+          query: `${place} India latest local news today समाचार`,
+          limit: 10,
+          tbs,
+          lang: "hi",
+          country: "in",
+        }, supabase);
+
+      let search = await runSearch("qdr:d");
+      if (search.ok) {
+        const d = (search.body as any)?.data;
+        const hits = (d?.web ?? d ?? []) as unknown[];
+        if (!Array.isArray(hits) || hits.length === 0) {
+          search = await runSearch("qdr:w");
+        }
+      }
+
+      if (search.ok) {
+        const searchJson = search.body as any;
+        const raw = (searchJson?.data?.web ?? searchJson?.data ?? []) as Array<
+          { url?: string; title?: string; description?: string; snippet?: string }
+        >;
+        const extra = raw
+          .filter((r) => r?.url && r?.title)
+          .slice(0, 10)
+          .map((r) => ({
+            url: r.url as string,
+            title: r.title as string,
+            description: r.description ?? r.snippet ?? "",
+          }));
+        const seen = new Set(results.map((r) => r.url));
+        for (const e of extra) if (!seen.has(e.url)) results.push(e);
+      } else {
+        console.error(`Firecrawl search failed [${search.status}]`, search.body);
       }
     }
-    void widened;
 
-
-    if (!search.ok) {
+    if (results.length === 0) {
       const { data: cached } = await supabase
         .from("news_articles")
         .select("*")
         .eq("city", city)
         .order("published_at", { ascending: false })
         .limit(30);
-      console.error(`Firecrawl search failed [${search.status}]`, search.body);
       return json({
         articles: cached ?? [],
         inserted: 0,
-        notice: search.status === 402 || search.status === 429
-          ? "Firecrawl limit reached — showing saved news. Add another Firecrawl account in the admin panel."
-          : "News search unavailable — showing saved news",
+        notice: "No fresh news found right now — showing saved news",
       }, 200);
     }
 
-    const searchJson = search.body as any;
-
-    const raw = (searchJson?.data?.web ?? searchJson?.data ?? []) as Array<
-      { url?: string; title?: string; description?: string; snippet?: string }
-    >;
-
-    const results = raw
-      .filter((r) => r?.url && r?.title)
-      .slice(0, 10)
-      .map((r) => ({
-        url: r.url as string,
-        title: r.title as string,
-        description: r.description ?? r.snippet ?? "",
-      }));
-
-    if (results.length === 0) {
-      return json({ articles: [], message: "No fresh news found" }, 200);
-    }
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys)
     const ai = await generateNewsText(supabase, {
@@ -162,7 +163,7 @@ Deno.serve(async (req) => {
           summary_hi: null,
           category: "general",
           source_url: r.url,
-          source_name: null,
+          source_name: r.sourceName ?? null,
         }));
     }
 
@@ -171,6 +172,9 @@ Deno.serve(async (req) => {
     // 3. Cache in the database
 
 
+    const pubMap = new Map(
+      results.filter((r) => r.publishedAt).map((r) => [r.url, r.publishedAt!]),
+    );
     let inserted = 0;
     if (articles.length > 0) {
       const rows = articles.map((a) => ({
@@ -182,7 +186,7 @@ Deno.serve(async (req) => {
         category: a.category || "general",
         source_url: a.source_url,
         source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
-        published_at: new Date().toISOString(),
+        published_at: pubMap.get(a.source_url) ?? new Date().toISOString(),
       }));
 
       // Only genuinely new URLs are stored; existing ones keep their original
@@ -202,7 +206,7 @@ Deno.serve(async (req) => {
       .order("published_at", { ascending: false })
       .limit(30);
 
-    return json({ articles: stored ?? [], inserted, notice: aiError }, 200);
+    return json({ articles: stored ?? [], inserted, notice: notice ?? aiError }, 200);
   } catch (e) {
     console.error("fetch-city-news error:", e);
     return json({ error: e instanceof Error ? e.message : "Unexpected error" }, 500);
