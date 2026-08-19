@@ -1081,12 +1081,32 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://localnews.meenai.in/news/surendranagar</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/news/surendranagar/hi</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://localnews.meenai.in/news/valsad</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://localnews.meenai.in/news/valsad/hi</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/news/zalawad</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://localnews.meenai.in/news/zalawad/hi</loc>
     <changefreq>hourly</changefreq>
     <priority>0.7</priority>
   </url>
