@@ -1,0 +1,1 @@
+UPDATE public.firecrawl_keys SET cooldown_until = NULL, failure_count = 0, exhausted_at = NULL;

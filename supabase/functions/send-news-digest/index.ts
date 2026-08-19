@@ -44,29 +44,41 @@ Deno.serve(async (req) => {
     if (subsError) throw subsError;
     const subs = (subsData ?? []) as Sub[];
 
-    // Refresh live news hourly for every subscribed city plus every city that
-    // has been read recently, so visitors always land on fresh stories.
+    // Refresh live news for subscribed cities plus a few recently-read ones.
+    // Firecrawl is rate-limited per minute, so refresh sequentially in a small
+    // batch with a short gap instead of firing every city at once (that was
+    // triggering 429s and leaving readers on stale cached news).
     const cities = new Map<string, string | null>();
     for (const s of subs) cities.set(s.city, s.state);
 
     const { data: recent } = await supabase
       .from("news_articles")
-      .select("city")
-      .gt("published_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
-      .limit(1000);
+      .select("city, published_at")
+      .order("published_at", { ascending: false })
+      .limit(200);
     for (const r of (recent ?? []) as { city: string }[]) {
       if (!cities.has(r.city)) cities.set(r.city, null);
     }
 
-    await Promise.allSettled(
-      [...cities].map(([city, state]) =>
-        supabase.functions.invoke("fetch-city-news", { body: { city, state: state ?? undefined } }),
-      ),
-    );
+    const MAX_REFRESH = 12;
+    const GAP_MS = 2500;
+    const targets = [...cities].slice(0, MAX_REFRESH);
+    for (const [city, state] of targets) {
+      try {
+        await supabase.functions.invoke("fetch-city-news", {
+          body: { city, state: state ?? undefined },
+        });
+      } catch (e) {
+        console.error(`refresh failed for ${city}:`, e);
+      }
+      await new Promise((r) => setTimeout(r, GAP_MS));
+    }
+
 
     if (subs.length === 0) {
-      return json({ ok: true, sent: 0, refreshed: cities.size, note: "no subscribers" });
+      return json({ ok: true, sent: 0, refreshed: targets.length, note: "no subscribers" });
     }
+
 
     let sent = 0;
     let skipped = 0;
@@ -150,7 +162,7 @@ Deno.serve(async (req) => {
 
     return json({
       ok: true,
-      refreshed: cities.size,
+      refreshed: targets.length,
       subscribers: subs.length,
       sent,
       skipped,
