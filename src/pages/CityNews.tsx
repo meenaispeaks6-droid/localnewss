@@ -29,6 +29,7 @@ import { clearRead, getReadIds, markRead, markUnread } from "@/lib/readState";
 const t = {
   hi: {
     heading: "की ताज़ा ख़बरें",
+    latestStories: "ताज़ा ख़बरें",
     refresh: "नई ख़बरें लाएँ",
     loading: "ख़बरें लोड हो रही हैं...",
     fetching: "लाइव ख़बरें खोजी जा रही हैं...",
@@ -47,6 +48,7 @@ const t = {
   },
   en: {
     heading: "latest news",
+    latestStories: "Latest stories",
     refresh: "Fetch fresh news",
     loading: "Loading news...",
     fetching: "Searching live news...",
@@ -450,6 +452,10 @@ const CityNews = ({ lang }: { lang: Lang }) => {
             </time>
           </p>
         )}
+
+        <h2 className="font-heading text-xl font-semibold tracking-tight sm:text-2xl">
+          {c.latestStories}
+        </h2>
 
         {busy ? (
           <NewsSkeleton />
