@@ -65,8 +65,10 @@ const t = {
   },
 };
 
-const STALE_MS = 15 * 60 * 1000;
+const STALE_MS = 5 * 60 * 1000;
 const LIVE_POLL_MS = 60 * 1000;
+const REFRESH_MS = 3 * 60 * 1000;
+
 
 const CityNews = ({ lang }: { lang: Lang }) => {
   const { citySlug: slug } = useParams();
