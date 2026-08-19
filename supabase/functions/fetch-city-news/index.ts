@@ -3,6 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { z } from "npm:zod";
 import { generateNewsText } from "../_shared/ai-gateway.ts";
 import { firecrawl } from "../_shared/firecrawl.ts";
+import { googleNewsSearch } from "../_shared/google-news.ts";
 
 
 const BodySchema = z.object({
@@ -162,7 +163,7 @@ Deno.serve(async (req) => {
           summary_hi: null,
           category: "general",
           source_url: r.url,
-          source_name: null,
+          source_name: r.sourceName ?? null,
         }));
     }
 
@@ -171,6 +172,9 @@ Deno.serve(async (req) => {
     // 3. Cache in the database
 
 
+    const pubMap = new Map(
+      results.filter((r) => r.publishedAt).map((r) => [r.url, r.publishedAt!]),
+    );
     let inserted = 0;
     if (articles.length > 0) {
       const rows = articles.map((a) => ({
@@ -182,7 +186,7 @@ Deno.serve(async (req) => {
         category: a.category || "general",
         source_url: a.source_url,
         source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
-        published_at: new Date().toISOString(),
+        published_at: pubMap.get(a.source_url) ?? new Date().toISOString(),
       }));
 
       // Only genuinely new URLs are stored; existing ones keep their original
@@ -202,7 +206,7 @@ Deno.serve(async (req) => {
       .order("published_at", { ascending: false })
       .limit(30);
 
-    return json({ articles: stored ?? [], inserted, notice: aiError }, 200);
+    return json({ articles: stored ?? [], inserted, notice: notice ?? aiError }, 200);
   } catch (e) {
     console.error("fetch-city-news error:", e);
     return json({ error: e instanceof Error ? e.message : "Unexpected error" }, 500);
