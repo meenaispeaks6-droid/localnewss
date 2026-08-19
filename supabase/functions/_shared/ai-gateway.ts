@@ -57,7 +57,14 @@ export async function generateNewsText(
             headers: { Authorization: `Bearer ${key.api_key}` },
           });
           const stream = streamText({ model: provider(key.model), ...opts });
-          return { text: (await stream.text).trim(), error: null as string | null, status: 200 };
+          const text = (await stream.text).trim();
+          // An empty reply means this account silently refused the request —
+          // treat it as a failure so the next account (or Lovable AI) is used.
+          if (text.length < 2) {
+            return { text: "", error: "Empty response from provider", status: 502 };
+          }
+          return { text, error: null as string | null, status: 200 };
+
         } catch (err) {
           const message = err instanceof Error ? err.message : String(err);
           const status = (err as { statusCode?: number })?.statusCode ?? 0;
