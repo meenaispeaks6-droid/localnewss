@@ -65,8 +65,10 @@ const t = {
   },
 };
 
-const STALE_MS = 15 * 60 * 1000;
+const STALE_MS = 5 * 60 * 1000;
 const LIVE_POLL_MS = 60 * 1000;
+const REFRESH_MS = 3 * 60 * 1000;
+
 
 const CityNews = ({ lang }: { lang: Lang }) => {
   const { citySlug: slug } = useParams();
@@ -97,8 +99,8 @@ const CityNews = ({ lang }: { lang: Lang }) => {
   }, []);
 
   const fetchLive = useCallback(
-    async (target: string, state?: string) => {
-      setFetching(true);
+    async (target: string, state?: string, silent = false) => {
+      if (!silent) setFetching(true);
       try {
         const { data, error } = await supabase.functions.invoke("fetch-city-news", {
           body: { city: target, state },
@@ -108,13 +110,13 @@ const CityNews = ({ lang }: { lang: Lang }) => {
         const fresh = (data?.articles as NewsArticle[]) ?? [];
         if (fresh.length > 0) {
           setArticles(fresh);
-          toast.success(c.updated);
+          if (!silent) toast.success(c.updated);
         }
       } catch (e) {
         console.error("fetch-city-news failed:", e);
-        toast.error(c.error);
+        if (!silent) toast.error(c.error);
       } finally {
-        setFetching(false);
+        if (!silent) setFetching(false);
       }
     },
     [c],
@@ -127,11 +129,15 @@ const CityNews = ({ lang }: { lang: Lang }) => {
     let active = true;
     (async () => {
       const { count, stale } = await loadCached(cityName);
-      if (active && (count === 0 || stale)) await fetchLive(cityName, city?.state);
+      if (!active) return;
+      // Always pull the latest Google News RSS stories; block the UI only when
+      // there is nothing cached to show meanwhile.
+      await fetchLive(cityName, city?.state, count > 0 && !stale);
     })();
     return () => {
       active = false;
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityName]);
 
@@ -167,6 +173,25 @@ const CityNews = ({ lang }: { lang: Lang }) => {
     }, LIVE_POLL_MS);
     return () => clearInterval(timer);
   }, [cityName, articles, c, lang, readIds]);
+
+  // Keep pulling fresh Google News RSS stories in the background while the
+  // reader stays on the page, and again whenever they return to the tab.
+  useEffect(() => {
+    if (!cityName) return;
+    const refresh = () => {
+      if (document.hidden) return;
+      fetchLive(cityName, city?.state, true);
+    };
+    const timer = setInterval(refresh, REFRESH_MS);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cityName]);
+
+
 
   const toggleRead = useCallback(
     (id: string, next: boolean) => {
