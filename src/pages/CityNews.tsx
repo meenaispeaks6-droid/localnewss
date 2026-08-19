@@ -97,8 +97,8 @@ const CityNews = ({ lang }: { lang: Lang }) => {
   }, []);
 
   const fetchLive = useCallback(
-    async (target: string, state?: string) => {
-      setFetching(true);
+    async (target: string, state?: string, silent = false) => {
+      if (!silent) setFetching(true);
       try {
         const { data, error } = await supabase.functions.invoke("fetch-city-news", {
           body: { city: target, state },
@@ -108,13 +108,13 @@ const CityNews = ({ lang }: { lang: Lang }) => {
         const fresh = (data?.articles as NewsArticle[]) ?? [];
         if (fresh.length > 0) {
           setArticles(fresh);
-          toast.success(c.updated);
+          if (!silent) toast.success(c.updated);
         }
       } catch (e) {
         console.error("fetch-city-news failed:", e);
-        toast.error(c.error);
+        if (!silent) toast.error(c.error);
       } finally {
-        setFetching(false);
+        if (!silent) setFetching(false);
       }
     },
     [c],
@@ -127,11 +127,15 @@ const CityNews = ({ lang }: { lang: Lang }) => {
     let active = true;
     (async () => {
       const { count, stale } = await loadCached(cityName);
-      if (active && (count === 0 || stale)) await fetchLive(cityName, city?.state);
+      if (!active) return;
+      // Always pull the latest Google News RSS stories; block the UI only when
+      // there is nothing cached to show meanwhile.
+      await fetchLive(cityName, city?.state, count > 0 && !stale);
     })();
     return () => {
       active = false;
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityName]);
 
