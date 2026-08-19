@@ -107,24 +107,29 @@ Deno.serve(async (req) => {
     }
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
-    // Google News RSS already gives clean headlines + real publish times, so
-    // when RSS covered the city we publish straight away — faster and free.
-    const rssOnly = results.every((r) => !!r.publishedAt);
     let articles: z.infer<typeof ArticlesSchema>["articles"] = [];
     let aiError: string | null = null;
 
-    if (!rssOnly) {
+    {
       const ai = await generateNewsText(supabase, {
         system:
           "You are a bilingual (Hindi + English) local news editor for India. " +
-          "From the given search results, keep only genuine news items about the requested city. " +
+          "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
           'Reply with ONLY raw JSON of the shape {"articles":[{"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_url":"","source_name":""}]} ' +
-          "with no markdown fences and no commentary. Summaries are 2-3 sentences; Hindi must be Devanagari. " +
-          "category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health. " +
-          "source_url must be copied exactly from the input. Never invent facts beyond the given text.",
+          "with no markdown fences and no commentary.\n" +
+          "Writing rules:\n" +
+          "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
+          "- Never keep the publisher name inside a headline (remove trailing ' - Zee News', ' | Dainik Bhaskar' etc.); put it in source_name.\n" +
+          "- summary_en and summary_hi: exactly 1-2 short sentences (max 300 characters) that answer what happened, where and why it matters. No long paragraphs, no repetition of the headline word for word.\n" +
+          "- Both languages are mandatory for every article; translate rather than leaving a field empty.\n" +
+          "- Simple everyday words; no clickbait, no opinion, no invented facts beyond the given text.\n" +
+          "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.\n" +
+          "- source_url must be copied exactly from the input.",
         prompt: `City: ${place}\n\nSearch results:\n${
           results
-            .map((r, i) => `${i + 1}. TITLE: ${r.title}\nURL: ${r.url}\nTEXT: ${r.description}`)
+            .map((r, i) =>
+              `${i + 1}. TITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nURL: ${r.url}\nTEXT: ${r.description}`
+            )
             .join("\n\n")
         }`,
       });
@@ -139,22 +144,43 @@ Deno.serve(async (req) => {
       const start = jsonText.indexOf("{");
       const end = jsonText.lastIndexOf("}");
       if (start !== -1 && end > start) {
-        const parsedOut = ArticlesSchema.safeParse(
-          JSON.parse(jsonText.slice(start, end + 1)),
-        );
-        if (parsedOut.success) {
-          articles = parsedOut.data.articles;
-        } else {
-          console.error("AI output did not match schema:", parsedOut.error.message, rawText.slice(0, 500));
+        try {
+          const parsedOut = ArticlesSchema.safeParse(
+            JSON.parse(jsonText.slice(start, end + 1)),
+          );
+          if (parsedOut.success) {
+            articles = parsedOut.data.articles;
+          } else {
+            console.error("AI output did not match schema:", parsedOut.error.message, rawText.slice(0, 500));
+          }
+        } catch (err) {
+          console.error("AI output was not parseable JSON:", (err as Error).message, rawText.slice(0, 300));
         }
       } else if (!aiError) {
         console.error("AI output was not JSON:", rawText.slice(0, 500));
       }
     }
 
-
-
     articles = articles.filter((a) => a.source_url?.startsWith("http"));
+
+    // Keep summaries short and headlines free of the publisher suffix even
+    // when the model gets chatty.
+    const clean = (s: string | null | undefined, max: number) => {
+      if (!s) return null;
+      const trimmed = s.replace(/\s+/g, " ").trim();
+      if (!trimmed) return null;
+      return trimmed.length > max ? `${trimmed.slice(0, max - 1).trimEnd()}…` : trimmed;
+    };
+    const stripSource = (title: string) =>
+      title.replace(/\s+[-–—|]\s+[^-–—|]{2,40}$/u, "").trim() || title.trim();
+
+    articles = articles.map((a) => ({
+      ...a,
+      title_en: clean(stripSource(a.title_en), 120) ?? a.title_en,
+      title_hi: clean(a.title_hi ? stripSource(a.title_hi) : null, 120),
+      summary_en: clean(a.summary_en, 300),
+      summary_hi: clean(a.summary_hi, 300),
+    }));
 
     // Fallback: if the AI step failed or returned nothing, still publish the
     // live search results as-is so readers get fresh news without AI credits.
@@ -163,15 +189,17 @@ Deno.serve(async (req) => {
       articles = results
         .filter((r) => !SOCIAL.test(r.url))
         .map((r) => ({
-          title_en: r.title.slice(0, 200),
+          title_en: clean(stripSource(r.title), 120) ?? r.title.slice(0, 120),
           title_hi: null,
-          summary_en: r.description ? r.description.slice(0, 500) : null,
+          summary_en: clean(r.description?.replace(/<[^>]+>/g, " "), 300),
           summary_hi: null,
           category: "general",
           source_url: r.url,
           source_name: r.sourceName ?? null,
         }));
     }
+
+
 
 
 
