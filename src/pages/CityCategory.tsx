@@ -163,6 +163,10 @@ const CityCategory = ({ lang }: { lang: Lang }) => {
           ))}
         </ul>
 
+        <h2 className="font-heading text-xl font-semibold tracking-tight sm:text-2xl">
+          {lang === "hi" ? "ताज़ा ख़बरें" : "Latest stories"}
+        </h2>
+
         <div className="mt-8">
           {loading ? (
             <NewsSkeleton />
