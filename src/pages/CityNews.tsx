@@ -172,6 +172,25 @@ const CityNews = ({ lang }: { lang: Lang }) => {
     return () => clearInterval(timer);
   }, [cityName, articles, c, lang, readIds]);
 
+  // Keep pulling fresh Google News RSS stories in the background while the
+  // reader stays on the page, and again whenever they return to the tab.
+  useEffect(() => {
+    if (!cityName) return;
+    const refresh = () => {
+      if (document.hidden) return;
+      fetchLive(cityName, city?.state, true);
+    };
+    const timer = setInterval(refresh, REFRESH_MS);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cityName]);
+
+
+
   const toggleRead = useCallback(
     (id: string, next: boolean) => {
       if (!cityName) return;
