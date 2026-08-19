@@ -81,21 +81,7 @@ export async function firecrawl(
 
   let last: FirecrawlResult | null = null;
 
-  // 1. Built-in connector account
-  if (LOVABLE_API_KEY && FIRECRAWL_API_KEY) {
-    const { status, body } = await callWithRetry(path, payload, {
-      Authorization: `Bearer ${LOVABLE_API_KEY}`,
-      "X-Connection-Api-Key": FIRECRAWL_API_KEY,
-    }, GATEWAY_URL);
-    if (status >= 200 && status < 300) {
-      return { ok: true, status, body, usedAccount: "Built-in account" };
-    }
-    console.error(`Firecrawl built-in account failed [${status}]`);
-    last = { ok: false, status, body, usedAccount: "Built-in account" };
-    if (!EXHAUSTED.has(status) && status !== 0) return last;
-  }
-
-  // 2. Admin-added backup accounts (skipping any in cooldown)
+  // 1. Admin-added accounts first (own API keys, no Lovable credits)
   const { data: keys } = await supabase
     .from("firecrawl_keys")
     .select("id, label, api_key, failure_count, cooldown_until")
@@ -125,6 +111,20 @@ export async function firecrawl(
     last = { ok: false, status, body, usedAccount: key.label };
     if (!EXHAUSTED.has(status) && status !== 0) return last;
   }
+
+  // 2. Built-in connector account, only as a last resort
+  if (LOVABLE_API_KEY && FIRECRAWL_API_KEY) {
+    const { status, body } = await callWithRetry(path, payload, {
+      Authorization: `Bearer ${LOVABLE_API_KEY}`,
+      "X-Connection-Api-Key": FIRECRAWL_API_KEY,
+    }, GATEWAY_URL);
+    if (status >= 200 && status < 300) {
+      return { ok: true, status, body, usedAccount: "Built-in account" };
+    }
+    console.error(`Firecrawl built-in account failed [${status}]`);
+    last = { ok: false, status, body, usedAccount: "Built-in account" };
+  }
+
 
   return last ?? {
     ok: false,

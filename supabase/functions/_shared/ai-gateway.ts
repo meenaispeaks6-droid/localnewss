@@ -93,18 +93,8 @@ export async function generateNewsText(
     );
   }
 
-  // Fallback: Lovable AI Gateway
-  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-  if (LOVABLE_API_KEY) {
-    try {
-      const model = createLovableAiGatewayProvider(LOVABLE_API_KEY)("google/gemini-3.6-flash");
-      const stream = streamText({ model, ...opts });
-      return { text: (await stream.text).trim(), usedAccount: "Lovable AI (credits)", error: null };
-    } catch (err) {
-      lastError = err instanceof Error ? err.message : String(err);
-      console.error("Lovable AI Gateway failed:", lastError);
-    }
-  }
-
+  // No Lovable AI fallback on purpose: this app runs AI only on the
+  // admin-managed keys (ai_keys), so no Lovable credits are consumed.
   return { text: "", usedAccount: "none", error: lastError ?? "No AI key available" };
+
 }
