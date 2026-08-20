@@ -51,28 +51,76 @@ export async function generateNewsText(
     const outcome = await withRetry(
       async () => {
         try {
-          const provider = createOpenAICompatible({
-            name: "admin-ai-key",
-            baseURL: key.base_url,
-            headers: { Authorization: `Bearer ${key.api_key}` },
-          });
-          const stream = streamText({
-            model: provider(key.model),
-            ...opts,
-            // Bilingual article JSON is substantially larger than a normal
-            // chat answer. Provider defaults can stop around 2K tokens and
-            // leave an otherwise valid JSON document cut in half.
-            maxOutputTokens: 1500,
-            maxRetries: 0,
-          });
-          const text = (await stream.text).trim();
+          // Plain (non-streaming) OpenAI-compatible call. Some community
+          // routers accept the request but never emit stream chunks, which
+          // looked like an "empty response" even though the key works.
+          const res = await fetch(
+            `${key.base_url.replace(/\/$/, "")}/chat/completions`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${key.api_key}`,
+                // Some routers sit behind a bot firewall that blocks
+                // requests without a normal browser/client fingerprint.
+                Accept: "application/json",
+                "User-Agent":
+                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+              },
+              body: JSON.stringify({
+                model: key.model,
+                messages: [
+                  { role: "system", content: opts.system },
+                  { role: "user", content: opts.prompt },
+                ],
+                // Bilingual article JSON is larger than a normal chat answer;
+                // provider defaults can cut a valid JSON document in half.
+                max_tokens: 2000,
+                temperature: 0.2,
+              }),
+            },
+          );
+          const raw = await res.text();
+          if (!res.ok) {
+            return { text: "", error: raw.slice(0, 300) || `HTTP ${res.status}`, status: res.status };
+          }
+          let text = "";
+          try {
+            const body = JSON.parse(raw);
+            const msg = body?.choices?.[0]?.message;
+            text = String(
+              msg?.content ?? msg?.reasoning_content ?? body?.choices?.[0]?.text ?? "",
+            ).trim();
+          } catch {
+            // Some routers answer with an SSE stream even for a plain
+            // request — stitch the delta chunks back together.
+            const chunks: string[] = [];
+            for (const line of raw.split("\n")) {
+              const t = line.trim();
+              if (!t.startsWith("data:")) continue;
+              const payload = t.slice(5).trim();
+              if (!payload || payload === "[DONE]") continue;
+              try {
+                const piece = JSON.parse(payload)?.choices?.[0];
+                const part = piece?.delta?.content ?? piece?.message?.content ?? "";
+                if (part) chunks.push(String(part));
+              } catch { /* ignore malformed chunk */ }
+            }
+            text = chunks.join("").trim();
+            if (!text) {
+              return {
+                text: "",
+                error: `Provider returned non-JSON body: ${raw.replace(/\s+/g, " ").slice(0, 200)}`,
+                status: 502,
+              };
+            }
+          }
           // An empty reply means this account silently refused the request —
-          // treat it as a failure so the next account (or Lovable AI) is used.
+          // treat it as a failure so the next account is used.
           if (text.length < 2) {
             return { text: "", error: "Empty response from provider", status: 502 };
           }
           return { text, error: null as string | null, status: 200 };
-
         } catch (err) {
           const message = err instanceof Error ? err.message : String(err);
           const status = (err as { statusCode?: number })?.statusCode ?? 0;
@@ -80,7 +128,7 @@ export async function generateNewsText(
         }
       },
       {
-        tries: 1,
+        tries: 2,
         shouldRetry: (r) => !!r.error && isRetryableError(r.error, r.status || undefined),
       },
     );

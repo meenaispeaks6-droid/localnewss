@@ -1,0 +1,1 @@
+update public.ai_keys set failure_count=0, cooldown_until=null, exhausted_at=null, last_error=null where is_active;

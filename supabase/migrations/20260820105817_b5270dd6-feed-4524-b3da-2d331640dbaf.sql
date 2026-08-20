@@ -1,0 +1,2 @@
+update public.ai_keys set base_url='https://openrouter.ai/api/v1', failure_count=0, cooldown_until=null, last_error=null where label='Open';
+update public.ai_keys set base_url='https://agentrouter.org/v1', failure_count=0, cooldown_until=null, last_error=null where label='Hey';
