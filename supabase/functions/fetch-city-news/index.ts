@@ -105,6 +105,10 @@ Deno.serve(async (req) => {
       }, 200);
     }
 
+    // Keep each editorial request small enough for providers to finish the
+    // complete bilingual JSON response instead of truncating it mid-article.
+    const editorialResults = results.slice(0, 8);
+
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
     let articles: z.infer<typeof ArticlesSchema>["articles"] = [];
     let aiError: string | null = null;
@@ -125,7 +129,7 @@ Deno.serve(async (req) => {
           "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.\n" +
           "- source_url must be copied exactly from the input.",
         prompt: `City: ${place}\n\nSearch results:\n${
-          results
+           editorialResults
             .map((r, i) =>
               `${i + 1}. TITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nURL: ${r.url}\nTEXT: ${r.description}`
             )
@@ -222,11 +226,11 @@ Deno.serve(async (req) => {
         published_at: pubMap.get(a.source_url) ?? new Date().toISOString(),
       }));
 
-      // Only genuinely new URLs are stored; existing ones keep their original
-      // published_at so "new since" checks stay accurate.
+      // Update matching URLs too. A story may first be cached by the non-AI
+      // fallback and gain its Hindi fields on a later successful AI run.
       const { data: insertedRows, error } = await supabase
         .from("news_articles")
-        .upsert(rows, { onConflict: "source_url", ignoreDuplicates: true })
+        .upsert(rows, { onConflict: "source_url", ignoreDuplicates: false })
         .select("id");
       if (error) console.error("Cache write failed:", error.message);
       inserted = insertedRows?.length ?? 0;

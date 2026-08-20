@@ -69,7 +69,8 @@ const t = {
 
 const STALE_MS = 5 * 60 * 1000;
 const LIVE_POLL_MS = 60 * 1000;
-const REFRESH_MS = 3 * 60 * 1000;
+// Refresh the RSS-backed feed every minute while this city page is visible.
+const REFRESH_MS = 60 * 1000;
 
 
 const CityNews = ({ lang }: { lang: Lang }) => {
