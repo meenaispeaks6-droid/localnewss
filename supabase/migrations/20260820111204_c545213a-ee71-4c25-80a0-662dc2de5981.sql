@@ -1,0 +1,1 @@
+update public.ai_keys set model='deepseek/deepseek-chat-v3.1:free', exhausted_at=null, failure_count=0, cooldown_until=null, last_error=null where label='Open';
