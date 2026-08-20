@@ -120,7 +120,17 @@ Deno.serve(async (req) => {
     // Enrich the freshest story per refresh. This stays below the
     // working account's token-per-minute limit; repeated minute refreshes
     // progressively enrich the feed without blocking live RSS updates.
-    const editorialResults = results.slice(0, 3);
+    // Spend the AI budget on stories that have no Hindi version yet, so every
+    // refresh adds new bilingual articles instead of redoing the same ones.
+    const { data: alreadyBilingual } = await supabase
+      .from("news_articles")
+      .select("source_url")
+      .not("title_hi", "is", null)
+      .in("source_url", results.slice(0, 40).map((r) => r.url));
+    const doneUrls = new Set((alreadyBilingual ?? []).map((r) => r.source_url));
+    const pending = results.filter((r) => !doneUrls.has(r.url));
+    const editorialResults = (pending.length > 0 ? pending : results).slice(0, 6);
+
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
     let articles: OutArticle[] = [];
