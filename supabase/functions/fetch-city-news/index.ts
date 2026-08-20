@@ -130,7 +130,7 @@ Deno.serve(async (req) => {
       "You are a bilingual (Hindi + English) local news editor for India. " +
       "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
       'Reply with ONLY raw JSON of the shape {"articles":[{"id":1,"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_name":""}]} ' +
-      "with no markdown fences and no commentary.\n" +
+      "with no markdown fences, no reasoning, no explanation before or after the JSON. The first character of your reply must be '{'.\n" +
       "Writing rules:\n" +
       "- Return one article for every valid input result, and copy its id number exactly.\n" +
       "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
