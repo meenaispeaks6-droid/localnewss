@@ -33,13 +33,19 @@ function tag(block: string, name: string): string | undefined {
 }
 
 async function fetchFeed(url: string): Promise<NewsHit[]> {
-  const res = await fetch(url, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (compatible; LocalNewsBot/1.0; +https://localnews.meenai.in)",
-      Accept: "application/rss+xml, application/xml, text/xml",
-    },
-  });
+  let res: Response | null = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    res = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (compatible; LocalNewsBot/1.0; +https://localnews.meenai.in)",
+        Accept: "application/rss+xml, application/xml, text/xml",
+      },
+    });
+    if (res.ok || (res.status !== 429 && res.status < 500)) break;
+    await new Promise((resolve) => setTimeout(resolve, 750 * 2 ** attempt));
+  }
+  if (!res) return [];
   if (!res.ok) {
     console.error(`Google News RSS failed [${res.status}] ${url}`);
     return [];

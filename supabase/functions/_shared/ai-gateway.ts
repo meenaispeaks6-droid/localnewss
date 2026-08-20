@@ -62,7 +62,7 @@ export async function generateNewsText(
             // Bilingual article JSON is substantially larger than a normal
             // chat answer. Provider defaults can stop around 2K tokens and
             // leave an otherwise valid JSON document cut in half.
-            maxOutputTokens: 7000,
+            maxOutputTokens: 2200,
           });
           const text = (await stream.text).trim();
           // An empty reply means this account silently refused the request —
