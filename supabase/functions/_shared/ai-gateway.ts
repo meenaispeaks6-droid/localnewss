@@ -73,11 +73,16 @@ export async function generateNewsText(
                   { role: "system", content: opts.system },
                   { role: "user", content: opts.prompt },
                 ],
+                // Reasoning models otherwise narrate before answering and burn
+                // the output budget, so the JSON document never arrives.
+                response_format: { type: "json_object" },
+                reasoning: { exclude: true, effort: "low" },
                 // Bilingual article JSON is larger than a normal chat answer;
                 // provider defaults can cut a valid JSON document in half.
-                max_tokens: 2000,
+                max_tokens: 3000,
                 temperature: 0.2,
               }),
+
             },
           );
           const raw = await res.text();

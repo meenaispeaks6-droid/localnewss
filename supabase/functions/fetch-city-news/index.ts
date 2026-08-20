@@ -120,7 +120,17 @@ Deno.serve(async (req) => {
     // Enrich the freshest story per refresh. This stays below the
     // working account's token-per-minute limit; repeated minute refreshes
     // progressively enrich the feed without blocking live RSS updates.
-    const editorialResults = results.slice(0, 3);
+    // Spend the AI budget on stories that have no Hindi version yet, so every
+    // refresh adds new bilingual articles instead of redoing the same ones.
+    const { data: alreadyBilingual } = await supabase
+      .from("news_articles")
+      .select("source_url")
+      .not("title_hi", "is", null)
+      .in("source_url", results.slice(0, 40).map((r) => r.url));
+    const doneUrls = new Set((alreadyBilingual ?? []).map((r) => r.source_url));
+    const pending = results.filter((r) => !doneUrls.has(r.url));
+    const editorialResults = (pending.length > 0 ? pending : results).slice(0, 6);
+
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
     let articles: OutArticle[] = [];
@@ -130,7 +140,7 @@ Deno.serve(async (req) => {
       "You are a bilingual (Hindi + English) local news editor for India. " +
       "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
       'Reply with ONLY raw JSON of the shape {"articles":[{"id":1,"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_name":""}]} ' +
-      "with no markdown fences and no commentary.\n" +
+      "with no markdown fences, no reasoning, no explanation before or after the JSON. The first character of your reply must be '{'.\n" +
       "Writing rules:\n" +
       "- Return one article for every valid input result, and copy its id number exactly.\n" +
       "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
@@ -161,39 +171,41 @@ Deno.serve(async (req) => {
         continue;
       }
 
-      const jsonText = ai.text
-        .replace(/^```(?:json)?/i, "")
-        .replace(/```$/, "")
-        .trim();
-      const start = jsonText.indexOf("{");
-      const end = jsonText.lastIndexOf("}");
-      if (start === -1 || end <= start) {
+      const candidate = extractArticlesJson(ai.text);
+      if (!candidate) {
         console.error("AI output was not JSON:", ai.text.slice(0, 500));
         continue;
       }
       try {
-        const parsedOut = ArticlesSchema.safeParse(
-          JSON.parse(jsonText.slice(start, end + 1)),
-        );
+        const parsedOut = ArticlesSchema.safeParse(JSON.parse(candidate));
         if (parsedOut.success) {
-          for (const a of parsedOut.data.articles) {
-            const src = batch[Number(a.id) - 1];
-            if (!src) continue;
+          const list = parsedOut.data.articles;
+          console.log(`AI returned ${list.length} article(s) via ${ai.usedAccount}`);
+          list.forEach((a, idx) => {
+            // Models sometimes renumber or drop the id — fall back to the
+            // response position so a good bilingual article is never lost.
+            const src = batch[Number(a.id) - 1] ?? batch[idx];
+            if (!src) return;
             articles.push({
               ...a,
               source_url: src.url,
               source_name: a.source_name || src.sourceName || null,
             });
-          }
+          });
         } else {
           console.error("AI output did not match schema:", parsedOut.error.message, ai.text.slice(0, 500));
         }
       } catch (err) {
         console.error("AI output was not parseable JSON:", (err as Error).message, ai.text.slice(0, 300));
       }
+
+
     }
 
-    articles = articles.filter((a) => a.source_url?.startsWith("http"));
+    articles = articles.filter(
+      (a) => a.source_url?.startsWith("http") && (a.title_en ?? "").trim().length > 3,
+    );
+
 
 
     // Keep summaries short and headlines free of the publisher suffix even
@@ -215,12 +227,18 @@ Deno.serve(async (req) => {
       summary_hi: clean(a.summary_hi, 300),
     }));
 
-    // Fallback: if the AI step failed or returned nothing, still publish the
-    // live search results as-is so readers get fresh news without AI credits.
-    if (articles.length === 0 && results.length > 0) {
+    // Every live result is still published as-is (fresh headlines without any
+    // AI cost); the AI-enriched bilingual versions take precedence by URL.
+    if (results.length > 0) {
       const SOCIAL = /(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com)/i;
-      articles = results
-        .filter((r) => !SOCIAL.test(r.url))
+      const enriched = new Set(articles.map((a) => a.source_url));
+      const raw = results
+        .filter(
+          (r) =>
+            !SOCIAL.test(r.url) &&
+            (r.title ?? "").trim().length > 3 &&
+            !enriched.has(r.url),
+        )
         .map((r) => ({
           title_en: clean(stripSource(r.title), 120) ?? r.title.slice(0, 120),
           title_hi: null,
@@ -230,7 +248,9 @@ Deno.serve(async (req) => {
           source_url: r.url,
           source_name: r.sourceName ?? null,
         }));
+      articles = [...articles, ...raw];
     }
+
 
 
 
@@ -247,22 +267,29 @@ Deno.serve(async (req) => {
       const urls = articles.map((a) => a.source_url);
       const { data: existingRows } = await supabase
         .from("news_articles")
-        .select("source_url, published_at")
+        .select("source_url, published_at, title_en, title_hi, summary_en, summary_hi, category")
         .in("source_url", urls);
-      const existingPubMap = new Map(
-        (existingRows ?? []).map((r) => [r.source_url, r.published_at]),
+      const existing = new Map(
+        (existingRows ?? []).map((r) => [r.source_url, r]),
       );
-      const rows = articles.map((a) => ({
-        city,
-        title_en: a.title_en,
-        title_hi: a.title_hi,
-        summary_en: a.summary_en,
-        summary_hi: a.summary_hi,
-        category: a.category || "general",
-        source_url: a.source_url,
-        source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
-        published_at: pubMap.get(a.source_url) ?? existingPubMap.get(a.source_url) ?? new Date().toISOString(),
-      }));
+      const rows = articles.map((a) => {
+        const prev = existing.get(a.source_url);
+        // Never let a later non-AI refresh wipe bilingual text a previous
+        // AI run already produced for the same story.
+        const keepPrev = !a.title_hi && prev?.title_hi;
+        return {
+          city,
+          title_en: keepPrev ? prev!.title_en : a.title_en,
+          title_hi: a.title_hi ?? prev?.title_hi ?? null,
+          summary_en: keepPrev ? prev!.summary_en : a.summary_en,
+          summary_hi: a.summary_hi ?? prev?.summary_hi ?? null,
+          category: a.category || prev?.category || "general",
+          source_url: a.source_url,
+          source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
+          published_at: pubMap.get(a.source_url) ?? prev?.published_at ?? new Date().toISOString(),
+        };
+      });
+
 
       // Update matching URLs too. A story may first be cached by the non-AI
       // fallback and gain its Hindi fields on a later successful AI run.
@@ -287,6 +314,49 @@ Deno.serve(async (req) => {
     return json({ error: e instanceof Error ? e.message : "Unexpected error" }, 500);
   }
 });
+
+/**
+ * Reasoning models often narrate before answering ("Here's a thinking
+ * process: ... { ... }"), so a naive first-brace/last-brace slice breaks.
+ * Scan for every balanced JSON object and return the first one that parses
+ * and actually contains an "articles" array.
+ */
+function extractArticlesJson(raw: string): string | null {
+  const text = raw
+    .replace(/<think>[\s\S]*?<\/think>/gi, " ")
+    .replace(/```(?:json)?/gi, " ");
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] !== "{") continue;
+    let depth = 0;
+    let inStr = false;
+    let esc = false;
+    for (let j = i; j < text.length; j++) {
+      const c = text[j];
+      if (inStr) {
+        if (esc) esc = false;
+        else if (c === "\\") esc = true;
+        else if (c === '"') inStr = false;
+        continue;
+      }
+      if (c === '"') inStr = true;
+      else if (c === "{") depth++;
+      else if (c === "}") {
+        depth--;
+        if (depth === 0) {
+          const slice = text.slice(i, j + 1);
+          try {
+            const obj = JSON.parse(slice);
+            if (obj && Array.isArray(obj.articles)) return slice;
+          } catch { /* keep scanning */ }
+          i = j;
+          break;
+        }
+      }
+    }
+  }
+  return null;
+}
+
 
 function json(body: unknown, status: number) {
   return new Response(JSON.stringify(body), {
