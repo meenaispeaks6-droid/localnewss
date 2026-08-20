@@ -107,10 +107,10 @@ Deno.serve(async (req) => {
 
     // Keep each editorial request small enough for providers to finish the
     // complete bilingual JSON response instead of truncating it mid-article.
-    // Enrich the three freshest stories per refresh. This stays below the
+    // Enrich the freshest story per refresh. This stays below the
     // working account's token-per-minute limit; repeated minute refreshes
     // progressively enrich the feed without blocking live RSS updates.
-    const editorialResults = results.slice(0, 3);
+    const editorialResults = results.slice(0, 1);
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
     let articles: z.infer<typeof ArticlesSchema>["articles"] = [];
