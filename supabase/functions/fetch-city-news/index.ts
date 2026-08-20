@@ -217,13 +217,18 @@ Deno.serve(async (req) => {
       summary_hi: clean(a.summary_hi, 300),
     }));
 
-    // Fallback: if the AI step failed or returned nothing, still publish the
-    // live search results as-is so readers get fresh news without AI credits.
-    if (articles.length === 0 && results.length > 0) {
+    // Every live result is still published as-is (fresh headlines without any
+    // AI cost); the AI-enriched bilingual versions take precedence by URL.
+    if (results.length > 0) {
       const SOCIAL = /(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com)/i;
-      articles = results
-        .filter((r) => !SOCIAL.test(r.url) && (r.title ?? "").trim().length > 3)
-
+      const enriched = new Set(articles.map((a) => a.source_url));
+      const raw = results
+        .filter(
+          (r) =>
+            !SOCIAL.test(r.url) &&
+            (r.title ?? "").trim().length > 3 &&
+            !enriched.has(r.url),
+        )
         .map((r) => ({
           title_en: clean(stripSource(r.title), 120) ?? r.title.slice(0, 120),
           title_hi: null,
@@ -233,7 +238,9 @@ Deno.serve(async (req) => {
           source_url: r.url,
           source_name: r.sourceName ?? null,
         }));
+      articles = [...articles, ...raw];
     }
+
 
 
 
