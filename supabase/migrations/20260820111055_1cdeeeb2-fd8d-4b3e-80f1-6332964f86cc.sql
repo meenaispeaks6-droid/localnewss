@@ -1,0 +1,2 @@
+update public.ai_keys set model='meta-llama/llama-3.3-70b-instruct:free', exhausted_at=null, failure_count=0, cooldown_until=null, last_error=null, priority=10 where label='Open';
+update public.ai_keys set priority=90, failure_count=0, cooldown_until=null where label='Hey';

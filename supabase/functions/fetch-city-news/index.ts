@@ -14,16 +14,26 @@ const BodySchema = z.object({
 const ArticlesSchema = z.object({
   articles: z.array(
     z.object({
+      id: z.coerce.number(),
       title_en: z.string(),
       title_hi: z.string().nullish(),
       summary_en: z.string().nullish(),
       summary_hi: z.string().nullish(),
       category: z.string().nullish(),
-      source_url: z.string(),
       source_name: z.string().nullish(),
     }),
   ),
 });
+
+type OutArticle = {
+  title_en: string;
+  title_hi?: string | null;
+  summary_en?: string | null;
+  summary_hi?: string | null;
+  category?: string | null;
+  source_url: string;
+  source_name?: string | null;
+};
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -110,36 +120,38 @@ Deno.serve(async (req) => {
     // Enrich the freshest story per refresh. This stays below the
     // working account's token-per-minute limit; repeated minute refreshes
     // progressively enrich the feed without blocking live RSS updates.
-    const editorialResults = results.slice(0, 1);
+    const editorialResults = results.slice(0, 3);
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
-    let articles: z.infer<typeof ArticlesSchema>["articles"] = [];
+    let articles: OutArticle[] = [];
     let aiError: string | null = null;
 
     const systemPrompt =
       "You are a bilingual (Hindi + English) local news editor for India. " +
       "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
-      'Reply with ONLY raw JSON of the shape {"articles":[{"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_url":"","source_name":""}]} ' +
+      'Reply with ONLY raw JSON of the shape {"articles":[{"id":1,"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_name":""}]} ' +
       "with no markdown fences and no commentary.\n" +
       "Writing rules:\n" +
-      "- Return one article for every valid input result.\n" +
+      "- Return one article for every valid input result, and copy its id number exactly.\n" +
       "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
       "- Never keep the publisher name inside a headline; put it in source_name.\n" +
       "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n" +
       "- Both languages are mandatory for every article. Use simple words and never invent facts.\n" +
-      "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.\n" +
-      "- source_url must be copied exactly from the input.";
+      "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.";
 
     // Small batches prevent providers with short output limits from cutting
     // the JSON document in half. A failed batch does not discard successful
     // bilingual articles from the other batches.
     for (let offset = 0; offset < editorialResults.length; offset += 3) {
       const batch = editorialResults.slice(offset, offset + 3);
+      // Source URLs stay out of the prompt: Google News links are very long
+      // base64 blobs that some providers' firewalls reject, and the model
+      // only needs an id it can echo back.
       const ai = await generateNewsText(supabase, {
         system: systemPrompt,
         prompt: `City: ${place}\n\nSearch results:\n${batch
           .map((r, i) =>
-            `${i + 1}. TITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nURL: ${r.url}\nTEXT: ${r.description.slice(0, 240)}`
+            `id ${i + 1}\nTITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nTEXT: ${r.description.replace(/<[^>]+>/g, " ").slice(0, 240)}`
           )
           .join("\n\n")}`,
       });
@@ -164,7 +176,15 @@ Deno.serve(async (req) => {
           JSON.parse(jsonText.slice(start, end + 1)),
         );
         if (parsedOut.success) {
-          articles.push(...parsedOut.data.articles);
+          for (const a of parsedOut.data.articles) {
+            const src = batch[Number(a.id) - 1];
+            if (!src) continue;
+            articles.push({
+              ...a,
+              source_url: src.url,
+              source_name: a.source_name || src.sourceName || null,
+            });
+          }
         } else {
           console.error("AI output did not match schema:", parsedOut.error.message, ai.text.slice(0, 500));
         }
@@ -174,6 +194,7 @@ Deno.serve(async (req) => {
     }
 
     articles = articles.filter((a) => a.source_url?.startsWith("http"));
+
 
     // Keep summaries short and headlines free of the publisher suffix even
     // when the model gets chatty.
