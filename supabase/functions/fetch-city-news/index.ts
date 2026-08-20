@@ -257,22 +257,29 @@ Deno.serve(async (req) => {
       const urls = articles.map((a) => a.source_url);
       const { data: existingRows } = await supabase
         .from("news_articles")
-        .select("source_url, published_at")
+        .select("source_url, published_at, title_en, title_hi, summary_en, summary_hi, category")
         .in("source_url", urls);
-      const existingPubMap = new Map(
-        (existingRows ?? []).map((r) => [r.source_url, r.published_at]),
+      const existing = new Map(
+        (existingRows ?? []).map((r) => [r.source_url, r]),
       );
-      const rows = articles.map((a) => ({
-        city,
-        title_en: a.title_en,
-        title_hi: a.title_hi,
-        summary_en: a.summary_en,
-        summary_hi: a.summary_hi,
-        category: a.category || "general",
-        source_url: a.source_url,
-        source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
-        published_at: pubMap.get(a.source_url) ?? existingPubMap.get(a.source_url) ?? new Date().toISOString(),
-      }));
+      const rows = articles.map((a) => {
+        const prev = existing.get(a.source_url);
+        // Never let a later non-AI refresh wipe bilingual text a previous
+        // AI run already produced for the same story.
+        const keepPrev = !a.title_hi && prev?.title_hi;
+        return {
+          city,
+          title_en: keepPrev ? prev!.title_en : a.title_en,
+          title_hi: a.title_hi ?? prev?.title_hi ?? null,
+          summary_en: keepPrev ? prev!.summary_en : a.summary_en,
+          summary_hi: a.summary_hi ?? prev?.summary_hi ?? null,
+          category: a.category || prev?.category || "general",
+          source_url: a.source_url,
+          source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
+          published_at: pubMap.get(a.source_url) ?? prev?.published_at ?? new Date().toISOString(),
+        };
+      });
+
 
       // Update matching URLs too. A story may first be cached by the non-AI
       // fallback and gain its Hindi fields on a later successful AI run.
