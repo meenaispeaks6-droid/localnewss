@@ -169,21 +169,26 @@ Deno.serve(async (req) => {
       try {
         const parsedOut = ArticlesSchema.safeParse(JSON.parse(candidate));
         if (parsedOut.success) {
-          for (const a of parsedOut.data.articles) {
-            const src = batch[Number(a.id) - 1];
-            if (!src) continue;
+          const list = parsedOut.data.articles;
+          console.log(`AI returned ${list.length} article(s) via ${ai.usedAccount}`);
+          list.forEach((a, idx) => {
+            // Models sometimes renumber or drop the id — fall back to the
+            // response position so a good bilingual article is never lost.
+            const src = batch[Number(a.id) - 1] ?? batch[idx];
+            if (!src) return;
             articles.push({
               ...a,
               source_url: src.url,
               source_name: a.source_name || src.sourceName || null,
             });
-          }
+          });
         } else {
           console.error("AI output did not match schema:", parsedOut.error.message, ai.text.slice(0, 500));
         }
       } catch (err) {
         console.error("AI output was not parseable JSON:", (err as Error).message, ai.text.slice(0, 300));
       }
+
 
     }
 
