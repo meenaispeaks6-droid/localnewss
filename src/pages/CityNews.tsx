@@ -8,6 +8,7 @@ import NewsCard from "@/components/NewsCard";
 import NewsSkeleton from "@/components/NewsSkeleton";
 import Seo from "@/components/Seo";
 import NotifyButton from "@/components/NotifyButton";
+import CityWeather from "@/components/CityWeather";
 import SiteFooter from "@/components/SiteFooter";
 import NotFound from "@/pages/NotFound";
 import { supabase } from "@/integrations/supabase/client";
