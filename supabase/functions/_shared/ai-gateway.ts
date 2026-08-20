@@ -54,9 +54,7 @@ export async function generateNewsText(
           const provider = createOpenAICompatible({
             name: "admin-ai-key",
             baseURL: key.base_url,
-            headers: key.base_url.includes("generativelanguage.googleapis.com")
-              ? { "x-goog-api-key": key.api_key }
-              : { Authorization: `Bearer ${key.api_key}` },
+            headers: { Authorization: `Bearer ${key.api_key}` },
           });
           const stream = streamText({
             model: provider(key.model),
