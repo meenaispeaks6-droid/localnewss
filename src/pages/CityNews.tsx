@@ -387,6 +387,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
                 {c.intro(cityLabel, stateLabel)}
               </p>
+              <CityWeather city={city.name} lang={lang} />
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
