@@ -286,6 +286,49 @@ Deno.serve(async (req) => {
   }
 });
 
+/**
+ * Reasoning models often narrate before answering ("Here's a thinking
+ * process: ... { ... }"), so a naive first-brace/last-brace slice breaks.
+ * Scan for every balanced JSON object and return the first one that parses
+ * and actually contains an "articles" array.
+ */
+function extractArticlesJson(raw: string): string | null {
+  const text = raw
+    .replace(/<think>[\s\S]*?<\/think>/gi, " ")
+    .replace(/```(?:json)?/gi, " ");
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] !== "{") continue;
+    let depth = 0;
+    let inStr = false;
+    let esc = false;
+    for (let j = i; j < text.length; j++) {
+      const c = text[j];
+      if (inStr) {
+        if (esc) esc = false;
+        else if (c === "\\") esc = true;
+        else if (c === '"') inStr = false;
+        continue;
+      }
+      if (c === '"') inStr = true;
+      else if (c === "{") depth++;
+      else if (c === "}") {
+        depth--;
+        if (depth === 0) {
+          const slice = text.slice(i, j + 1);
+          try {
+            const obj = JSON.parse(slice);
+            if (obj && Array.isArray(obj.articles)) return slice;
+          } catch { /* keep scanning */ }
+          i = j;
+          break;
+        }
+      }
+    }
+  }
+  return null;
+}
+
+
 function json(body: unknown, status: number) {
   return new Response(JSON.stringify(body), {
     status,
