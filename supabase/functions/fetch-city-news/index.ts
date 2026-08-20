@@ -187,7 +187,10 @@ Deno.serve(async (req) => {
 
     }
 
-    articles = articles.filter((a) => a.source_url?.startsWith("http"));
+    articles = articles.filter(
+      (a) => a.source_url?.startsWith("http") && (a.title_en ?? "").trim().length > 3,
+    );
+
 
 
     // Keep summaries short and headlines free of the publisher suffix even
