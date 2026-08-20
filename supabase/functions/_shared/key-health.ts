@@ -31,12 +31,21 @@ async function probe(
   try {
     const res = await fetch(url, init);
     const body = (await res.text()).slice(0, 500);
+    // Some routers sit behind a bot firewall that answers HTTP 200 with an
+    // HTML challenge page. That is not a working API key.
+    const isHtml = /^\s*<(!doctype|html|meta)/i.test(body);
+    const ok = res.ok && !isHtml;
     return {
-      ok: res.ok,
-      status: res.status,
+      ok,
+      status: isHtml ? 403 : res.status,
       latencyMs: Date.now() - started,
-      details: res.ok ? body.slice(0, 300) : errorMessage(body),
+      details: isHtml
+        ? "Blocked by the provider's bot firewall (HTML challenge page instead of an API response)"
+        : ok
+        ? body.slice(0, 300)
+        : errorMessage(body),
     };
+
   } catch (e) {
     return {
       ok: false,
