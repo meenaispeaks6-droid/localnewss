@@ -161,20 +161,13 @@ Deno.serve(async (req) => {
         continue;
       }
 
-      const jsonText = ai.text
-        .replace(/^```(?:json)?/i, "")
-        .replace(/```$/, "")
-        .trim();
-      const start = jsonText.indexOf("{");
-      const end = jsonText.lastIndexOf("}");
-      if (start === -1 || end <= start) {
+      const candidate = extractArticlesJson(ai.text);
+      if (!candidate) {
         console.error("AI output was not JSON:", ai.text.slice(0, 500));
         continue;
       }
       try {
-        const parsedOut = ArticlesSchema.safeParse(
-          JSON.parse(jsonText.slice(start, end + 1)),
-        );
+        const parsedOut = ArticlesSchema.safeParse(JSON.parse(candidate));
         if (parsedOut.success) {
           for (const a of parsedOut.data.articles) {
             const src = batch[Number(a.id) - 1];
@@ -191,6 +184,7 @@ Deno.serve(async (req) => {
       } catch (err) {
         console.error("AI output was not parseable JSON:", (err as Error).message, ai.text.slice(0, 300));
       }
+
     }
 
     articles = articles.filter((a) => a.source_url?.startsWith("http"));
