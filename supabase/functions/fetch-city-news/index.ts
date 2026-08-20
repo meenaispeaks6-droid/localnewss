@@ -217,7 +217,8 @@ Deno.serve(async (req) => {
     if (articles.length === 0 && results.length > 0) {
       const SOCIAL = /(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com)/i;
       articles = results
-        .filter((r) => !SOCIAL.test(r.url))
+        .filter((r) => !SOCIAL.test(r.url) && (r.title ?? "").trim().length > 3)
+
         .map((r) => ({
           title_en: clean(stripSource(r.title), 120) ?? r.title.slice(0, 120),
           title_hi: null,
