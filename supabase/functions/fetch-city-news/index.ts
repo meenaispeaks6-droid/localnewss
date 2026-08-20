@@ -101,7 +101,13 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Drop non-story links (section fronts, e-papers, homepages, tag pages)
+    // that Firecrawl search often returns — they look like "no new news"
+    // because they never change.
+    results = results.filter((r) => isRealStory(r.url, r.title));
+
     if (results.length === 0) {
+
       const { data: cached } = await supabase
         .from("news_articles")
         .select("*")
@@ -358,7 +364,33 @@ function extractArticlesJson(raw: string): string | null {
 }
 
 
+/**
+ * A real story has a headline (not a section name like "राजस्थान") and a URL
+ * that points at an article, not a site front page or e-paper index.
+ */
+function isRealStory(url: string, title: string): boolean {
+  const t = (title ?? "").replace(/\s+/g, " ").trim();
+  if (t.length < 15 || t.split(/\s+/).length < 3) return false;
+  if (/(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page)/i.test(t)) {
+    return false;
+  }
+  let path = "";
+  try {
+    path = new URL(url).pathname;
+  } catch {
+    return false;
+  }
+  const segments = path.split("/").filter(Boolean);
+  // Article URLs have a slug or numeric id; section fronts are 1-2 short words.
+  if (segments.length === 0) return false;
+  const last = segments[segments.length - 1];
+  if (segments.length <= 1 && last.length < 12) return false;
+  if (/^(news|city|state|india|videos?|photos?|tag|topic|category)$/i.test(last)) return false;
+  return true;
+}
+
 function json(body: unknown, status: number) {
+
   return new Response(JSON.stringify(body), {
     status,
     headers: { ...corsHeaders, "Content-Type": "application/json" },
