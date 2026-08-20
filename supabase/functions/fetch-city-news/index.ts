@@ -105,58 +105,71 @@ Deno.serve(async (req) => {
       }, 200);
     }
 
+    // Keep each editorial request small enough for providers to finish the
+    // complete bilingual JSON response instead of truncating it mid-article.
+    // Enrich the freshest story per refresh. This stays below the
+    // working account's token-per-minute limit; repeated minute refreshes
+    // progressively enrich the feed without blocking live RSS updates.
+    const editorialResults = results.slice(0, 1);
+
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
     let articles: z.infer<typeof ArticlesSchema>["articles"] = [];
     let aiError: string | null = null;
 
-    {
+    const systemPrompt =
+      "You are a bilingual (Hindi + English) local news editor for India. " +
+      "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
+      'Reply with ONLY raw JSON of the shape {"articles":[{"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_url":"","source_name":""}]} ' +
+      "with no markdown fences and no commentary.\n" +
+      "Writing rules:\n" +
+      "- Return one article for every valid input result.\n" +
+      "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
+      "- Never keep the publisher name inside a headline; put it in source_name.\n" +
+      "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n" +
+      "- Both languages are mandatory for every article. Use simple words and never invent facts.\n" +
+      "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.\n" +
+      "- source_url must be copied exactly from the input.";
+
+    // Small batches prevent providers with short output limits from cutting
+    // the JSON document in half. A failed batch does not discard successful
+    // bilingual articles from the other batches.
+    for (let offset = 0; offset < editorialResults.length; offset += 3) {
+      const batch = editorialResults.slice(offset, offset + 3);
       const ai = await generateNewsText(supabase, {
-        system:
-          "You are a bilingual (Hindi + English) local news editor for India. " +
-          "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
-          'Reply with ONLY raw JSON of the shape {"articles":[{"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_url":"","source_name":""}]} ' +
-          "with no markdown fences and no commentary.\n" +
-          "Writing rules:\n" +
-          "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
-          "- Never keep the publisher name inside a headline (remove trailing ' - Zee News', ' | Dainik Bhaskar' etc.); put it in source_name.\n" +
-          "- summary_en and summary_hi: exactly 1-2 short sentences (max 300 characters) that answer what happened, where and why it matters. No long paragraphs, no repetition of the headline word for word.\n" +
-          "- Both languages are mandatory for every article; translate rather than leaving a field empty.\n" +
-          "- Simple everyday words; no clickbait, no opinion, no invented facts beyond the given text.\n" +
-          "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.\n" +
-          "- source_url must be copied exactly from the input.",
-        prompt: `City: ${place}\n\nSearch results:\n${
-          results
-            .map((r, i) =>
-              `${i + 1}. TITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nURL: ${r.url}\nTEXT: ${r.description}`
-            )
-            .join("\n\n")
-        }`,
+        system: systemPrompt,
+        prompt: `City: ${place}\n\nSearch results:\n${batch
+          .map((r, i) =>
+            `${i + 1}. TITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nURL: ${r.url}\nTEXT: ${r.description.slice(0, 240)}`
+          )
+          .join("\n\n")}`,
       });
 
-      const rawText = ai.text;
-      aiError = ai.error ? "AI summarisation unavailable — showing live search results" : null;
+      if (ai.error) {
+        aiError = "AI summarisation partially unavailable — showing live search results";
+        continue;
+      }
 
-      const jsonText = rawText
+      const jsonText = ai.text
         .replace(/^```(?:json)?/i, "")
         .replace(/```$/, "")
         .trim();
       const start = jsonText.indexOf("{");
       const end = jsonText.lastIndexOf("}");
-      if (start !== -1 && end > start) {
-        try {
-          const parsedOut = ArticlesSchema.safeParse(
-            JSON.parse(jsonText.slice(start, end + 1)),
-          );
-          if (parsedOut.success) {
-            articles = parsedOut.data.articles;
-          } else {
-            console.error("AI output did not match schema:", parsedOut.error.message, rawText.slice(0, 500));
-          }
-        } catch (err) {
-          console.error("AI output was not parseable JSON:", (err as Error).message, rawText.slice(0, 300));
+      if (start === -1 || end <= start) {
+        console.error("AI output was not JSON:", ai.text.slice(0, 500));
+        continue;
+      }
+      try {
+        const parsedOut = ArticlesSchema.safeParse(
+          JSON.parse(jsonText.slice(start, end + 1)),
+        );
+        if (parsedOut.success) {
+          articles.push(...parsedOut.data.articles);
+        } else {
+          console.error("AI output did not match schema:", parsedOut.error.message, ai.text.slice(0, 500));
         }
-      } else if (!aiError) {
-        console.error("AI output was not JSON:", rawText.slice(0, 500));
+      } catch (err) {
+        console.error("AI output was not parseable JSON:", (err as Error).message, ai.text.slice(0, 300));
       }
     }
 
@@ -210,6 +223,14 @@ Deno.serve(async (req) => {
     );
     let inserted = 0;
     if (articles.length > 0) {
+      const urls = articles.map((a) => a.source_url);
+      const { data: existingRows } = await supabase
+        .from("news_articles")
+        .select("source_url, published_at")
+        .in("source_url", urls);
+      const existingPubMap = new Map(
+        (existingRows ?? []).map((r) => [r.source_url, r.published_at]),
+      );
       const rows = articles.map((a) => ({
         city,
         title_en: a.title_en,
@@ -219,14 +240,14 @@ Deno.serve(async (req) => {
         category: a.category || "general",
         source_url: a.source_url,
         source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
-        published_at: pubMap.get(a.source_url) ?? new Date().toISOString(),
+        published_at: pubMap.get(a.source_url) ?? existingPubMap.get(a.source_url) ?? new Date().toISOString(),
       }));
 
-      // Only genuinely new URLs are stored; existing ones keep their original
-      // published_at so "new since" checks stay accurate.
+      // Update matching URLs too. A story may first be cached by the non-AI
+      // fallback and gain its Hindi fields on a later successful AI run.
       const { data: insertedRows, error } = await supabase
         .from("news_articles")
-        .upsert(rows, { onConflict: "source_url", ignoreDuplicates: true })
+        .upsert(rows, { onConflict: "source_url", ignoreDuplicates: false })
         .select("id");
       if (error) console.error("Cache write failed:", error.message);
       inserted = insertedRows?.length ?? 0;

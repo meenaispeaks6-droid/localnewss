@@ -56,7 +56,15 @@ export async function generateNewsText(
             baseURL: key.base_url,
             headers: { Authorization: `Bearer ${key.api_key}` },
           });
-          const stream = streamText({ model: provider(key.model), ...opts });
+          const stream = streamText({
+            model: provider(key.model),
+            ...opts,
+            // Bilingual article JSON is substantially larger than a normal
+            // chat answer. Provider defaults can stop around 2K tokens and
+            // leave an otherwise valid JSON document cut in half.
+            maxOutputTokens: 1500,
+            maxRetries: 0,
+          });
           const text = (await stream.text).trim();
           // An empty reply means this account silently refused the request —
           // treat it as a failure so the next account (or Lovable AI) is used.
@@ -72,7 +80,7 @@ export async function generateNewsText(
         }
       },
       {
-        tries: 3,
+        tries: 1,
         shouldRetry: (r) => !!r.error && isRetryableError(r.error, r.status || undefined),
       },
     );

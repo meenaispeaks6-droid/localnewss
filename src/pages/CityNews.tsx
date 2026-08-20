@@ -69,7 +69,8 @@ const t = {
 
 const STALE_MS = 5 * 60 * 1000;
 const LIVE_POLL_MS = 60 * 1000;
-const REFRESH_MS = 3 * 60 * 1000;
+// Refresh the RSS-backed feed every minute while this city page is visible.
+const REFRESH_MS = 60 * 1000;
 
 
 const CityNews = ({ lang }: { lang: Lang }) => {
@@ -111,7 +112,13 @@ const CityNews = ({ lang }: { lang: Lang }) => {
         if (data?.error) throw new Error(String(data.error));
         const fresh = (data?.articles as NewsArticle[]) ?? [];
         if (fresh.length > 0) {
-          setArticles(fresh);
+          setArticles((current) => {
+            const byId = new Map(current.map((article) => [article.id, article]));
+            for (const article of fresh) byId.set(article.id, article);
+            return [...byId.values()]
+              .sort((a, b) => b.published_at.localeCompare(a.published_at))
+              .slice(0, 30);
+          });
           if (!silent) toast.success(c.updated);
         }
       } catch (e) {
