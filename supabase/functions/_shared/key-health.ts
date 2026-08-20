@@ -80,7 +80,12 @@ export async function checkAiKey(
 ): Promise<CheckResult> {
   const result = await probe(`${row.base_url.replace(/\/$/, "")}/chat/completions`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${row.api_key}` },
+    headers: {
+      "Content-Type": "application/json",
+      ...(row.base_url.includes("generativelanguage.googleapis.com")
+        ? { "x-goog-api-key": row.api_key }
+        : { Authorization: `Bearer ${row.api_key}` }),
+    },
     body: JSON.stringify({
       model: row.model,
       messages: [{ role: "user", content: "Reply with OK" }],

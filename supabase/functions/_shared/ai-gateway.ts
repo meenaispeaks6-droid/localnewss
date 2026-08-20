@@ -54,7 +54,9 @@ export async function generateNewsText(
           const provider = createOpenAICompatible({
             name: "admin-ai-key",
             baseURL: key.base_url,
-            headers: { Authorization: `Bearer ${key.api_key}` },
+            headers: key.base_url.includes("generativelanguage.googleapis.com")
+              ? { "x-goog-api-key": key.api_key }
+              : { Authorization: `Bearer ${key.api_key}` },
           });
           const stream = streamText({
             model: provider(key.model),
@@ -63,6 +65,7 @@ export async function generateNewsText(
             // chat answer. Provider defaults can stop around 2K tokens and
             // leave an otherwise valid JSON document cut in half.
             maxOutputTokens: 1500,
+            maxRetries: 0,
           });
           const text = (await stream.text).trim();
           // An empty reply means this account silently refused the request —
@@ -79,7 +82,7 @@ export async function generateNewsText(
         }
       },
       {
-        tries: 3,
+        tries: 1,
         shouldRetry: (r) => !!r.error && isRetryableError(r.error, r.status || undefined),
       },
     );
