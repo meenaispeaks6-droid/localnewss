@@ -175,17 +175,38 @@ const CloudScene = ({ fog, snow }: { fog?: boolean; snow?: boolean }) => (
   </svg>
 );
 
-const CityWeather = ({ city, lang }: { city: string; lang: Lang }) => {
+const CityWeather = ({ city, state, lang }: { city: string; state?: string; lang: Lang }) => {
   const [w, setW] = useState<Weather | null>(null);
 
   useEffect(() => {
     let active = true;
+    setW(null);
     const load = async () => {
       try {
         const g = await fetch(
-          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&country=IN&language=en&format=json`,
+          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=10&countryCode=IN&language=en&format=json`,
         ).then((r) => r.json());
-        const place = g?.results?.[0];
+        const indian = (g?.results ?? []).filter(
+          (r: { country_code?: string }) => r.country_code === "IN",
+        );
+        if (indian.length === 0) return;
+        const norm = (v?: string) => (v ?? "").toLowerCase().replace(/[^a-z]/g, "");
+        const inState = state
+          ? indian.filter(
+              (r: { admin1?: string }) =>
+                norm(r.admin1) === norm(state) ||
+                norm(state).includes(norm(r.admin1)) ||
+                norm(r.admin1).includes(norm(state)),
+            )
+          : [];
+        const pool = inState.length ? inState : indian;
+        const exact = pool.filter(
+          (r: { name?: string }) => norm(r.name) === norm(city),
+        );
+        const place = (exact.length ? exact : pool).sort(
+          (a: { population?: number }, b: { population?: number }) =>
+            (b.population ?? 0) - (a.population ?? 0),
+        )[0];
         if (!place) return;
         const f = await fetch(
           `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Asia%2FKolkata`,
@@ -209,7 +230,8 @@ const CityWeather = ({ city, lang }: { city: string; lang: Lang }) => {
       active = false;
       clearInterval(timer);
     };
-  }, [city]);
+  }, [city, state]);
+
 
   if (!w) return null;
 
