@@ -1,0 +1,3 @@
+DELETE FROM public.news_articles
+WHERE source_url ~* '^https?://(www\.)?(gemini\.google|deepmind\.google|play\.google\.com|apps\.apple\.com|google\.com|blog\.google|openai\.com|anthropic\.com|microsoft\.com|apple\.com|youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com|pinterest\.com|linkedin\.com|wikipedia\.org)'
+   OR title_en ~* '(gemini|chatgpt|copilot|ai assistant|asistente)';
