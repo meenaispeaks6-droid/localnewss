@@ -104,7 +104,7 @@ Deno.serve(async (req) => {
     // Drop non-story links (section fronts, e-papers, homepages, tag pages)
     // that Firecrawl search often returns — they look like "no new news"
     // because they never change.
-    results = results.filter((r) => isRealStory(r.url, r.title));
+    results = results.filter((r) => isRealStory(r.url, r.title, `${r.title} ${r.description ?? ""}`, city));
 
     if (results.length === 0) {
 
