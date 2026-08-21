@@ -303,12 +303,17 @@ Deno.serve(async (req) => {
         // Never let a later non-AI refresh wipe bilingual text a previous
         // AI run already produced for the same story.
         const keepPrev = !a.title_hi && prev?.title_hi;
+        // Keep a real English translation instead of falling back to the raw
+        // Hindi RSS headline.
+        const prevEnglish = prev?.title_en && !DEVANAGARI.test(prev.title_en);
+        const keepEnglish = DEVANAGARI.test(a.title_en) && prevEnglish;
         return {
           city,
-          title_en: keepPrev ? prev!.title_en : a.title_en,
+          title_en: keepPrev || keepEnglish ? prev!.title_en : a.title_en,
           title_hi: a.title_hi ?? prev?.title_hi ?? null,
-          summary_en: keepPrev ? prev!.summary_en : a.summary_en,
+          summary_en: keepPrev || keepEnglish ? prev!.summary_en : a.summary_en,
           summary_hi: a.summary_hi ?? prev?.summary_hi ?? null,
+
           category: a.category || prev?.category || "general",
           source_url: a.source_url,
           source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
