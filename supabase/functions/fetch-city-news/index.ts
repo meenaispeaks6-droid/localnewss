@@ -35,6 +35,11 @@ type OutArticle = {
   source_name?: string | null;
 };
 
+// Detects Hindi/Devanagari text so a Hindi RSS headline is never presented
+// as the English version of a story.
+const DEVANAGARI = /[\u0900-\u097F]/;
+
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
