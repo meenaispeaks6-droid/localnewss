@@ -395,7 +395,10 @@ function isRealStory(url: string, title: string, text = "", city = ""): boolean 
   // The story must actually mention the city somewhere.
   if (city) {
     const hay = `${text} ${url}`.toLowerCase();
-    if (!hay.includes(city.toLowerCase())) return false;
+    const hindiNewsSource = /[\u0900-\u097F]/.test(t) &&
+      /(bhaskar|jagran|amarujala|patrika|livehindustan|navbharattimes|abplive|aajtak|news18|zeenews|public\.app|etvbharat|\.in)$|(bhaskar|jagran|amarujala|patrika|livehindustan|navbharattimes|abplive|aajtak|news18|zeenews|public\.app|etvbharat)/i
+        .test(host);
+    if (!hay.includes(city.toLowerCase()) && !hindiNewsSource) return false;
   }
   const segments = path.split("/").filter(Boolean);
   // Article URLs have a slug or numeric id; section fronts are 1-2 short words.
