@@ -10,6 +10,7 @@ interface Weather {
   code: number;
   wind: number;
   kind: Kind;
+  isDay: boolean;
 }
 
 const kindOf = (code: number): Kind => {
@@ -80,6 +81,31 @@ const SunScene = ({ temp }: { temp: number }) => {
     </svg>
   );
 };
+
+const MoonScene = () => (
+  <svg viewBox="0 0 120 90" className="h-full w-full" role="img" aria-hidden="true">
+    <motion.g
+      animate={{ y: [0, -3, 0] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+    >
+      <circle cx="60" cy="42" r="20" className="fill-sky-100" />
+      <circle cx="69" cy="34" r="19" className="fill-card" />
+    </motion.g>
+    {[{ x: 29, y: 24 }, { x: 91, y: 29 }, { x: 82, y: 65 }, { x: 34, y: 62 }].map(
+      (star, index) => (
+        <motion.circle
+          key={index}
+          cx={star.x}
+          cy={star.y}
+          r="1.8"
+          className="fill-sky-200"
+          animate={{ opacity: [0.35, 1, 0.35] }}
+          transition={{ duration: 1.8, repeat: Infinity, delay: index * 0.35 }}
+        />
+      ),
+    )}
+  </svg>
+);
 
 /** Rain with a cute cartoon character walking under an umbrella. */
 const RainScene = ({ storm }: { storm?: boolean }) => (
@@ -209,7 +235,7 @@ const CityWeather = ({ city, state, lang }: { city: string; state?: string; lang
         )[0];
         if (!place) return;
         const f = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Asia%2FKolkata`,
+          `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,is_day&timezone=Asia%2FKolkata`,
         ).then((r) => r.json());
         const c = f?.current;
         if (!active || !c) return;
@@ -219,6 +245,7 @@ const CityWeather = ({ city, state, lang }: { city: string; state?: string; lang
           code: c.weather_code,
           wind: Math.round(c.wind_speed_10m),
           kind: kindOf(c.weather_code),
+           isDay: c.is_day === 1,
         });
       } catch (e) {
         console.error("weather failed", e);
@@ -244,8 +271,10 @@ const CityWeather = ({ city, state, lang }: { city: string; state?: string; lang
       className="mt-5 inline-flex items-center gap-4 rounded-2xl border border-border bg-card/80 px-4 py-3 backdrop-blur"
     >
       <div className="h-16 w-20 shrink-0">
-        {w.kind === "sun" ? (
+        {w.kind === "sun" && w.isDay ? (
           <SunScene temp={w.temp} />
+        ) : w.kind === "sun" ? (
+          <MoonScene />
         ) : wet ? (
           <RainScene storm={w.kind === "storm"} />
         ) : (
@@ -255,7 +284,9 @@ const CityWeather = ({ city, state, lang }: { city: string; state?: string; lang
       <div className="leading-tight">
         <p className="font-heading text-2xl font-bold">{w.temp}°C</p>
         <p className="text-xs text-muted-foreground">
-          {label[w.kind][lang]} ·{" "}
+          {w.kind === "sun" && !w.isDay
+            ? lang === "hi" ? "साफ़ रात" : "Clear night"
+            : label[w.kind][lang]} ·{" "}
           {lang === "hi" ? `महसूस ${w.feels}°` : `feels ${w.feels}°`} ·{" "}
           {lang === "hi" ? `हवा ${w.wind} किमी/घं` : `wind ${w.wind} km/h`}
         </p>
