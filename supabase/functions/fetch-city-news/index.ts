@@ -130,12 +130,19 @@ Deno.serve(async (req) => {
     // refresh adds new bilingual articles instead of redoing the same ones.
     const { data: alreadyBilingual } = await supabase
       .from("news_articles")
-      .select("source_url")
-      .not("title_hi", "is", null)
+      .select("source_url, title_en, title_hi")
       .in("source_url", results.slice(0, 40).map((r) => r.url));
-    const doneUrls = new Set((alreadyBilingual ?? []).map((r) => r.source_url));
+    // A story only counts as done when it has Hindi text AND its English
+    // headline is really English (raw Hindi RSS titles are stored in both
+    // columns until the AI produces a translation).
+    const doneUrls = new Set(
+      (alreadyBilingual ?? [])
+        .filter((r) => r.title_hi && !DEVANAGARI.test(r.title_en ?? ""))
+        .map((r) => r.source_url),
+    );
     const pending = results.filter((r) => !doneUrls.has(r.url));
     const editorialResults = (pending.length > 0 ? pending : results).slice(0, 6);
+
 
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
