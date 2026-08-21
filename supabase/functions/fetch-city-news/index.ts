@@ -257,15 +257,23 @@ Deno.serve(async (req) => {
             (r.title ?? "").trim().length > 3 &&
             !enriched.has(r.url),
         )
-        .map((r) => ({
-          title_en: clean(stripSource(r.title), 120) ?? r.title.slice(0, 120),
-          title_hi: null,
-          summary_en: clean(r.description?.replace(/<[^>]+>/g, " "), 300),
-          summary_hi: null,
-          category: "general",
-          source_url: r.url,
-          source_name: r.sourceName ?? null,
-        }));
+        .map((r) => {
+          const title = clean(stripSource(r.title), 120) ?? r.title.slice(0, 120);
+          const summary = clean(r.description?.replace(/<[^>]+>/g, " "), 300);
+          // A Hindi RSS headline is Hindi content: mirror it into the Hindi
+          // columns so the English page can tell it still needs translating.
+          const isHindi = DEVANAGARI.test(title);
+          return {
+            title_en: title,
+            title_hi: isHindi ? title : null,
+            summary_en: summary,
+            summary_hi: isHindi ? summary : null,
+            category: "general",
+            source_url: r.url,
+            source_name: r.sourceName ?? null,
+          };
+        });
+
       articles = [...articles, ...raw];
     }
 
