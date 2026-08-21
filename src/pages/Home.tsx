@@ -119,19 +119,37 @@ const Home = ({ lang }: { lang: Lang }) => {
             {hi ? "राज्य के अनुसार ख़बरें" : "Browse news by state"}
           </h2>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {indiaStates.map((s) => (
-              <li key={s.slug}>
-                <Link
-                  to={statePath(s.slug, lang)}
-                  className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm transition-colors hover:border-primary/40 hover:text-primary"
-                >
-                  <span className="truncate">{hi ? s.stateHi : s.state}</span>
-                  <span className="shrink-0 text-xs text-muted-foreground">
-                    {s.cities.length}
-                  </span>
-                </Link>
-              </li>
-            ))}
+            {indiaStates.map((s) => {
+              const flavour = STATE_FLAVOUR[s.slug];
+              return (
+                <li key={s.slug}>
+                  <Link
+                    to={statePath(s.slug, lang)}
+                    className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    <span className="flex min-w-0 items-center gap-2">
+                      {flavour && (
+                        <span aria-hidden="true" className="text-base leading-none">
+                          {flavour.emoji}
+                        </span>
+                      )}
+                      <span className="min-w-0">
+                        <span className="block truncate">{hi ? s.stateHi : s.state}</span>
+                        {flavour && (
+                          <span className="block truncate text-xs text-muted-foreground">
+                            {hi ? flavour.hi : flavour.en}
+                          </span>
+                        )}
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-xs text-muted-foreground">
+                      {s.cities.length}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+
           </ul>
         </section>
       </main>
