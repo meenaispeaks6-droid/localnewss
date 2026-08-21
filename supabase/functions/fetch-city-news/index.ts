@@ -35,6 +35,11 @@ type OutArticle = {
   source_name?: string | null;
 };
 
+// Detects Hindi/Devanagari text so a Hindi RSS headline is never presented
+// as the English version of a story.
+const DEVANAGARI = /[\u0900-\u097F]/;
+
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -130,12 +135,19 @@ Deno.serve(async (req) => {
     // refresh adds new bilingual articles instead of redoing the same ones.
     const { data: alreadyBilingual } = await supabase
       .from("news_articles")
-      .select("source_url")
-      .not("title_hi", "is", null)
+      .select("source_url, title_en, title_hi")
       .in("source_url", results.slice(0, 40).map((r) => r.url));
-    const doneUrls = new Set((alreadyBilingual ?? []).map((r) => r.source_url));
+    // A story only counts as done when it has Hindi text AND its English
+    // headline is really English (raw Hindi RSS titles are stored in both
+    // columns until the AI produces a translation).
+    const doneUrls = new Set(
+      (alreadyBilingual ?? [])
+        .filter((r) => r.title_hi && !DEVANAGARI.test(r.title_en ?? ""))
+        .map((r) => r.source_url),
+    );
     const pending = results.filter((r) => !doneUrls.has(r.url));
     const editorialResults = (pending.length > 0 ? pending : results).slice(0, 6);
+
 
 
     // 2. Turn raw results into clean bilingual news items (rotates AI keys).
@@ -245,15 +257,23 @@ Deno.serve(async (req) => {
             (r.title ?? "").trim().length > 3 &&
             !enriched.has(r.url),
         )
-        .map((r) => ({
-          title_en: clean(stripSource(r.title), 120) ?? r.title.slice(0, 120),
-          title_hi: null,
-          summary_en: clean(r.description?.replace(/<[^>]+>/g, " "), 300),
-          summary_hi: null,
-          category: "general",
-          source_url: r.url,
-          source_name: r.sourceName ?? null,
-        }));
+        .map((r) => {
+          const title = clean(stripSource(r.title), 120) ?? r.title.slice(0, 120);
+          const summary = clean(r.description?.replace(/<[^>]+>/g, " "), 300);
+          // A Hindi RSS headline is Hindi content: mirror it into the Hindi
+          // columns so the English page can tell it still needs translating.
+          const isHindi = DEVANAGARI.test(title);
+          return {
+            title_en: title,
+            title_hi: isHindi ? title : null,
+            summary_en: summary,
+            summary_hi: isHindi ? summary : null,
+            category: "general",
+            source_url: r.url,
+            source_name: r.sourceName ?? null,
+          };
+        });
+
       articles = [...articles, ...raw];
     }
 
@@ -283,12 +303,17 @@ Deno.serve(async (req) => {
         // Never let a later non-AI refresh wipe bilingual text a previous
         // AI run already produced for the same story.
         const keepPrev = !a.title_hi && prev?.title_hi;
+        // Keep a real English translation instead of falling back to the raw
+        // Hindi RSS headline.
+        const prevEnglish = prev?.title_en && !DEVANAGARI.test(prev.title_en);
+        const keepEnglish = DEVANAGARI.test(a.title_en) && prevEnglish;
         return {
           city,
-          title_en: keepPrev ? prev!.title_en : a.title_en,
+          title_en: keepPrev || keepEnglish ? prev!.title_en : a.title_en,
           title_hi: a.title_hi ?? prev?.title_hi ?? null,
-          summary_en: keepPrev ? prev!.summary_en : a.summary_en,
+          summary_en: keepPrev || keepEnglish ? prev!.summary_en : a.summary_en,
           summary_hi: a.summary_hi ?? prev?.summary_hi ?? null,
+
           category: a.category || prev?.category || "general",
           source_url: a.source_url,
           source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
