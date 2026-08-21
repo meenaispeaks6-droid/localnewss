@@ -104,7 +104,7 @@ Deno.serve(async (req) => {
     // Drop non-story links (section fronts, e-papers, homepages, tag pages)
     // that Firecrawl search often returns — they look like "no new news"
     // because they never change.
-    results = results.filter((r) => isRealStory(r.url, r.title));
+    results = results.filter((r) => isRealStory(r.url, r.title, `${r.title} ${r.description ?? ""}`, city));
 
     if (results.length === 0) {
 
@@ -368,17 +368,37 @@ function extractArticlesJson(raw: string): string | null {
  * A real story has a headline (not a section name like "राजस्थान") and a URL
  * that points at an article, not a site front page or e-paper index.
  */
-function isRealStory(url: string, title: string): boolean {
+const BLOCKED_HOSTS =
+  /(^|\.)(gemini\.google|deepmind\.google|play\.google\.com|apps\.apple\.com|google\.com|blog\.google|openai\.com|anthropic\.com|microsoft\.com|apple\.com|youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com|pinterest\.com|amazon\.[a-z.]+|wikipedia\.org|linkedin\.com)$/i;
+
+const PROMO_WORDS =
+  /(gemini|chatgpt|copilot|ai assistant|asistente|download the app|app store|play store|subscribe now|pricing|sign up free)/i;
+
+function isRealStory(url: string, title: string, text = "", city = ""): boolean {
   const t = (title ?? "").replace(/\s+/g, " ").trim();
   if (t.length < 15 || t.split(/\s+/).length < 3) return false;
   if (/(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page)/i.test(t)) {
     return false;
   }
+  if (PROMO_WORDS.test(t)) return false;
   let path = "";
+  let host = "";
   try {
-    path = new URL(url).pathname;
+    const u = new URL(url);
+    path = u.pathname;
+    host = u.hostname.replace(/^www\./, "");
   } catch {
     return false;
+  }
+  // Product/marketing/social pages are never local news.
+  if (BLOCKED_HOSTS.test(host)) return false;
+  // The story must actually mention the city somewhere.
+  if (city) {
+    const hay = `${text} ${url}`.toLowerCase();
+    const hindiNewsSource = /[\u0900-\u097F]/.test(t) &&
+      /(bhaskar|jagran|amarujala|patrika|livehindustan|navbharattimes|abplive|aajtak|news18|zeenews|public\.app|etvbharat|\.in)$|(bhaskar|jagran|amarujala|patrika|livehindustan|navbharattimes|abplive|aajtak|news18|zeenews|public\.app|etvbharat)/i
+        .test(host);
+    if (!hay.includes(city.toLowerCase()) && !hindiNewsSource) return false;
   }
   const segments = path.split("/").filter(Boolean);
   // Article URLs have a slug or numeric id; section fronts are 1-2 short words.
