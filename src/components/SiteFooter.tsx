@@ -30,8 +30,10 @@ const SiteFooter = ({ lang }: { lang: Lang }) => (
         </Link>{" "}
         · {lang === "hi" ? "हर शहर, हर ख़बर" : "Every city, every story"}
       </p>
-    </div>
-  </footer>
+      </div>
+    </footer>
+  </>
 );
+
 
 export default SiteFooter;
