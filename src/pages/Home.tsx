@@ -21,6 +21,13 @@ const POPULAR = [
   "Pune", "Ahmedabad", "Jaipur", "Lucknow", "Patna", "Bhopal",
 ];
 
+// Small state-specific flavour shown next to a few state names.
+const STATE_FLAVOUR: Record<string, { emoji: string; en: string; hi: string }> = {
+  rajasthan: { emoji: "🐪", en: "Forts & desert", hi: "किले और रेगिस्तान" },
+  "andaman-and-nicobar-islands": { emoji: "🏝️", en: "Islands & beaches", hi: "द्वीप और समुद्र तट" },
+};
+
+
 const Home = ({ lang }: { lang: Lang }) => {
   const navigate = useNavigate();
   const hi = lang === "hi";
