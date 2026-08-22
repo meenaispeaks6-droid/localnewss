@@ -253,8 +253,7 @@ const AiNews = () => {
           </nav>
         )}
 
-        <h2 className="flex items-center gap-2 font-heading text-xl font-semibold tracking-tight sm:text-2xl">
-          <Sparkles className="h-5 w-5 text-primary" aria-hidden="true" />
+        <h2 className="font-heading text-xl font-semibold tracking-tight sm:text-2xl">
           Latest drops
         </h2>
 
