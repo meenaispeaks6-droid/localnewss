@@ -433,9 +433,14 @@ export const TOPICS: Record<
     // English-only feed: readers asked for AI news without Hindi versions.
     englishOnly: true,
     label: "artificial intelligence and AI tools",
+    // Keep the search string short: Google News answers 503 to long quoted
+    // OR-queries coming from datacentre IPs. The technology section feed is
+    // added as a second, always-available source.
     queries: {
-      en:
-        '"artificial intelligence" OR "AI model" OR "AI tool" OR OpenAI OR Anthropic OR "machine learning"',
+      en: "artificial intelligence AI",
+      extraFeeds: [
+        "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en",
+      ],
     },
     match:
       /(\bai\b|artificial intelligence|machine learning|llm|chatbot|openai|anthropic|deepmind|gemini|claude|chatgpt|copilot|nvidia|neural|generative|आर्टिफिशियल|एआई|चैटजीपीटी)/i,

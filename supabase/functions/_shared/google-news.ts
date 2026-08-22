@@ -34,7 +34,7 @@ function tag(block: string, name: string): string | undefined {
 
 async function fetchFeed(url: string): Promise<NewsHit[]> {
   let res: Response | null = null;
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (let attempt = 0; attempt < 4; attempt++) {
     res = await fetch(url, {
       headers: {
         "User-Agent":
@@ -43,7 +43,8 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
       },
     });
     if (res.ok || (res.status !== 429 && res.status < 500)) break;
-    await new Promise((resolve) => setTimeout(resolve, 500 * 2 ** attempt));
+    // Google throttles bursts from datacentre IPs with 429/503; back off.
+    await new Promise((resolve) => setTimeout(resolve, 700 * 2 ** attempt));
   }
   if (!res) return [];
   if (!res.ok) {
@@ -80,7 +81,7 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
 export async function googleNewsSearch(
   place: string,
   maxAgeHours = 48,
-  queries?: { hi?: string; en: string },
+  queries?: { hi?: string; en: string; extraFeeds?: string[] },
 ): Promise<NewsHit[]> {
   const hiQuery = queries ? queries.hi : `${place} समाचार OR news`;
   const enQuery = queries?.en ?? `${place} news`;
@@ -94,7 +95,9 @@ export async function googleNewsSearch(
   }&hl=en-IN&gl=IN&ceid=IN:en`;
   // Topic feeds (custom queries) are English-first — and English-only when no
   // Hindi query is supplied.
-  const feeds = (queries ? [enFeed, hiFeed] : [hiFeed, enFeed]).filter(Boolean) as string[];
+  const feeds = (queries
+    ? [enFeed, ...(queries.extraFeeds ?? []), hiFeed]
+    : [hiFeed, enFeed]).filter(Boolean) as string[];
 
   const seen = new Set<string>();
   const out: NewsHit[] = [];
@@ -113,12 +116,12 @@ export async function googleNewsSearch(
       seen.add(h.url);
       out.push(h);
     }
-    if (out.length >= 12) break;
+    if (out.length >= (queries ? 24 : 12)) break;
   }
 
   return out
     .sort((a, b) =>
       (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "")
     )
-    .slice(0, 15);
+    .slice(0, queries ? 24 : 15);
 }
