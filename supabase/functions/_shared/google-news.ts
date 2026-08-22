@@ -80,12 +80,16 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
 export async function googleNewsSearch(
   place: string,
   maxAgeHours = 48,
+  queries?: { hi: string; en: string },
 ): Promise<NewsHit[]> {
-  const q = encodeURIComponent(`${place} समाचार OR news`);
+  const hiQuery = queries?.hi ?? `${place} समाचार OR news`;
+  const enQuery = queries?.en ?? `${place} news`;
   const feeds = [
-    `https://news.google.com/rss/search?q=${q}&hl=hi-IN&gl=IN&ceid=IN:hi`,
     `https://news.google.com/rss/search?q=${
-      encodeURIComponent(place + " news")
+      encodeURIComponent(hiQuery)
+    }&hl=hi-IN&gl=IN&ceid=IN:hi`,
+    `https://news.google.com/rss/search?q=${
+      encodeURIComponent(enQuery)
     }&hl=en-IN&gl=IN&ceid=IN:en`,
   ];
 

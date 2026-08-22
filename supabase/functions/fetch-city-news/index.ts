@@ -53,7 +53,8 @@ Deno.serve(async (req) => {
     }
     const city = parsed.data.city.trim();
     const state = parsed.data.state?.trim() ?? "";
-    const place = state ? `${city}, ${state}` : city;
+    const topic = TOPICS[city];
+    const place = topic ? city : state ? `${city}, ${state}` : city;
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -64,7 +65,7 @@ Deno.serve(async (req) => {
     // as a fallback for places RSS doesn't cover.
     let results: Array<
       { url: string; title: string; description: string; sourceName?: string; publishedAt?: string }
-    > = await googleNewsSearch(place, 48);
+    > = await googleNewsSearch(place, topic ? 24 : 48, topic?.queries);
     let notice: string | null = null;
 
     if (results.length < 3) {
@@ -109,7 +110,9 @@ Deno.serve(async (req) => {
     // Drop non-story links (section fronts, e-papers, homepages, tag pages)
     // that Firecrawl search often returns — they look like "no new news"
     // because they never change.
-    results = results.filter((r) => isRealStory(r.url, r.title, `${r.title} ${r.description ?? ""}`, city));
+    results = results.filter((r) =>
+      isRealStory(r.url, r.title, `${r.title} ${r.description ?? ""}`, topic ? "" : city, !!topic)
+    );
 
     if (results.length === 0) {
 
@@ -155,8 +158,12 @@ Deno.serve(async (req) => {
     let aiError: string | null = null;
 
     const systemPrompt =
-      "You are a bilingual (Hindi + English) local news editor for India. " +
-      "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
+      (topic
+        ? `You are a bilingual (Hindi + English) technology news editor covering ${topic.label}. `
+        : "You are a bilingual (Hindi + English) local news editor for India. ") +
+      (topic
+        ? "From the given search results, keep only genuine AI, software and tech-product news; drop duplicates, opinion listicles and adverts. "
+        : "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. ") +
       'Reply with ONLY raw JSON of the shape {"articles":[{"id":1,"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_name":""}]} ' +
       "with no markdown fences, no reasoning, no explanation before or after the JSON. The first character of your reply must be '{'.\n" +
       "Writing rules:\n" +
@@ -165,7 +172,9 @@ Deno.serve(async (req) => {
       "- Never keep the publisher name inside a headline; put it in source_name.\n" +
       "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n" +
       "- Both languages are mandatory for every article. Use simple words and never invent facts.\n" +
-      "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.";
+      (topic
+        ? "- category is one of AI Models, AI Tools, Startups, Research, Policy, Gadgets, Business."
+        : "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.");
 
     // Small batches prevent providers with short output limits from cutting
     // the JSON document in half. A failed batch does not discard successful
@@ -390,22 +399,53 @@ function extractArticlesJson(raw: string): string | null {
 
 
 /**
+ * Non-geographic feeds (e.g. AI & Tools) reuse this whole pipeline: the only
+ * differences are the Google News query and the relaxed keyword filters.
+ */
+export const TOPICS: Record<
+  string,
+  { label: string; queries: { hi: string; en: string } }
+> = {
+  "AI & Tools": {
+    label: "artificial intelligence and AI tools",
+    queries: {
+      hi: "आर्टिफिशियल इंटेलिजेंस OR एआई टूल्स OR टेक्नोलॉजी समाचार",
+      en:
+        "artificial intelligence OR \"AI tools\" OR OpenAI OR Anthropic OR \"machine learning\" news",
+    },
+  },
+};
+
+/**
  * A real story has a headline (not a section name like "राजस्थान") and a URL
  * that points at an article, not a site front page or e-paper index.
  */
 const BLOCKED_HOSTS =
   /(^|\.)(gemini\.google|deepmind\.google|play\.google\.com|apps\.apple\.com|google\.com|blog\.google|openai\.com|anthropic\.com|microsoft\.com|apple\.com|youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com|pinterest\.com|amazon\.[a-z.]+|wikipedia\.org|linkedin\.com)$/i;
 
+const SOCIAL_HOSTS =
+  /(^|\.)(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com|pinterest\.com|linkedin\.com)$/i;
+
 const PROMO_WORDS =
   /(gemini|chatgpt|copilot|ai assistant|asistente|download the app|app store|play store|subscribe now|pricing|sign up free)/i;
 
-function isRealStory(url: string, title: string, text = "", city = ""): boolean {
+// Product names are the news on a tech feed, so only the pure adverts go.
+const TOPIC_PROMO_WORDS =
+  /(download the app|app store|play store|subscribe now|pricing|sign up free|coupon|deal of the day)/i;
+
+function isRealStory(
+  url: string,
+  title: string,
+  text = "",
+  city = "",
+  topicMode = false,
+): boolean {
   const t = (title ?? "").replace(/\s+/g, " ").trim();
   if (t.length < 15 || t.split(/\s+/).length < 3) return false;
   if (/(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page)/i.test(t)) {
     return false;
   }
-  if (PROMO_WORDS.test(t)) return false;
+  if ((topicMode ? TOPIC_PROMO_WORDS : PROMO_WORDS).test(t)) return false;
   let path = "";
   let host = "";
   try {
@@ -415,8 +455,9 @@ function isRealStory(url: string, title: string, text = "", city = ""): boolean 
   } catch {
     return false;
   }
-  // Product/marketing/social pages are never local news.
-  if (BLOCKED_HOSTS.test(host)) return false;
+  // Product/marketing/social pages are never local news. Tech feeds still
+  // need vendor blogs and Big Tech domains, so only social is dropped there.
+  if ((topicMode ? SOCIAL_HOSTS : BLOCKED_HOSTS).test(host)) return false;
   // The story must actually mention the city somewhere.
   if (city) {
     const hay = `${text} ${url}`.toLowerCase();
