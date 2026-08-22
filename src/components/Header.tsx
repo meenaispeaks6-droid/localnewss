@@ -8,9 +8,13 @@ interface HeaderProps {
   onCityChange: (name: string) => void;
   lang: Lang;
   onLangChange: (lang: Lang) => void;
+  /** Hide the Hindi/English switch (used by English-only pages). */
+  hideLangToggle?: boolean;
+  /** Hide the global theme switch (page provides its own). */
+  hideThemeToggle?: boolean;
 }
 
-const Header = ({ city, onCityChange, lang, onLangChange }: HeaderProps) => {
+const Header = ({ city, onCityChange, lang, onLangChange, hideLangToggle, hideThemeToggle }: HeaderProps) => {
   const { theme, toggle } = useTheme();
 
   return (
@@ -34,6 +38,7 @@ const Header = ({ city, onCityChange, lang, onLangChange }: HeaderProps) => {
             <li>
               <CityPicker city={city} onCityChange={onCityChange} lang={lang} />
             </li>
+            {!hideLangToggle && (
             <li>
               <button
                 type="button"
@@ -47,6 +52,8 @@ const Header = ({ city, onCityChange, lang, onLangChange }: HeaderProps) => {
                 <span aria-hidden="true">{lang === "hi" ? "EN" : "हिं"}</span>
               </button>
             </li>
+            )}
+            {!hideThemeToggle && (
             <li>
               <button
                 type="button"
@@ -69,6 +76,7 @@ const Header = ({ city, onCityChange, lang, onLangChange }: HeaderProps) => {
                 )}
               </button>
             </li>
+            )}
           </ul>
         </nav>
       </div>

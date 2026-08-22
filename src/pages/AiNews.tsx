@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { Bot, Cpu, RefreshCw, Sparkles, Zap } from "lucide-react";
+import { Moon, RefreshCw, Sparkles, Sun } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import NewsCard from "@/components/NewsCard";
@@ -27,6 +27,15 @@ const AiNews = () => {
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
   const [filter, setFilter] = useState<string>("__all");
+  // Page-local appearance: dark by default, light just swaps to a white surface.
+  const [mode, setMode] = useState<"dark" | "light">(() => {
+    if (typeof window === "undefined") return "dark";
+    return localStorage.getItem("ai-news-mode") === "light" ? "light" : "dark";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("ai-news-mode", mode);
+  }, [mode]);
 
   const loadCached = useCallback(async () => {
     const { data } = await supabase
@@ -115,7 +124,7 @@ const AiNews = () => {
     "A live stream of artificial intelligence news in English: new AI models, tools and apps, funding rounds, research breakthroughs and policy moves, summarised in plain language and refreshed through the day.";
 
   return (
-    <div className="ai-surface flex min-h-dvh flex-col bg-background text-foreground">
+    <div className={`ai-surface ${mode === "light" ? "ai-light" : ""} flex min-h-dvh flex-col bg-background text-foreground`}>
       <Seo
         title={title}
         description={description}
@@ -138,6 +147,8 @@ const AiNews = () => {
         onCityChange={(name) => navigate(cityPath(name, "en"))}
         lang="en"
         onLangChange={(next) => navigate(homePath(next))}
+        hideLangToggle
+        hideThemeToggle
       />
 
       <section className="relative isolate overflow-hidden border-b border-border">
@@ -192,6 +203,18 @@ const AiNews = () => {
                 {fetching ? "Scanning the wire..." : "Sync now"}
               </button>
               <NotifyButton city={AI_TOPIC} state="India" lang="en" />
+              <button
+                type="button"
+                onClick={() => setMode((m) => (m === "dark" ? "light" : "dark"))}
+                aria-label={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-border bg-card/60 px-4 text-sm backdrop-blur transition-colors hover:border-primary/50 hover:text-primary"
+              >
+                {mode === "dark" ? (
+                  <Sun className="h-4 w-4 text-primary" aria-hidden="true" />
+                ) : (
+                  <Moon className="h-4 w-4 text-primary" aria-hidden="true" />
+                )}
+              </button>
               <Link
                 to={homePath("en")}
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 text-sm backdrop-blur transition-colors hover:border-primary/50 hover:text-primary"
@@ -200,37 +223,6 @@ const AiNews = () => {
               </Link>
             </div>
 
-            <dl className="mt-8 grid max-w-lg grid-cols-3 gap-3">
-              {[
-                { icon: Zap, label: "Live", value: `${articles.length} stories` },
-                {
-                  icon: Bot,
-                  label: "Topics",
-                  value: String(categories.length || 1),
-                },
-                {
-                  icon: Cpu,
-                  label: "Last sync",
-                  value: lastUpdated
-                    ? new Date(lastUpdated).toLocaleTimeString("en-IN", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })
-                    : "—",
-                },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className="rounded-2xl border border-border bg-card/60 p-3 backdrop-blur"
-                >
-                  <dt className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-muted-foreground">
-                    <s.icon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-                    {s.label}
-                  </dt>
-                  <dd className="mt-1 font-heading text-sm font-semibold">{s.value}</dd>
-                </div>
-              ))}
-            </dl>
           </motion.div>
         </div>
       </section>

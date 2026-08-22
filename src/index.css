@@ -179,6 +179,42 @@
     --ai-pink: #f472b6;
     --gradient-ai: linear-gradient(120deg, var(--ai-violet), var(--ai-cyan) 55%, var(--ai-pink));
   }
+
+  /* Light variant of the AI surface: white background, dark text. */
+  .ai-surface.ai-light {
+    color-scheme: light;
+
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.18 0.03 285);
+
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.18 0.03 285);
+
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.18 0.03 285);
+
+    --secondary: oklch(0.96 0.01 285);
+    --secondary-foreground: oklch(0.18 0.03 285);
+
+    --muted: oklch(0.96 0.01 285);
+    --muted-foreground: oklch(0.45 0.02 285);
+
+    --accent: oklch(0.95 0.02 285);
+    --accent-foreground: oklch(0.18 0.03 285);
+
+    --border: oklch(0.18 0.03 285 / 12%);
+    --input: oklch(0.18 0.03 285 / 16%);
+    --ring: #7c3aed;
+
+    --primary: #7c3aed;
+    --primary-foreground: #ffffff;
+  }
+
+  .ai-surface.ai-light .ai-grid {
+    background-image:
+      linear-gradient(to right, oklch(0.18 0.03 285 / 7%) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.18 0.03 285 / 7%) 1px, transparent 1px);
+  }
 }
 
 @layer components {
