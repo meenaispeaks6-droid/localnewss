@@ -80,19 +80,21 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
 export async function googleNewsSearch(
   place: string,
   maxAgeHours = 48,
-  queries?: { hi: string; en: string },
+  queries?: { hi?: string; en: string },
 ): Promise<NewsHit[]> {
-  const hiQuery = queries?.hi ?? `${place} समाचार OR news`;
+  const hiQuery = queries ? queries.hi : `${place} समाचार OR news`;
   const enQuery = queries?.en ?? `${place} news`;
-  const hiFeed = `https://news.google.com/rss/search?q=${
-    encodeURIComponent(hiQuery)
-  }&hl=hi-IN&gl=IN&ceid=IN:hi`;
+  const hiFeed = hiQuery
+    ? `https://news.google.com/rss/search?q=${
+      encodeURIComponent(hiQuery)
+    }&hl=hi-IN&gl=IN&ceid=IN:hi`
+    : null;
   const enFeed = `https://news.google.com/rss/search?q=${
     encodeURIComponent(enQuery)
   }&hl=en-IN&gl=IN&ceid=IN:en`;
-  // Topic feeds (custom queries) are English-first: the English wire carries
-  // far more technology reporting than the Hindi one.
-  const feeds = queries ? [enFeed, hiFeed] : [hiFeed, enFeed];
+  // Topic feeds (custom queries) are English-first — and English-only when no
+  // Hindi query is supplied.
+  const feeds = (queries ? [enFeed, hiFeed] : [hiFeed, enFeed]).filter(Boolean) as string[];
 
   const seen = new Set<string>();
   const out: NewsHit[] = [];
