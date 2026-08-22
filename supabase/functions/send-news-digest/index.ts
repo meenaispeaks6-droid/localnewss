@@ -44,10 +44,10 @@ Deno.serve(async (req) => {
     if (subsError) throw subsError;
     const subs = (subsData ?? []) as Sub[];
 
-    // Refresh live news for subscribed cities plus a few recently-read ones.
-    // Firecrawl is rate-limited per minute, so refresh sequentially in a small
-    // batch with a short gap instead of firing every city at once (that was
-    // triggering 429s and leaving readers on stale cached news).
+    // Refresh live news for subscribed cities first, under a strict time
+    // budget. Refreshing a dozen cities inline used to blow the function's
+    // wall-clock limit, so the run died before a single notification was
+    // ever sent. Extra cities are refreshed in the background instead.
     const cities = new Map<string, string | null>();
     for (const s of subs) cities.set(s.city, s.state);
 
@@ -56,14 +56,15 @@ Deno.serve(async (req) => {
       .select("city, published_at")
       .order("published_at", { ascending: false })
       .limit(200);
+    const extras: Array<[string, string | null]> = [];
     for (const r of (recent ?? []) as { city: string }[]) {
-      if (!cities.has(r.city)) cities.set(r.city, null);
+      if (!cities.has(r.city)) extras.push([r.city, null]);
     }
 
-    const MAX_REFRESH = 12;
-    const GAP_MS = 2500;
-    const targets = [...cities].slice(0, MAX_REFRESH);
-    for (const [city, state] of targets) {
+    const GAP_MS = 1500;
+    const BUDGET_MS = 45_000;
+    const startedAt = Date.now();
+    const refresh = async (city: string, state: string | null) => {
       try {
         await supabase.functions.invoke("fetch-city-news", {
           body: { city, state: state ?? undefined },
@@ -71,13 +72,33 @@ Deno.serve(async (req) => {
       } catch (e) {
         console.error(`refresh failed for ${city}:`, e);
       }
+    };
+
+    let refreshed = 0;
+    for (const [city, state] of cities) {
+      if (Date.now() - startedAt > BUDGET_MS) break;
+      await refresh(city, state);
+      refreshed++;
       await new Promise((r) => setTimeout(r, GAP_MS));
     }
 
+    // Warm a few other popular cities after the response is sent so pushes
+    // are never delayed or dropped by a slow refresh.
+    const background = extras.slice(0, 6);
+    const warm = (async () => {
+      for (const [city, state] of background) {
+        await refresh(city, state);
+        await new Promise((r) => setTimeout(r, GAP_MS));
+      }
+    })();
+    // deno-lint-ignore no-explicit-any
+    (globalThis as any).EdgeRuntime?.waitUntil?.(warm);
 
     if (subs.length === 0) {
-      return json({ ok: true, sent: 0, refreshed: targets.length, note: "no subscribers" });
+      return json({ ok: true, sent: 0, refreshed, note: "no subscribers" });
     }
+
+
 
 
     let sent = 0;
