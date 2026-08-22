@@ -94,9 +94,12 @@ export async function googleNewsSearch(
       encodeURIComponent(hiQuery)
     }&hl=hi-IN&gl=IN&ceid=IN:hi`
     : null;
+  // Topic feeds cover worldwide news, so they use the global English edition
+  // instead of the India edition used for city news.
+  const enLocale = queries ? "hl=en-US&gl=US&ceid=US:en" : "hl=en-IN&gl=IN&ceid=IN:en";
   const enFeed = `https://news.google.com/rss/search?q=${
     encodeURIComponent(enQuery)
-  }&hl=en-IN&gl=IN&ceid=IN:en`;
+  }&${enLocale}`;
   // Topic feeds (custom queries) are English-first — and English-only when no
   // Hindi query is supplied.
   const feeds = (queries
