@@ -148,14 +148,19 @@ Deno.serve(async (req) => {
     // refresh adds new bilingual articles instead of redoing the same ones.
     const { data: alreadyBilingual } = await supabase
       .from("news_articles")
-      .select("source_url, title_en, title_hi")
+      .select("source_url, title_en, title_hi, summary_en")
       .in("source_url", results.slice(0, 40).map((r) => r.url));
     // A story only counts as done when it has Hindi text AND its English
     // headline is really English (raw Hindi RSS titles are stored in both
-    // columns until the AI produces a translation).
+    // columns until the AI produces a translation). English-only topic feeds
+    // just need a clean English headline plus a summary.
     const doneUrls = new Set(
       (alreadyBilingual ?? [])
-        .filter((r) => r.title_hi && !DEVANAGARI.test(r.title_en ?? ""))
+        .filter((r) =>
+          topic?.englishOnly
+            ? !DEVANAGARI.test(r.title_en ?? "") && !!r.summary_en
+            : r.title_hi && !DEVANAGARI.test(r.title_en ?? "")
+        )
         .map((r) => r.source_url),
     );
     const pending = results.filter((r) => !doneUrls.has(r.url));
