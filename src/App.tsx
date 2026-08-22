@@ -10,6 +10,8 @@ import ArticleNews from "./pages/ArticleNews";
 import StateNews from "./pages/StateNews";
 import AiNews from "./pages/AiNews";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import OAuthConsent from "./pages/OAuthConsent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
