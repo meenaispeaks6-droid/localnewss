@@ -438,7 +438,13 @@ export const TOPICS: Record<
     // added as a second, always-available source.
     queries: {
       en: "artificial intelligence AI",
+      // Google News answers 503 to datacentre traffic for this topic, so
+      // publisher feeds are the reliable source here.
       extraFeeds: [
+        "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "https://feeds.arstechnica.com/arstechnica/technology-lab",
+        "https://economictimes.indiatimes.com/tech/artificial-intelligence/rssfeeds/78570530.cms",
         "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en",
       ],
     },

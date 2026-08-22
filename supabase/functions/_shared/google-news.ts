@@ -52,18 +52,22 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
     return [];
   }
   const xml = await res.text();
-  const items = xml.match(/<item>[\s\S]*?<\/item>/gi) ?? [];
+  const items = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ??
+    // Atom feeds (e.g. The Verge) use <entry> instead of <item>.
+    xml.match(/<entry[\s>][\s\S]*?<\/entry>/gi) ?? [];
   const hits: NewsHit[] = [];
   for (const item of items) {
-    const link = tag(item, "link");
+    // RSS puts the URL in <link>text</link>, Atom in <link href="..."/>.
+    const link = tag(item, "link") ||
+      item.match(/<link[^>]+href="([^"]+)"/i)?.[1];
     const title = tag(item, "title");
     if (!link || !title || !link.startsWith("http") || SOCIAL.test(link)) continue;
-    const pub = tag(item, "pubDate");
+    const pub = tag(item, "pubDate") ?? tag(item, "published") ?? tag(item, "updated");
     const parsed = pub ? new Date(pub) : null;
     hits.push({
       url: link,
       title: title.replace(/\s+-\s+[^-]+$/, "").slice(0, 200),
-      description: (tag(item, "description") ?? "").slice(0, 500),
+      description: (tag(item, "description") ?? tag(item, "summary") ?? "").slice(0, 500),
       sourceName: tag(item, "source"),
       publishedAt: parsed && !isNaN(parsed.getTime())
         ? parsed.toISOString()
