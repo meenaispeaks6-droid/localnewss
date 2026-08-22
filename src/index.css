@@ -139,3 +139,88 @@
     color: var(--category-arts);
   }
 }
+
+/* ---------------------------------------------------------------
+   AI & Tools surface — a dedicated neon/dark token scope used only
+   by the AI news page so it feels distinct from the local feeds.
+   Every child (header, cards, buttons) inherits these tokens.
+---------------------------------------------------------------- */
+@layer base {
+  .ai-surface {
+    color-scheme: dark;
+
+    --background: oklch(0.14 0.035 285);
+    --foreground: oklch(0.98 0.005 285);
+
+    --card: oklch(0.19 0.04 285);
+    --card-foreground: oklch(0.98 0.005 285);
+
+    --popover: oklch(0.19 0.04 285);
+    --popover-foreground: oklch(0.98 0.005 285);
+
+    --secondary: oklch(0.23 0.05 285);
+    --secondary-foreground: oklch(0.98 0.005 285);
+
+    --muted: oklch(0.23 0.05 285);
+    --muted-foreground: oklch(0.74 0.03 285);
+
+    --accent: oklch(0.25 0.06 285);
+    --accent-foreground: oklch(0.98 0.005 285);
+
+    --border: oklch(1 0 0 / 12%);
+    --input: oklch(1 0 0 / 16%);
+    --ring: #a78bfa;
+
+    --primary: #a78bfa;
+    --primary-foreground: #150726;
+
+    --ai-violet: #8b5cf6;
+    --ai-cyan: #22d3ee;
+    --ai-pink: #f472b6;
+    --gradient-ai: linear-gradient(120deg, var(--ai-violet), var(--ai-cyan) 55%, var(--ai-pink));
+  }
+}
+
+@layer components {
+  .ai-grid {
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 6%) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 6%) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  .ai-gradient-text {
+    background: var(--gradient-ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .ai-orb {
+    filter: blur(70px);
+    animation: ai-float 12s ease-in-out infinite;
+  }
+
+  .ai-ring {
+    background: var(--gradient-ai);
+    padding: 1px;
+    border-radius: 1.1rem;
+  }
+
+  .ai-shine {
+    background: var(--gradient-ai);
+    background-size: 200% 200%;
+    animation: ai-shine 6s ease infinite;
+  }
+}
+
+@keyframes ai-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(18px, -22px, 0) scale(1.12); }
+}
+
+@keyframes ai-shine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}

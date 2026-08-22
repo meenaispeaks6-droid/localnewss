@@ -8,6 +8,7 @@ import CityNews from "./pages/CityNews";
 import CityCategory from "./pages/CityCategory";
 import ArticleNews from "./pages/ArticleNews";
 import StateNews from "./pages/StateNews";
+import AiNews from "./pages/AiNews";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/news/:citySlug/:articleSlug/hi" element={<ArticleNews lang="hi" />} />
           <Route path="/state/:stateSlug" element={<StateNews lang="en" />} />
           <Route path="/state/:stateSlug/hi" element={<StateNews lang="hi" />} />
+          <Route path="/ai-news" element={<AiNews />} />
           <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

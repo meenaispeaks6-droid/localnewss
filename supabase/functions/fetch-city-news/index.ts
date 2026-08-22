@@ -53,7 +53,8 @@ Deno.serve(async (req) => {
     }
     const city = parsed.data.city.trim();
     const state = parsed.data.state?.trim() ?? "";
-    const place = state ? `${city}, ${state}` : city;
+    const topic = TOPICS[city];
+    const place = topic ? city : state ? `${city}, ${state}` : city;
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -64,7 +65,7 @@ Deno.serve(async (req) => {
     // as a fallback for places RSS doesn't cover.
     let results: Array<
       { url: string; title: string; description: string; sourceName?: string; publishedAt?: string }
-    > = await googleNewsSearch(place, 48);
+    > = await googleNewsSearch(place, 48, topic?.queries);
     let notice: string | null = null;
 
     if (results.length < 3) {
@@ -109,7 +110,19 @@ Deno.serve(async (req) => {
     // Drop non-story links (section fronts, e-papers, homepages, tag pages)
     // that Firecrawl search often returns — they look like "no new news"
     // because they never change.
-    results = results.filter((r) => isRealStory(r.url, r.title, `${r.title} ${r.description ?? ""}`, city));
+    results = results.filter((r) =>
+      isRealStory(r.url, r.title, `${r.title} ${r.description ?? ""}`, topic ? "" : city, !!topic)
+    );
+
+    // Topic feeds must stay on-topic: Google News sometimes mixes unrelated
+    // general headlines into a keyword search.
+    if (topic) {
+      results = results.filter(
+        (r) =>
+          topic.match.test(`${r.title} ${r.description ?? ""}`) &&
+          !(topic.englishOnly && DEVANAGARI.test(r.title)),
+      );
+    }
 
     if (results.length === 0) {
 
@@ -135,14 +148,19 @@ Deno.serve(async (req) => {
     // refresh adds new bilingual articles instead of redoing the same ones.
     const { data: alreadyBilingual } = await supabase
       .from("news_articles")
-      .select("source_url, title_en, title_hi")
+      .select("source_url, title_en, title_hi, summary_en")
       .in("source_url", results.slice(0, 40).map((r) => r.url));
     // A story only counts as done when it has Hindi text AND its English
     // headline is really English (raw Hindi RSS titles are stored in both
-    // columns until the AI produces a translation).
+    // columns until the AI produces a translation). English-only topic feeds
+    // just need a clean English headline plus a summary.
     const doneUrls = new Set(
       (alreadyBilingual ?? [])
-        .filter((r) => r.title_hi && !DEVANAGARI.test(r.title_en ?? ""))
+        .filter((r) =>
+          topic?.englishOnly
+            ? !DEVANAGARI.test(r.title_en ?? "") && !!r.summary_en
+            : r.title_hi && !DEVANAGARI.test(r.title_en ?? "")
+        )
         .map((r) => r.source_url),
     );
     const pending = results.filter((r) => !doneUrls.has(r.url));
@@ -155,17 +173,26 @@ Deno.serve(async (req) => {
     let aiError: string | null = null;
 
     const systemPrompt =
-      "You are a bilingual (Hindi + English) local news editor for India. " +
-      "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. " +
+      (topic
+        ? `You are a bilingual (Hindi + English) technology news editor covering ${topic.label}. `
+        : "You are a bilingual (Hindi + English) local news editor for India. ") +
+      (topic
+        ? "From the given search results, keep only genuine AI, software and tech-product news; drop duplicates, opinion listicles and adverts. "
+        : "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. ") +
       'Reply with ONLY raw JSON of the shape {"articles":[{"id":1,"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_name":""}]} ' +
       "with no markdown fences, no reasoning, no explanation before or after the JSON. The first character of your reply must be '{'.\n" +
       "Writing rules:\n" +
       "- Return one article for every valid input result, and copy its id number exactly.\n" +
-      "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
+      (topic?.englishOnly
+        ? "- title_en: clear English headline, max 12 words. Leave title_hi and summary_hi empty.\n"
+        : "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n") +
       "- Never keep the publisher name inside a headline; put it in source_name.\n" +
-      "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n" +
-      "- Both languages are mandatory for every article. Use simple words and never invent facts.\n" +
-      "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.";
+      (topic?.englishOnly
+        ? "- summary_en: 1-2 short sentences (max 300 characters) in English explaining what happened and why it matters.\n- Write in English only. Use simple words and never invent facts.\n"
+        : "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n- Both languages are mandatory for every article. Use simple words and never invent facts.\n") +
+      (topic
+        ? "- category is one of AI Models, AI Tools, Startups, Research, Policy, Gadgets, Business."
+        : "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.");
 
     // Small batches prevent providers with short output limits from cutting
     // the JSON document in half. A failed batch does not discard successful
@@ -390,22 +417,72 @@ function extractArticlesJson(raw: string): string | null {
 
 
 /**
+ * Non-geographic feeds (e.g. AI & Tools) reuse this whole pipeline: the only
+ * differences are the Google News query and the relaxed keyword filters.
+ */
+export const TOPICS: Record<
+  string,
+  {
+    label: string;
+    queries: { hi?: string; en: string };
+    match: RegExp;
+    englishOnly?: boolean;
+  }
+> = {
+  "AI & Tools": {
+    // English-only feed: readers asked for AI news without Hindi versions.
+    englishOnly: true,
+    label: "artificial intelligence and AI tools",
+    // Keep the search string short: Google News answers 503 to long quoted
+    // OR-queries coming from datacentre IPs. The technology section feed is
+    // added as a second, always-available source.
+    queries: {
+      en: "artificial intelligence AI",
+      // Google News answers 503 to datacentre traffic for this topic, so
+      // publisher feeds are the reliable source here.
+      extraFeeds: [
+        "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "https://feeds.arstechnica.com/arstechnica/technology-lab",
+        "https://economictimes.indiatimes.com/tech/artificial-intelligence/rssfeeds/78570530.cms",
+        "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en",
+      ],
+    },
+    match:
+      /(\bai\b|artificial intelligence|machine learning|llm|chatbot|openai|anthropic|deepmind|gemini|claude|chatgpt|copilot|nvidia|neural|generative|आर्टिफिशियल|एआई|चैटजीपीटी)/i,
+  },
+};
+
+/**
  * A real story has a headline (not a section name like "राजस्थान") and a URL
  * that points at an article, not a site front page or e-paper index.
  */
 const BLOCKED_HOSTS =
   /(^|\.)(gemini\.google|deepmind\.google|play\.google\.com|apps\.apple\.com|google\.com|blog\.google|openai\.com|anthropic\.com|microsoft\.com|apple\.com|youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com|pinterest\.com|amazon\.[a-z.]+|wikipedia\.org|linkedin\.com)$/i;
 
+const SOCIAL_HOSTS =
+  /(^|\.)(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com|pinterest\.com|linkedin\.com)$/i;
+
 const PROMO_WORDS =
   /(gemini|chatgpt|copilot|ai assistant|asistente|download the app|app store|play store|subscribe now|pricing|sign up free)/i;
 
-function isRealStory(url: string, title: string, text = "", city = ""): boolean {
+// Product names are the news on a tech feed, so only the pure adverts go.
+const TOPIC_PROMO_WORDS =
+  /(download the app|app store|play store|subscribe now|pricing|sign up free|coupon|deal of the day)/i;
+
+function isRealStory(
+  url: string,
+  title: string,
+  text = "",
+  city = "",
+  topicMode = false,
+): boolean {
   const t = (title ?? "").replace(/\s+/g, " ").trim();
   if (t.length < 15 || t.split(/\s+/).length < 3) return false;
   if (/(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page)/i.test(t)) {
     return false;
   }
-  if (PROMO_WORDS.test(t)) return false;
+  if ((topicMode ? TOPIC_PROMO_WORDS : PROMO_WORDS).test(t)) return false;
   let path = "";
   let host = "";
   try {
@@ -415,8 +492,9 @@ function isRealStory(url: string, title: string, text = "", city = ""): boolean 
   } catch {
     return false;
   }
-  // Product/marketing/social pages are never local news.
-  if (BLOCKED_HOSTS.test(host)) return false;
+  // Product/marketing/social pages are never local news. Tech feeds still
+  // need vendor blogs and Big Tech domains, so only social is dropped there.
+  if ((topicMode ? SOCIAL_HOSTS : BLOCKED_HOSTS).test(host)) return false;
   // The story must actually mention the city somewhere.
   if (city) {
     const hay = `${text} ${url}`.toLowerCase();

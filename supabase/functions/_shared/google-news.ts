@@ -34,7 +34,7 @@ function tag(block: string, name: string): string | undefined {
 
 async function fetchFeed(url: string): Promise<NewsHit[]> {
   let res: Response | null = null;
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (let attempt = 0; attempt < 4; attempt++) {
     res = await fetch(url, {
       headers: {
         "User-Agent":
@@ -43,7 +43,8 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
       },
     });
     if (res.ok || (res.status !== 429 && res.status < 500)) break;
-    await new Promise((resolve) => setTimeout(resolve, 500 * 2 ** attempt));
+    // Google throttles bursts from datacentre IPs with 429/503; back off.
+    await new Promise((resolve) => setTimeout(resolve, 700 * 2 ** attempt));
   }
   if (!res) return [];
   if (!res.ok) {
@@ -51,18 +52,22 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
     return [];
   }
   const xml = await res.text();
-  const items = xml.match(/<item>[\s\S]*?<\/item>/gi) ?? [];
+  const items = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ??
+    // Atom feeds (e.g. The Verge) use <entry> instead of <item>.
+    xml.match(/<entry[\s>][\s\S]*?<\/entry>/gi) ?? [];
   const hits: NewsHit[] = [];
   for (const item of items) {
-    const link = tag(item, "link");
+    // RSS puts the URL in <link>text</link>, Atom in <link href="..."/>.
+    const link = tag(item, "link") ||
+      item.match(/<link[^>]+href="([^"]+)"/i)?.[1];
     const title = tag(item, "title");
     if (!link || !title || !link.startsWith("http") || SOCIAL.test(link)) continue;
-    const pub = tag(item, "pubDate");
+    const pub = tag(item, "pubDate") ?? tag(item, "published") ?? tag(item, "updated");
     const parsed = pub ? new Date(pub) : null;
     hits.push({
       url: link,
       title: title.replace(/\s+-\s+[^-]+$/, "").slice(0, 200),
-      description: (tag(item, "description") ?? "").slice(0, 500),
+      description: (tag(item, "description") ?? tag(item, "summary") ?? "").slice(0, 500),
       sourceName: tag(item, "source"),
       publishedAt: parsed && !isNaN(parsed.getTime())
         ? parsed.toISOString()
@@ -80,14 +85,23 @@ async function fetchFeed(url: string): Promise<NewsHit[]> {
 export async function googleNewsSearch(
   place: string,
   maxAgeHours = 48,
+  queries?: { hi?: string; en: string; extraFeeds?: string[] },
 ): Promise<NewsHit[]> {
-  const q = encodeURIComponent(`${place} समाचार OR news`);
-  const feeds = [
-    `https://news.google.com/rss/search?q=${q}&hl=hi-IN&gl=IN&ceid=IN:hi`,
-    `https://news.google.com/rss/search?q=${
-      encodeURIComponent(place + " news")
-    }&hl=en-IN&gl=IN&ceid=IN:en`,
-  ];
+  const hiQuery = queries ? queries.hi : `${place} समाचार OR news`;
+  const enQuery = queries?.en ?? `${place} news`;
+  const hiFeed = hiQuery
+    ? `https://news.google.com/rss/search?q=${
+      encodeURIComponent(hiQuery)
+    }&hl=hi-IN&gl=IN&ceid=IN:hi`
+    : null;
+  const enFeed = `https://news.google.com/rss/search?q=${
+    encodeURIComponent(enQuery)
+  }&hl=en-IN&gl=IN&ceid=IN:en`;
+  // Topic feeds (custom queries) are English-first — and English-only when no
+  // Hindi query is supplied.
+  const feeds = (queries
+    ? [enFeed, ...(queries.extraFeeds ?? []), hiFeed]
+    : [hiFeed, enFeed]).filter(Boolean) as string[];
 
   const seen = new Set<string>();
   const out: NewsHit[] = [];
@@ -106,12 +120,12 @@ export async function googleNewsSearch(
       seen.add(h.url);
       out.push(h);
     }
-    if (out.length >= 12) break;
+    if (out.length >= (queries ? 24 : 12)) break;
   }
 
   return out
     .sort((a, b) =>
       (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "")
     )
-    .slice(0, 15);
+    .slice(0, queries ? 24 : 15);
 }
