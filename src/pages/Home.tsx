@@ -95,7 +95,7 @@ const Home = ({ lang }: { lang: Lang }) => {
 
         {/* Topic feed: AI & Tools — deliberately styled apart from city cards. */}
         <Link
-          to={aiNewsPath(lang)}
+          to={aiNewsPath()}
           className="group relative mt-9 block overflow-hidden rounded-3xl p-[1px] shadow-lg transition-transform hover:-translate-y-0.5"
           style={{ background: "linear-gradient(120deg, #8b5cf6, #22d3ee 55%, #f472b6)" }}
         >
