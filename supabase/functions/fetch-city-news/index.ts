@@ -117,7 +117,11 @@ Deno.serve(async (req) => {
     // Topic feeds must stay on-topic: Google News sometimes mixes unrelated
     // general headlines into a keyword search.
     if (topic) {
-      results = results.filter((r) => topic.match.test(`${r.title} ${r.description ?? ""}`));
+      results = results.filter(
+        (r) =>
+          topic.match.test(`${r.title} ${r.description ?? ""}`) &&
+          !(topic.englishOnly && DEVANAGARI.test(r.title)),
+      );
     }
 
     if (results.length === 0) {
@@ -174,10 +178,13 @@ Deno.serve(async (req) => {
       "with no markdown fences, no reasoning, no explanation before or after the JSON. The first character of your reply must be '{'.\n" +
       "Writing rules:\n" +
       "- Return one article for every valid input result, and copy its id number exactly.\n" +
-      "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n" +
+      (topic?.englishOnly
+        ? "- title_en: clear English headline, max 12 words. Leave title_hi and summary_hi empty.\n"
+        : "- title_en: clear English headline, max 12 words. title_hi: the same headline in natural Devanagari Hindi, max 12 words.\n") +
       "- Never keep the publisher name inside a headline; put it in source_name.\n" +
-      "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n" +
-      "- Both languages are mandatory for every article. Use simple words and never invent facts.\n" +
+      (topic?.englishOnly
+        ? "- summary_en: 1-2 short sentences (max 300 characters) in English explaining what happened and why it matters.\n- Write in English only. Use simple words and never invent facts.\n"
+        : "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n- Both languages are mandatory for every article. Use simple words and never invent facts.\n") +
       (topic
         ? "- category is one of AI Models, AI Tools, Startups, Research, Policy, Gadgets, Business."
         : "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.");
@@ -410,12 +417,18 @@ function extractArticlesJson(raw: string): string | null {
  */
 export const TOPICS: Record<
   string,
-  { label: string; queries: { hi: string; en: string }; match: RegExp }
+  {
+    label: string;
+    queries: { hi?: string; en: string };
+    match: RegExp;
+    englishOnly?: boolean;
+  }
 > = {
   "AI & Tools": {
+    // English-only feed: readers asked for AI news without Hindi versions.
+    englishOnly: true,
     label: "artificial intelligence and AI tools",
     queries: {
-      hi: '"आर्टिफिशियल इंटेलिजेंस" OR "एआई" OR "चैटजीपीटी" तकनीक',
       en:
         '"artificial intelligence" OR "AI model" OR "AI tool" OR OpenAI OR Anthropic OR "machine learning"',
     },
