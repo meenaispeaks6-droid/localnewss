@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Moon, RefreshCw, Sun } from "lucide-react";
+import { ExternalLink, Moon, RefreshCw, Sun } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import NewsCard from "@/components/NewsCard";
@@ -9,6 +9,13 @@ import NewsSkeleton from "@/components/NewsSkeleton";
 import Seo from "@/components/Seo";
 import NotifyButton from "@/components/NotifyButton";
 import SiteFooter from "@/components/SiteFooter";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import type { NewsArticle } from "@/lib/newsTypes";
 import { SITE_NAME, SITE_URL, cityPath, homePath } from "@/lib/geo";
@@ -27,6 +34,7 @@ const AiNews = () => {
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
   const [filter, setFilter] = useState<string>("__all");
+  const [openArticle, setOpenArticle] = useState<NewsArticle | null>(null);
   // Page-local appearance: dark by default, light just swaps to a white surface.
   const [mode, setMode] = useState<"dark" | "light">(() => {
     if (typeof window === "undefined") return "dark";
@@ -262,11 +270,61 @@ const AiNews = () => {
         ) : (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {visible.map((a, i) => (
-              <NewsCard key={a.id} article={a as NewsArticle} index={i} lang="en" />
+              <NewsCard
+                key={a.id}
+                article={a as NewsArticle}
+                index={i}
+                lang="en"
+                onOpen={(article) => setOpenArticle(article)}
+              />
             ))}
           </div>
         )}
       </main>
+
+      <Dialog open={!!openArticle} onOpenChange={(o) => !o && setOpenArticle(null)}>
+        <DialogContent className="max-h-[85dvh] overflow-y-auto sm:max-w-xl">
+          {openArticle && (
+            <>
+              <DialogHeader>
+                <div className="mb-1 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
+                  <span className="rounded-full bg-primary/10 px-2.5 py-1 font-semibold uppercase tracking-wide text-primary">
+                    {openArticle.category}
+                  </span>
+                  <span>{openArticle.source_name ?? "Source"}</span>
+                  <span>·</span>
+                  <time dateTime={openArticle.published_at}>
+                    {new Date(openArticle.published_at).toLocaleString("en-IN", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </time>
+                </div>
+                <DialogTitle className="font-heading text-xl leading-snug">
+                  {openArticle.title_en}
+                </DialogTitle>
+                <DialogDescription className="sr-only">AI news summary</DialogDescription>
+              </DialogHeader>
+
+              <p className="text-sm leading-relaxed text-foreground/90">
+                {openArticle.summary_en?.trim() ||
+                  "A short summary for this story is still being generated. Open the source for the full report."}
+              </p>
+
+              <a
+                href={openArticle.source_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold transition-colors hover:border-primary/50 hover:text-primary"
+              >
+                Read full story
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
 
       <SiteFooter lang="en" />
     </div>
