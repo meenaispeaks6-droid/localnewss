@@ -306,7 +306,10 @@ Deno.serve(async (req) => {
         )
         .map((r) => {
           const title = clean(stripSource(r.title), 120) ?? r.title.slice(0, 120);
-          const summary = clean(r.description?.replace(/<[^>]+>/g, " "), 300);
+          const summary = usefulSummary(
+            clean(r.description?.replace(/<[^>]+>/g, " "), 300),
+            title,
+          );
           // A Hindi RSS headline is Hindi content: mirror it into the Hindi
           // columns so the English page can tell it still needs translating.
           const isHindi = DEVANAGARI.test(title);
