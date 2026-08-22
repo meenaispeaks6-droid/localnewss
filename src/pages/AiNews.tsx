@@ -215,12 +215,6 @@ const AiNews = () => {
                   <Moon className="h-4 w-4 text-primary" aria-hidden="true" />
                 )}
               </button>
-              <Link
-                to={homePath("en")}
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 text-sm backdrop-blur transition-colors hover:border-primary/50 hover:text-primary"
-              >
-                All city news
-              </Link>
             </div>
 
           </motion.div>
