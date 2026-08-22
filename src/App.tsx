@@ -10,6 +10,8 @@ import ArticleNews from "./pages/ArticleNews";
 import StateNews from "./pages/StateNews";
 import AiNews from "./pages/AiNews";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import OAuthConsent from "./pages/OAuthConsent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +35,8 @@ const App = () => (
           <Route path="/state/:stateSlug/hi" element={<StateNews lang="hi" />} />
           <Route path="/ai-news" element={<AiNews />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

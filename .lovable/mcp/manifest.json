@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.2",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://fwummhpxwwelpoqtjpiw.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "local-news",
+      "version": "0.1.0",
+      "title": "Local News"
+    },
+    "tools": [
+      {
+        "name": "list_cities",
+        "title": "List covered cities",
+        "description": "List Indian cities and states covered by Local News. Optionally filter by a search term matching city or state name.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Optional search term for city or state name."
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Maximum cities to return (default 50)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_city_news",
+        "title": "Get city news",
+        "description": "Get the latest published news stories for an Indian city covered by Local News, newest first. Returns bilingual headlines and summaries plus links.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "city": {
+              "type": "string",
+              "description": "City name, e.g. 'Alwar' or 'Jaipur'."
+            },
+            "category": {
+              "type": "string",
+              "description": "Optional category filter, e.g. Politics, Crime, Sports."
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Maximum stories to return (default 10, max 50)."
+            }
+          },
+          "required": [
+            "city"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "search_news",
+        "title": "Search news",
+        "description": "Search published Local News stories across all cities by keyword in the English or Hindi headline, newest first.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Keyword or phrase to search for in headlines."
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Maximum stories to return (default 10, max 50)."
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_ai_news",
+        "title": "Get AI & Tools news",
+        "description": "Get the latest worldwide AI and technology stories from the Local News 'AI & Tools' feed (new models, benchmarks, tools, robotics, research), newest first.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "description": "Maximum stories to return (default 10, max 50)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
