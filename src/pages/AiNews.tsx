@@ -10,59 +10,19 @@ import Seo from "@/components/Seo";
 import NotifyButton from "@/components/NotifyButton";
 import SiteFooter from "@/components/SiteFooter";
 import { supabase } from "@/integrations/supabase/client";
-import type { Lang, NewsArticle } from "@/lib/newsTypes";
+import type { NewsArticle } from "@/lib/newsTypes";
 import { SITE_NAME, SITE_URL, cityPath, homePath } from "@/lib/geo";
 
 /** Pseudo-city key used by the news pipeline for this topic feed. */
 export const AI_TOPIC = "AI & Tools";
 
-export const aiNewsPath = (lang: Lang) => (lang === "hi" ? "/ai-news/hi" : "/ai-news");
+/** This feed is English-only by design, so it has a single URL. */
+export const aiNewsPath = () => "/ai-news";
 
 const REFRESH_MS = 90 * 1000;
 
-const t = {
-  en: {
-    eyebrow: "Live AI intelligence feed",
-    title: "AI & Tools",
-    tagline: "Every model launch, tool drop and AI story — as it happens.",
-    intro:
-      "A live stream of artificial intelligence news: new models, AI tools and apps, funding rounds, research breakthroughs and policy moves, summarised in plain language and refreshed through the day.",
-    refresh: "Sync now",
-    fetching: "Scanning the wire...",
-    updated: "Feed synced",
-    error: "Could not sync the AI feed",
-    empty: "No AI stories cached yet. Hit “Sync now”.",
-    all: "All signals",
-    stories: (n: number) => `${n} stories`,
-    live: "LIVE",
-    latest: "Latest drops",
-    back: "All city news",
-    updatedAt: "Last sync",
-  },
-  hi: {
-    eyebrow: "लाइव एआई फ़ीड",
-    title: "एआई और टूल्स",
-    tagline: "हर नया मॉडल, हर नया टूल, हर एआई ख़बर — तुरंत।",
-    intro:
-      "आर्टिफिशियल इंटेलिजेंस की लाइव ख़बरें — नए एआई मॉडल, टूल्स और ऐप्स, फ़ंडिंग, रिसर्च और नीतियों की आसान भाषा में जानकारी, दिन भर अपडेट।",
-    refresh: "अभी अपडेट करें",
-    fetching: "ख़बरें खोजी जा रही हैं...",
-    updated: "फ़ीड अपडेट हो गई",
-    error: "एआई फ़ीड अपडेट नहीं हो सकी",
-    empty: "अभी कोई एआई ख़बर सेव नहीं है। “अभी अपडेट करें” दबाएँ।",
-    all: "सभी",
-    stories: (n: number) => `${n} ख़बरें`,
-    live: "लाइव",
-    latest: "ताज़ा अपडेट",
-    back: "शहरों की ख़बरें",
-    updatedAt: "अंतिम अपडेट",
-  },
-};
-
-const AiNews = ({ lang }: { lang: Lang }) => {
+const AiNews = () => {
   const navigate = useNavigate();
-  const c = t[lang];
-  const hi = lang === "hi";
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
@@ -80,34 +40,31 @@ const AiNews = ({ lang }: { lang: Lang }) => {
     return (data ?? []).length;
   }, []);
 
-  const sync = useCallback(
-    async (silent = false) => {
-      if (!silent) setFetching(true);
-      try {
-        const { data, error } = await supabase.functions.invoke("fetch-city-news", {
-          body: { city: AI_TOPIC },
+  const sync = useCallback(async (silent = false) => {
+    if (!silent) setFetching(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("fetch-city-news", {
+        body: { city: AI_TOPIC },
+      });
+      if (error) throw error;
+      const fresh = (data?.articles as NewsArticle[]) ?? [];
+      if (fresh.length > 0) {
+        setArticles((current) => {
+          const byId = new Map(current.map((a) => [a.id, a]));
+          for (const a of fresh) byId.set(a.id, a);
+          return [...byId.values()]
+            .sort((a, b) => b.published_at.localeCompare(a.published_at))
+            .slice(0, 36);
         });
-        if (error) throw error;
-        const fresh = (data?.articles as NewsArticle[]) ?? [];
-        if (fresh.length > 0) {
-          setArticles((current) => {
-            const byId = new Map(current.map((a) => [a.id, a]));
-            for (const a of fresh) byId.set(a.id, a);
-            return [...byId.values()]
-              .sort((a, b) => b.published_at.localeCompare(a.published_at))
-              .slice(0, 36);
-          });
-          if (!silent) toast.success(c.updated);
-        }
-      } catch (e) {
-        console.error("AI feed sync failed:", e);
-        if (!silent) toast.error(c.error);
-      } finally {
-        if (!silent) setFetching(false);
+        if (!silent) toast.success("Feed synced");
       }
-    },
-    [c],
-  );
+    } catch (e) {
+      console.error("AI feed sync failed:", e);
+      if (!silent) toast.error("Could not sync the AI feed");
+    } finally {
+      if (!silent) setFetching(false);
+    }
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -153,25 +110,24 @@ const AiNews = ({ lang }: { lang: Lang }) => {
   );
 
   const lastUpdated = articles[0]?.published_at ?? null;
-  const title = hi
-    ? "एआई और टूल्स न्यूज़ — आज की ताज़ा आर्टिफिशियल इंटेलिजेंस ख़बरें"
-    : "AI & Tools News Today — Live Artificial Intelligence Updates";
+  const title = "AI & Tools News Today — Live Artificial Intelligence Updates";
+  const description =
+    "A live stream of artificial intelligence news in English: new AI models, tools and apps, funding rounds, research breakthroughs and policy moves, summarised in plain language and refreshed through the day.";
 
   return (
     <div className="ai-surface flex min-h-dvh flex-col bg-background text-foreground">
       <Seo
         title={title}
-        description={c.intro}
-        path={aiNewsPath(lang)}
-        lang={lang}
-        altPath={aiNewsPath(hi ? "en" : "hi")}
+        description={description}
+        path={aiNewsPath()}
+        lang="en"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: title,
-          description: c.intro,
-          url: `${SITE_URL}${aiNewsPath(lang)}`,
-          inLanguage: hi ? "hi-IN" : "en-IN",
+          description,
+          url: `${SITE_URL}${aiNewsPath()}`,
+          inLanguage: "en",
           dateModified: lastUpdated ?? undefined,
           about: { "@type": "Thing", name: "Artificial intelligence" },
           isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
@@ -179,13 +135,13 @@ const AiNews = ({ lang }: { lang: Lang }) => {
       />
 
       <Header
-        onCityChange={(name) => navigate(cityPath(name, lang))}
-        lang={lang}
-        onLangChange={(next) => navigate(aiNewsPath(next))}
+        onCityChange={(name) => navigate(cityPath(name, "en"))}
+        lang="en"
+        onLangChange={(next) => navigate(homePath(next))}
       />
 
       <section className="relative isolate overflow-hidden border-b border-border">
-        <div aria-hidden="true" className="absolute inset-0 ai-grid" />
+        <div aria-hidden="true" className="ai-grid absolute inset-0" />
         <div
           aria-hidden="true"
           className="ai-orb pointer-events-none absolute -left-20 -top-24 h-72 w-72 rounded-full opacity-50"
@@ -209,15 +165,17 @@ const AiNews = ({ lang }: { lang: Lang }) => {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
-              {c.eyebrow}
+              Live AI intelligence feed
             </span>
 
             <h1 className="mt-5 font-heading text-4xl font-bold tracking-tight text-balance sm:text-5xl md:text-6xl">
-              <span className="ai-gradient-text">{c.title}</span>
+              <span className="ai-gradient-text">AI &amp; Tools</span>
             </h1>
-            <p className="mt-3 font-heading text-lg text-foreground/90 sm:text-xl">{c.tagline}</p>
+            <p className="mt-3 font-heading text-lg text-foreground/90 sm:text-xl">
+              Every model launch, tool drop and AI story — as it happens.
+            </p>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {c.intro}
+              {description}
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -227,27 +185,34 @@ const AiNews = ({ lang }: { lang: Lang }) => {
                 disabled={fetching}
                 className="ai-shine inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold text-[color:var(--primary-foreground)] shadow-lg transition-transform hover:scale-[1.03] disabled:opacity-60"
               >
-                <RefreshCw className={`h-4 w-4 ${fetching ? "animate-spin" : ""}`} aria-hidden="true" />
-                {fetching ? c.fetching : c.refresh}
+                <RefreshCw
+                  className={`h-4 w-4 ${fetching ? "animate-spin" : ""}`}
+                  aria-hidden="true"
+                />
+                {fetching ? "Scanning the wire..." : "Sync now"}
               </button>
-              <NotifyButton city={AI_TOPIC} state="India" lang={lang} />
+              <NotifyButton city={AI_TOPIC} state="India" lang="en" />
               <Link
-                to={homePath(lang)}
+                to={homePath("en")}
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 text-sm backdrop-blur transition-colors hover:border-primary/50 hover:text-primary"
               >
-                {c.back}
+                All city news
               </Link>
             </div>
 
             <dl className="mt-8 grid max-w-lg grid-cols-3 gap-3">
               {[
-                { icon: Zap, label: c.live, value: c.stories(articles.length) },
-                { icon: Bot, label: hi ? "मॉडल व टूल्स" : "Models & tools", value: String(categories.length || 1) },
+                { icon: Zap, label: "Live", value: `${articles.length} stories` },
+                {
+                  icon: Bot,
+                  label: "Topics",
+                  value: String(categories.length || 1),
+                },
                 {
                   icon: Cpu,
-                  label: c.updatedAt,
+                  label: "Last sync",
                   value: lastUpdated
-                    ? new Date(lastUpdated).toLocaleTimeString(hi ? "hi-IN" : "en-IN", {
+                    ? new Date(lastUpdated).toLocaleTimeString("en-IN", {
                         hour: "2-digit",
                         minute: "2-digit",
                       })
@@ -272,8 +237,8 @@ const AiNews = ({ lang }: { lang: Lang }) => {
 
       <main className="container flex-1 py-9 md:py-12">
         {categories.length > 0 && (
-          <nav aria-label={hi ? "श्रेणियाँ" : "Topics"} className="mb-7 flex flex-wrap gap-2">
-            {[["__all", c.all] as const, ...categories.map(([k]) => [k, k] as const)].map(
+          <nav aria-label="Topics" className="mb-7 flex flex-wrap gap-2">
+            {[["__all", "All signals"] as const, ...categories.map(([k]) => [k, k] as const)].map(
               ([key, label]) => {
                 const active = filter === key;
                 return (
@@ -298,7 +263,7 @@ const AiNews = ({ lang }: { lang: Lang }) => {
 
         <h2 className="flex items-center gap-2 font-heading text-xl font-semibold tracking-tight sm:text-2xl">
           <Sparkles className="h-5 w-5 text-primary" aria-hidden="true" />
-          {c.latest}
+          Latest drops
         </h2>
 
         {loading ? (
@@ -307,18 +272,18 @@ const AiNews = ({ lang }: { lang: Lang }) => {
           </div>
         ) : visible.length === 0 ? (
           <p className="mt-8 rounded-2xl border border-border bg-card/60 p-8 text-center text-sm text-muted-foreground">
-            {c.empty}
+            No AI stories cached yet. Hit “Sync now”.
           </p>
         ) : (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {visible.map((a, i) => (
-              <NewsCard key={a.id} article={a as NewsArticle} index={i} lang={lang} />
+              <NewsCard key={a.id} article={a as NewsArticle} index={i} lang="en" />
             ))}
           </div>
         )}
       </main>
 
-      <SiteFooter lang={lang} />
+      <SiteFooter lang="en" />
     </div>
   );
 };
