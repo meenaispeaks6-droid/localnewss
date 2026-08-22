@@ -195,8 +195,9 @@ Deno.serve(async (req) => {
         ? "- summary_en: 1-2 short sentences (max 300 characters) in English explaining what happened and why it matters.\n- Write in English only. Use simple words and never invent facts.\n"
         : "- summary_en and summary_hi: 1-2 short sentences (max 300 characters) explaining what happened, where and why it matters.\n- Both languages are mandatory for every article. Use simple words and never invent facts.\n") +
       (topic
-        ? "- category is one of AI Models, AI Tools, Startups, Research, Policy, Gadgets, Business."
+        ? "- category is one of AI Models, Benchmarks, AI Tools, Robotics, Research, Hardware, Policy, Startups."
         : "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.");
+
 
     // Small batches prevent providers with short output limits from cutting
     // the JSON document in half. A failed batch does not discard successful
