@@ -174,7 +174,7 @@ Deno.serve(async (req) => {
 
     const systemPrompt =
       (topic
-        ? `You are a bilingual (Hindi + English) technology news editor covering ${topic.label}. `
+        ? `You are a global technology news editor covering ${topic.label}. This feed is worldwide and has nothing to do with any city or state. `
         : "You are a bilingual (Hindi + English) local news editor for India. ") +
       (topic
         ? "From the given search results, keep only genuine AI, software and tech-product news; drop duplicates, opinion listicles and adverts. "
@@ -432,7 +432,7 @@ export const TOPICS: Record<
   "AI & Tools": {
     // English-only feed: readers asked for AI news without Hindi versions.
     englishOnly: true,
-    label: "artificial intelligence and AI tools",
+    label: "worldwide artificial intelligence, AI tools and tech-product news",
     // Keep the search string short: Google News answers 503 to long quoted
     // OR-queries coming from datacentre IPs. The technology section feed is
     // added as a second, always-available source.
@@ -444,8 +444,9 @@ export const TOPICS: Record<
         "https://techcrunch.com/category/artificial-intelligence/feed/",
         "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
         "https://feeds.arstechnica.com/arstechnica/technology-lab",
+        "https://www.wired.com/feed/tag/ai/latest/rss",
         "https://economictimes.indiatimes.com/tech/artificial-intelligence/rssfeeds/78570530.cms",
-        "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en",
+        "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-US&gl=US&ceid=US:en",
       ],
     },
     match:
