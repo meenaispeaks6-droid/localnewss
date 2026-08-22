@@ -31,8 +31,7 @@ const App = () => (
           <Route path="/news/:citySlug/:articleSlug/hi" element={<ArticleNews lang="hi" />} />
           <Route path="/state/:stateSlug" element={<StateNews lang="en" />} />
           <Route path="/state/:stateSlug/hi" element={<StateNews lang="hi" />} />
-          <Route path="/ai-news" element={<AiNews lang="en" />} />
-          <Route path="/ai-news/hi" element={<AiNews lang="hi" />} />
+          <Route path="/ai-news" element={<AiNews />} />
           <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
