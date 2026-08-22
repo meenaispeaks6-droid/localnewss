@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { Moon, RefreshCw, Sparkles, Sun } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Moon, RefreshCw, Sun } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import NewsCard from "@/components/NewsCard";
