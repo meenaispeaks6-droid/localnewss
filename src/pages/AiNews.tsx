@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Moon, RefreshCw, Sun } from "lucide-react";
+import { ExternalLink, Moon, RefreshCw, Sun } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import NewsCard from "@/components/NewsCard";
@@ -9,6 +9,13 @@ import NewsSkeleton from "@/components/NewsSkeleton";
 import Seo from "@/components/Seo";
 import NotifyButton from "@/components/NotifyButton";
 import SiteFooter from "@/components/SiteFooter";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import type { NewsArticle } from "@/lib/newsTypes";
 import { SITE_NAME, SITE_URL, cityPath, homePath } from "@/lib/geo";
@@ -27,6 +34,7 @@ const AiNews = () => {
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
   const [filter, setFilter] = useState<string>("__all");
+  const [openArticle, setOpenArticle] = useState<NewsArticle | null>(null);
   // Page-local appearance: dark by default, light just swaps to a white surface.
   const [mode, setMode] = useState<"dark" | "light">(() => {
     if (typeof window === "undefined") return "dark";
