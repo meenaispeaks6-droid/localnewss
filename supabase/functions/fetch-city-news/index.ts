@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
     // as a fallback for places RSS doesn't cover.
     let results: Array<
       { url: string; title: string; description: string; sourceName?: string; publishedAt?: string }
-    > = await googleNewsSearch(place, topic ? 24 : 48, topic?.queries);
+    > = await googleNewsSearch(place, 48, topic?.queries);
     let notice: string | null = null;
 
     if (results.length < 3) {
