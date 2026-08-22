@@ -445,7 +445,7 @@ export const TOPICS: Record<
         "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
         "https://feeds.arstechnica.com/arstechnica/technology-lab",
         "https://www.wired.com/feed/tag/ai/latest/rss",
-        "https://economictimes.indiatimes.com/tech/artificial-intelligence/rssfeeds/78570530.cms",
+        "https://venturebeat.com/category/ai/feed/",
         "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-US&gl=US&ceid=US:en",
       ],
     },
