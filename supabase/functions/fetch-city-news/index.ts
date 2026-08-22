@@ -181,7 +181,7 @@ Deno.serve(async (req) => {
         ? `You are a global technology news editor covering ${topic.label}. This feed is worldwide and has nothing to do with any city or state. `
         : "You are a bilingual (Hindi + English) local news editor for India. ") +
       (topic
-        ? "From the given search results, keep only genuine AI, software and tech-product news; drop duplicates, opinion listicles and adverts. "
+        ? "From the given search results, keep only substantive AI/tech updates: new AI model or tool launches, benchmark results, robotics, new technology, research papers and scientific discoveries. Drop duplicates, opinion listicles, deals, stock-market chatter and adverts. "
         : "From the given search results, keep only genuine news items about the requested city; drop duplicates and anything that is not news. ") +
       'Reply with ONLY raw JSON of the shape {"articles":[{"id":1,"title_en":"","title_hi":"","summary_en":"","summary_hi":"","category":"","source_name":""}]} ' +
       "with no markdown fences, no reasoning, no explanation before or after the JSON. The first character of your reply must be '{'.\n" +
