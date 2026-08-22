@@ -452,20 +452,22 @@ export const TOPICS: Record<
   string,
   {
     label: string;
-    queries: { hi?: string; en: string };
+    queries: { hi?: string; en: string; extraFeeds?: string[] };
     match: RegExp;
+    exclude?: RegExp;
     englishOnly?: boolean;
   }
 > = {
   "AI & Tools": {
     // English-only feed: readers asked for AI news without Hindi versions.
     englishOnly: true,
-    label: "worldwide artificial intelligence, AI tools and tech-product news",
+    label:
+      "worldwide AI updates: new AI models, benchmarks, new AI tools, robotics, new technology, research papers and scientific discoveries",
     // Keep the search string short: Google News answers 503 to long quoted
     // OR-queries coming from datacentre IPs. The technology section feed is
     // added as a second, always-available source.
     queries: {
-      en: "artificial intelligence AI",
+      en: "AI model release benchmark robotics research",
       // Google News answers 503 to datacentre traffic for this topic, so
       // publisher feeds are the reliable source here.
       extraFeeds: [
@@ -474,13 +476,24 @@ export const TOPICS: Record<
         "https://feeds.arstechnica.com/arstechnica/technology-lab",
         "https://www.wired.com/feed/tag/ai/latest/rss",
         "https://venturebeat.com/category/ai/feed/",
+        "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+        "https://spectrum.ieee.org/feeds/topic/robotics.rss",
+        "https://spectrum.ieee.org/feeds/topic/artificial-intelligence.rss",
+        "https://www.sciencedaily.com/rss/computers_math/artificial_intelligence.xml",
+        "https://www.sciencedaily.com/rss/computers_math/robotics.xml",
+        "https://huggingface.co/blog/feed.xml",
         "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-US&gl=US&ceid=US:en",
       ],
     },
+    // Only genuine AI / robotics / research / new-tech stories.
     match:
-      /(\bai\b|artificial intelligence|machine learning|llm|chatbot|openai|anthropic|deepmind|gemini|claude|chatgpt|copilot|nvidia|neural|generative|आर्टिफिशियल|एआई|चैटजीपीटी)/i,
+      /(\bai\b|\bagi\b|artificial intelligence|machine learning|deep learning|neural|\bllm\b|large language model|foundation model|multimodal|generative|diffusion model|benchmark|\bgpu\b|\btpu\b|inference|fine-?tun|open-?weight|chatbot|\bagent(s|ic)?\b|robot|robotics|humanoid|autonomous|self-?driving|drone|quantum|breakthrough|discover(y|ies)|research(ers)?|study|paper|arxiv|openai|anthropic|deepmind|google ai|meta ai|mistral|hugging ?face|nvidia|qwen|llama|deepseek|gemini|claude|chatgpt|copilot|sora|midjourney|grok)/i,
+    // Kill the market/celebrity/lifestyle noise that tech feeds mix in.
+    exclude:
+      /(stock (price|market)|share price|nasdaq|ipo pric|best deals?|discount|coupon|black friday|prime day|how to watch|streaming guide|netflix series|movie review|smartphone deal|crypto price|bitcoin price|dating app|horoscope)/i,
   },
 };
+
 
 /**
  * A real story has a headline (not a section name like "राजस्थान") and a URL
