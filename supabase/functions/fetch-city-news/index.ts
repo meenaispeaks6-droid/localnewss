@@ -404,15 +404,17 @@ function extractArticlesJson(raw: string): string | null {
  */
 export const TOPICS: Record<
   string,
-  { label: string; queries: { hi: string; en: string } }
+  { label: string; queries: { hi: string; en: string }; match: RegExp }
 > = {
   "AI & Tools": {
     label: "artificial intelligence and AI tools",
     queries: {
-      hi: "आर्टिफिशियल इंटेलिजेंस OR एआई टूल्स OR टेक्नोलॉजी समाचार",
+      hi: '"आर्टिफिशियल इंटेलिजेंस" OR "एआई" OR "चैटजीपीटी" तकनीक',
       en:
-        "artificial intelligence OR \"AI tools\" OR OpenAI OR Anthropic OR \"machine learning\" news",
+        '"artificial intelligence" OR "AI model" OR "AI tool" OR OpenAI OR Anthropic OR "machine learning"',
     },
+    match:
+      /(\bai\b|artificial intelligence|machine learning|llm|chatbot|openai|anthropic|deepmind|gemini|claude|chatgpt|copilot|nvidia|neural|generative|आर्टिफिशियल|एआई|चैटजीपीटी)/i,
   },
 };
 
