@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { Moon, RefreshCw, Sparkles, Sun } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Moon, RefreshCw, Sun } from "lucide-react";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import NewsCard from "@/components/NewsCard";
@@ -215,12 +215,6 @@ const AiNews = () => {
                   <Moon className="h-4 w-4 text-primary" aria-hidden="true" />
                 )}
               </button>
-              <Link
-                to={homePath("en")}
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 text-sm backdrop-blur transition-colors hover:border-primary/50 hover:text-primary"
-              >
-                All city news
-              </Link>
             </div>
 
           </motion.div>
@@ -253,8 +247,7 @@ const AiNews = () => {
           </nav>
         )}
 
-        <h2 className="flex items-center gap-2 font-heading text-xl font-semibold tracking-tight sm:text-2xl">
-          <Sparkles className="h-5 w-5 text-primary" aria-hidden="true" />
+        <h2 className="font-heading text-xl font-semibold tracking-tight sm:text-2xl">
           Latest drops
         </h2>
 
