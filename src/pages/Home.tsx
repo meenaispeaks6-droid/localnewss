@@ -93,43 +93,30 @@ const Home = ({ lang }: { lang: Lang }) => {
           {description}
         </p>
 
-        {/* Topic feed: AI & Tools — deliberately styled apart from city cards. */}
+        {/* Topic feed: AI & Tools — compact card matching the state list style. */}
         <Link
           to={aiNewsPath()}
-          className="group relative mt-9 block overflow-hidden rounded-3xl p-[1px] shadow-lg transition-transform hover:-translate-y-0.5"
-          style={{ background: "linear-gradient(120deg, #8b5cf6, #22d3ee 55%, #f472b6)" }}
+          className="group mt-6 flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-primary/40 hover:text-primary"
         >
-          <span className="relative flex flex-col gap-4 rounded-[calc(1.5rem-1px)] bg-[#140f28] p-6 sm:flex-row sm:items-center sm:justify-between">
-            <span
-              aria-hidden="true"
-              className="ai-orb pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full opacity-40"
-              style={{ background: "#8b5cf6" }}
-            />
-            <span className="relative flex items-start gap-4">
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/10 text-[#c4b5fd]">
-                <Sparkles className="h-6 w-6" aria-hidden="true" />
+          <span className="flex min-w-0 flex-col">
+            <span className="flex flex-wrap items-center gap-2">
+              <span className="block truncate font-heading text-sm font-semibold ai-title-shimmer">
+                {hi ? "एआई और टूल्स" : "AI & Tools"}
               </span>
-              <span>
-                <span className="flex flex-wrap items-center gap-2">
-                  <span className="font-heading text-xl font-bold text-white sm:text-2xl">
-                    {hi ? "एआई और टूल्स" : "AI & Tools"}
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#67e8f9]">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#67e8f9]" />
-                    {hi ? "लाइव" : "Live"}
-                  </span>
-                </span>
-                <span className="mt-1 block max-w-md text-sm leading-relaxed text-white/70">
-                  {hi
-                    ? "नए एआई मॉडल, टूल्स और टेक ख़बरें एक जगह — सूचनाएँ चालू करें और हर अपडेट सबसे पहले पाएँ।"
-                    : "New AI models, tools and tech news in one live feed — turn on alerts and get every drop first."}
-                </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+                {hi ? "लाइव" : "Live"}
               </span>
             </span>
-            <span className="relative inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-colors group-hover:bg-white/20 sm:self-auto">
-              {hi ? "फ़ीड खोलें" : "Open feed"}
-              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            <span className="block truncate text-xs text-muted-foreground">
+              {hi
+                ? "नए एआई मॉडल और टूल्स की ख़बरें"
+                : "New AI models, tools and tech updates"}
             </span>
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
+            {hi ? "खोलें" : "Open"}
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
         </Link>
 
