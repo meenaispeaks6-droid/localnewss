@@ -117,12 +117,16 @@ Deno.serve(async (req) => {
     // Topic feeds must stay on-topic: Google News sometimes mixes unrelated
     // general headlines into a keyword search.
     if (topic) {
-      results = results.filter(
-        (r) =>
-          topic.match.test(`${r.title} ${r.description ?? ""}`) &&
-          !(topic.englishOnly && DEVANAGARI.test(r.title)),
-      );
+      results = results.filter((r) => {
+        const hay = `${r.title} ${r.description ?? ""}`;
+        return (
+          topic.match.test(hay) &&
+          !(topic.exclude?.test(hay)) &&
+          !(topic.englishOnly && DEVANAGARI.test(r.title))
+        );
+      });
     }
+
 
     if (results.length === 0) {
 
