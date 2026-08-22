@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { aiNewsPath } from "@/pages/AiNews";
 import Header from "@/components/Header";
 import Seo from "@/components/Seo";
