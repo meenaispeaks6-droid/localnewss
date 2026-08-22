@@ -68,7 +68,19 @@ const NewsCard = ({
       </div>
 
       <h3 className="font-heading text-base font-semibold leading-snug tracking-tight sm:text-lg">
-        {article.slug ? (
+        {onOpen ? (
+          <button
+            type="button"
+            onClick={() => {
+              onToggleRead?.(article.id, true);
+              onOpen(article);
+            }}
+            className="text-left outline-none transition-colors group-hover:text-primary"
+          >
+            <span className="absolute inset-0 rounded-2xl" aria-hidden="true" />
+            {title}
+          </button>
+        ) : article.slug ? (
           <Link
             to={articlePath(article.city, article.slug, lang)}
             onClick={() => onToggleRead?.(article.id, true)}
@@ -90,6 +102,7 @@ const NewsCard = ({
             {title}
           </a>
         )}
+
       </h3>
 
 
