@@ -114,6 +114,12 @@ Deno.serve(async (req) => {
       isRealStory(r.url, r.title, `${r.title} ${r.description ?? ""}`, topic ? "" : city, !!topic)
     );
 
+    // Topic feeds must stay on-topic: Google News sometimes mixes unrelated
+    // general headlines into a keyword search.
+    if (topic) {
+      results = results.filter((r) => topic.match.test(`${r.title} ${r.description ?? ""}`));
+    }
+
     if (results.length === 0) {
 
       const { data: cached } = await supabase
