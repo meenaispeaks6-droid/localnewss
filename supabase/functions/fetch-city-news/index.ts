@@ -255,14 +255,34 @@ Deno.serve(async (req) => {
 
     // Keep summaries short and headlines free of the publisher suffix even
     // when the model gets chatty.
+    const decodeEntities = (s: string) =>
+      s
+        .replace(/&nbsp;/gi, " ")
+        .replace(/&amp;/gi, "&")
+        .replace(/&quot;/gi, '"')
+        .replace(/&#39;|&apos;/gi, "'")
+        .replace(/&lt;/gi, "<")
+        .replace(/&gt;/gi, ">");
     const clean = (s: string | null | undefined, max: number) => {
       if (!s) return null;
-      const trimmed = s.replace(/\s+/g, " ").trim();
+      const trimmed = decodeEntities(s).replace(/\s+/g, " ").trim();
       if (!trimmed) return null;
       return trimmed.length > max ? `${trimmed.slice(0, max - 1).trimEnd()}…` : trimmed;
     };
     const stripSource = (title: string) =>
       title.replace(/\s+[-–—|]\s+[^-–—|]{2,40}$/u, "").trim() || title.trim();
+    // RSS "descriptions" are very often just the headline repeated with the
+    // publisher glued on. That is noise, not a summary.
+    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9\u0900-\u097F]+/g, "");
+    const usefulSummary = (summary: string | null, title: string) => {
+      if (!summary) return null;
+      const ns = norm(summary);
+      const nt = norm(title);
+      if (!ns || ns === nt || ns.startsWith(nt) || nt.startsWith(ns)) return null;
+      if (summary.trim().length < 60) return null;
+      return summary;
+    };
+
 
     articles = articles.map((a) => ({
       ...a,
