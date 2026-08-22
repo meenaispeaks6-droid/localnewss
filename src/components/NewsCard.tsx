@@ -27,16 +27,20 @@ const NewsCard = ({
   lang,
   read = false,
   onToggleRead,
+  onOpen,
 }: {
   article: NewsArticle;
   index: number;
   lang: Lang;
   read?: boolean;
   onToggleRead?: (id: string, read: boolean) => void;
+  /** When given, the card opens an in-app summary view instead of the source. */
+  onOpen?: (article: NewsArticle) => void;
 }) => {
   const title = lang === "hi" ? article.title_hi || article.title_en : article.title_en;
   const summary =
     lang === "hi" ? article.summary_hi || article.summary_en : article.summary_en;
+
 
   return (
     <motion.article
