@@ -95,7 +95,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
       .order("published_at", { ascending: false })
       .limit(30);
     if (error) console.error(error);
-    const rows = (data as NewsArticle[]) ?? [];
+    const rows = dedupeArticles((data as NewsArticle[]) ?? []);
     setArticles(rows);
     setLoading(false);
     const newest = rows[0]?.published_at ? new Date(rows[0].published_at).getTime() : 0;
