@@ -169,7 +169,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
         // Show new stories instantly, then tell the reader they arrived.
         setArticles((prev) => {
           const seen = new Set(prev.map((p) => p.id));
-          return [...fresh.filter((f) => !seen.has(f.id)), ...prev];
+          return dedupeArticles([...fresh.filter((f) => !seen.has(f.id)), ...prev]);
         });
         const unseen = fresh.filter((f) => !readIds.has(f.id)).length;
         if (unseen === 0) return;
