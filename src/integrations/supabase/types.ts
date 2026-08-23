@@ -236,6 +236,7 @@ export type Database = {
         Args: { _id: string; _title: string }
         Returns: string
       }
+      purge_old_news: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
