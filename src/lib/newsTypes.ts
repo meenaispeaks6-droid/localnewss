@@ -27,3 +27,33 @@ export const categoryHi: Record<string, string> = {
   Health: "स्वास्थ्य",
   general: "सामान्य",
 };
+
+/**
+ * The same story often arrives from several feeds (different URLs, tiny
+ * headline differences). Keep the first/newest copy of each story.
+ */
+const normaliseTitle = (s: string | null | undefined) =>
+  (s ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\u0900-\u097F]+/g, " ")
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 10)
+    .join(" ");
+
+export function dedupeArticles<T extends NewsArticle>(list: T[]): T[] {
+  const seen = new Set<string>();
+  const out: T[] = [];
+  for (const a of list) {
+    const keys = [
+      `u:${(a.source_url ?? "").split("?")[0]}`,
+      `e:${normaliseTitle(a.title_en)}`,
+      a.title_hi ? `h:${normaliseTitle(a.title_hi)}` : "",
+    ].filter((k) => k && !k.endsWith(":"));
+    if (keys.some((k) => seen.has(k))) continue;
+    for (const k of keys) seen.add(k);
+    out.push(a);
+  }
+  return out;
+}
