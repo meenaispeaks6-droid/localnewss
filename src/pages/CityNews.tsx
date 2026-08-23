@@ -12,7 +12,7 @@ import CityWeather from "@/components/CityWeather";
 import SiteFooter from "@/components/SiteFooter";
 import NotFound from "@/pages/NotFound";
 import { supabase } from "@/integrations/supabase/client";
-import { categoryHi, type Lang, type NewsArticle } from "@/lib/newsTypes";
+import { categoryHi, dedupeArticles, type Lang, type NewsArticle } from "@/lib/newsTypes";
 import { NEWS_CATEGORIES } from "@/pages/CityCategory";
 import {
   SITE_NAME,
@@ -95,7 +95,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
       .order("published_at", { ascending: false })
       .limit(30);
     if (error) console.error(error);
-    const rows = (data as NewsArticle[]) ?? [];
+    const rows = dedupeArticles((data as NewsArticle[]) ?? []);
     setArticles(rows);
     setLoading(false);
     const newest = rows[0]?.published_at ? new Date(rows[0].published_at).getTime() : 0;
@@ -116,9 +116,9 @@ const CityNews = ({ lang }: { lang: Lang }) => {
           setArticles((current) => {
             const byId = new Map(current.map((article) => [article.id, article]));
             for (const article of fresh) byId.set(article.id, article);
-            return [...byId.values()]
-              .sort((a, b) => b.published_at.localeCompare(a.published_at))
-              .slice(0, 30);
+            return dedupeArticles(
+              [...byId.values()].sort((a, b) => b.published_at.localeCompare(a.published_at)),
+            ).slice(0, 30);
           });
           if (!silent) toast.success(c.updated);
         }
@@ -169,7 +169,7 @@ const CityNews = ({ lang }: { lang: Lang }) => {
         // Show new stories instantly, then tell the reader they arrived.
         setArticles((prev) => {
           const seen = new Set(prev.map((p) => p.id));
-          return [...fresh.filter((f) => !seen.has(f.id)), ...prev];
+          return dedupeArticles([...fresh.filter((f) => !seen.has(f.id)), ...prev]);
         });
         const unseen = fresh.filter((f) => !readIds.has(f.id)).length;
         if (unseen === 0) return;
