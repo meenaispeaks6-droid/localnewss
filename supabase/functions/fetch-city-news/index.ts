@@ -172,10 +172,100 @@ Deno.serve(async (req) => {
 
 
 
-    // 2. Turn raw results into clean bilingual news items (rotates AI keys).
-    let articles: OutArticle[] = [];
-    let aiError: string | null = null;
+    // Text helpers shared by the instant path and the background AI pass.
+    const decodeEntities = (s: string) =>
+      s
+        .replace(/&nbsp;/gi, " ")
+        .replace(/&amp;/gi, "&")
+        .replace(/&quot;/gi, '"')
+        .replace(/&#39;|&apos;/gi, "'")
+        .replace(/&lt;/gi, "<")
+        .replace(/&gt;/gi, ">");
+    const clean = (s: string | null | undefined, max: number) => {
+      if (!s) return null;
+      const trimmed = decodeEntities(s).replace(/\s+/g, " ").trim();
+      if (!trimmed) return null;
+      return trimmed.length > max ? `${trimmed.slice(0, max - 1).trimEnd()}…` : trimmed;
+    };
+    const stripSource = (title: string) =>
+      title.replace(/\s+[-–—|]\s+[^-–—|]{2,40}$/u, "").trim() || title.trim();
+    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9\u0900-\u097F]+/g, "");
+    const usefulSummary = (summary: string | null, title: string) => {
+      if (!summary) return null;
+      const ns = norm(summary);
+      const nt = norm(title);
+      if (!ns || ns === nt || ns.startsWith(nt) || nt.startsWith(ns)) return null;
+      if (summary.trim().length < 60) return null;
+      return summary;
+    };
 
+    const pubMap = new Map(
+      results.filter((r) => r.publishedAt).map((r) => [r.url, r.publishedAt!]),
+    );
+
+    // Writes stories to the cache without ever overwriting better (AI) text
+    // that a previous run already produced for the same URL.
+    async function persist(list: OutArticle[]): Promise<number> {
+      const valid = list.filter(
+        (a) => a.source_url?.startsWith("http") && (a.title_en ?? "").trim().length > 3,
+      );
+      if (valid.length === 0) return 0;
+      const { data: existingRows } = await supabase
+        .from("news_articles")
+        .select("source_url, published_at, title_en, title_hi, summary_en, summary_hi, category")
+        .in("source_url", valid.map((a) => a.source_url));
+      const existing = new Map((existingRows ?? []).map((r) => [r.source_url, r]));
+      const rows = valid.map((a) => {
+        const prev = existing.get(a.source_url);
+        const keepPrev = !a.title_hi && prev?.title_hi;
+        const prevEnglish = prev?.title_en && !DEVANAGARI.test(prev.title_en);
+        const keepEnglish = DEVANAGARI.test(a.title_en) && prevEnglish;
+        return {
+          city,
+          title_en: keepPrev || keepEnglish ? prev!.title_en : a.title_en,
+          title_hi: a.title_hi ?? prev?.title_hi ?? null,
+          summary_en: keepPrev || keepEnglish ? prev!.summary_en : a.summary_en,
+          summary_hi: a.summary_hi ?? prev?.summary_hi ?? null,
+          category: a.category || prev?.category || "general",
+          source_url: a.source_url,
+          source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
+          published_at: pubMap.get(a.source_url) ?? prev?.published_at ?? new Date().toISOString(),
+        };
+      });
+      const { data: insertedRows, error } = await supabase
+        .from("news_articles")
+        .upsert(rows, { onConflict: "source_url", ignoreDuplicates: false })
+        .select("id");
+      if (error) console.error("Cache write failed:", error.message);
+      return insertedRows?.length ?? 0;
+    }
+
+    // 2. Publish every live headline immediately (no AI cost, no waiting).
+    const SOCIAL = /(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com)/i;
+    const rawArticles: OutArticle[] = results
+      .filter((r) => !SOCIAL.test(r.url) && (r.title ?? "").trim().length > 3)
+      .map((r) => {
+        const title = clean(stripSource(r.title), 120) ?? r.title.slice(0, 120);
+        const summary = usefulSummary(
+          clean(r.description?.replace(/<[^>]+>/g, " "), 300),
+          title,
+        );
+        const isHindi = DEVANAGARI.test(title);
+        return {
+          title_en: title,
+          title_hi: isHindi ? title : null,
+          summary_en: summary,
+          summary_hi: isHindi ? summary : null,
+          category: "general",
+          source_url: r.url,
+          source_name: r.sourceName ?? null,
+        };
+      });
+
+    const inserted = await persist(rawArticles);
+
+    // 3. Bilingual AI polish runs in the background so the reader never waits
+    // for the model: the next refresh picks up the improved text.
     const systemPrompt =
       (topic
         ? `You are a global technology news editor covering ${topic.label}. This feed is worldwide and has nothing to do with any city or state. `
@@ -198,194 +288,54 @@ Deno.serve(async (req) => {
         ? "- category is one of AI Models, Benchmarks, AI Tools, Robotics, Research, Hardware, Policy, Startups."
         : "- category is one of Politics, Crime, Business, Sports, Education, Weather, Culture, Community, Health.");
 
-
-    // Small batches prevent providers with short output limits from cutting
-    // the JSON document in half. A failed batch does not discard successful
-    // bilingual articles from the other batches.
-    for (let offset = 0; offset < editorialResults.length; offset += 3) {
-      const batch = editorialResults.slice(offset, offset + 3);
-      // Source URLs stay out of the prompt: Google News links are very long
-      // base64 blobs that some providers' firewalls reject, and the model
-      // only needs an id it can echo back.
-      const ai = await generateNewsText(supabase, {
-        system: systemPrompt,
-        prompt: `City: ${place}\n\nSearch results:\n${batch
-          .map((r, i) =>
-            `id ${i + 1}\nTITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nTEXT: ${r.description.replace(/<[^>]+>/g, " ").slice(0, 240)}`
-          )
-          .join("\n\n")}`,
-      });
-
-      if (ai.error) {
-        aiError = "AI summarisation partially unavailable — showing live search results";
-        continue;
-      }
-
-      const candidate = extractArticlesJson(ai.text);
-      if (!candidate) {
-        console.error("AI output was not JSON:", ai.text.slice(0, 500));
-        continue;
-      }
-      try {
-        const parsedOut = ArticlesSchema.safeParse(JSON.parse(candidate));
-        if (parsedOut.success) {
-          const list = parsedOut.data.articles;
-          console.log(`AI returned ${list.length} article(s) via ${ai.usedAccount}`);
-          list.forEach((a, idx) => {
-            // Models sometimes renumber or drop the id — fall back to the
-            // response position so a good bilingual article is never lost.
+    const enrich = async () => {
+      const enriched: OutArticle[] = [];
+      for (let offset = 0; offset < editorialResults.length; offset += 3) {
+        const batch = editorialResults.slice(offset, offset + 3);
+        const ai = await generateNewsText(supabase, {
+          system: systemPrompt,
+          prompt: `City: ${place}\n\nSearch results:\n${batch
+            .map((r, i) =>
+              `id ${i + 1}\nTITLE: ${r.title}\nSOURCE: ${r.sourceName ?? ""}\nTEXT: ${r.description.replace(/<[^>]+>/g, " ").slice(0, 240)}`
+            )
+            .join("\n\n")}`,
+        });
+        if (ai.error) continue;
+        const candidate = extractArticlesJson(ai.text);
+        if (!candidate) {
+          console.error("AI output was not JSON:", ai.text.slice(0, 300));
+          continue;
+        }
+        try {
+          const parsedOut = ArticlesSchema.safeParse(JSON.parse(candidate));
+          if (!parsedOut.success) {
+            console.error("AI output did not match schema:", parsedOut.error.message);
+            continue;
+          }
+          parsedOut.data.articles.forEach((a, idx) => {
             const src = batch[Number(a.id) - 1] ?? batch[idx];
             if (!src) return;
-            articles.push({
+            enriched.push({
               ...a,
+              title_en: clean(stripSource(a.title_en), 120) ?? a.title_en,
+              title_hi: clean(a.title_hi ? stripSource(a.title_hi) : null, 120),
+              summary_en: clean(a.summary_en, 300),
+              summary_hi: clean(a.summary_hi, 300),
               source_url: src.url,
               source_name: a.source_name || src.sourceName || null,
             });
           });
-        } else {
-          console.error("AI output did not match schema:", parsedOut.error.message, ai.text.slice(0, 500));
+        } catch (err) {
+          console.error("AI output was not parseable JSON:", (err as Error).message);
         }
-      } catch (err) {
-        console.error("AI output was not parseable JSON:", (err as Error).message, ai.text.slice(0, 300));
       }
-
-
-    }
-
-    articles = articles.filter(
-      (a) => a.source_url?.startsWith("http") && (a.title_en ?? "").trim().length > 3,
-    );
-
-
-
-    // Keep summaries short and headlines free of the publisher suffix even
-    // when the model gets chatty.
-    const decodeEntities = (s: string) =>
-      s
-        .replace(/&nbsp;/gi, " ")
-        .replace(/&amp;/gi, "&")
-        .replace(/&quot;/gi, '"')
-        .replace(/&#39;|&apos;/gi, "'")
-        .replace(/&lt;/gi, "<")
-        .replace(/&gt;/gi, ">");
-    const clean = (s: string | null | undefined, max: number) => {
-      if (!s) return null;
-      const trimmed = decodeEntities(s).replace(/\s+/g, " ").trim();
-      if (!trimmed) return null;
-      return trimmed.length > max ? `${trimmed.slice(0, max - 1).trimEnd()}…` : trimmed;
-    };
-    const stripSource = (title: string) =>
-      title.replace(/\s+[-–—|]\s+[^-–—|]{2,40}$/u, "").trim() || title.trim();
-    // RSS "descriptions" are very often just the headline repeated with the
-    // publisher glued on. That is noise, not a summary.
-    const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9\u0900-\u097F]+/g, "");
-    const usefulSummary = (summary: string | null, title: string) => {
-      if (!summary) return null;
-      const ns = norm(summary);
-      const nt = norm(title);
-      if (!ns || ns === nt || ns.startsWith(nt) || nt.startsWith(ns)) return null;
-      if (summary.trim().length < 60) return null;
-      return summary;
+      if (enriched.length > 0) await persist(enriched);
     };
 
-
-    articles = articles.map((a) => ({
-      ...a,
-      title_en: clean(stripSource(a.title_en), 120) ?? a.title_en,
-      title_hi: clean(a.title_hi ? stripSource(a.title_hi) : null, 120),
-      summary_en: clean(a.summary_en, 300),
-      summary_hi: clean(a.summary_hi, 300),
-    }));
-
-    // Every live result is still published as-is (fresh headlines without any
-    // AI cost); the AI-enriched bilingual versions take precedence by URL.
-    if (results.length > 0) {
-      const SOCIAL = /(youtube\.com|youtu\.be|instagram\.com|facebook\.com|x\.com|twitter\.com|tiktok\.com)/i;
-      const enriched = new Set(articles.map((a) => a.source_url));
-      const raw = results
-        .filter(
-          (r) =>
-            !SOCIAL.test(r.url) &&
-            (r.title ?? "").trim().length > 3 &&
-            !enriched.has(r.url),
-        )
-        .map((r) => {
-          const title = clean(stripSource(r.title), 120) ?? r.title.slice(0, 120);
-          const summary = usefulSummary(
-            clean(r.description?.replace(/<[^>]+>/g, " "), 300),
-            title,
-          );
-          // A Hindi RSS headline is Hindi content: mirror it into the Hindi
-          // columns so the English page can tell it still needs translating.
-          const isHindi = DEVANAGARI.test(title);
-          return {
-            title_en: title,
-            title_hi: isHindi ? title : null,
-            summary_en: summary,
-            summary_hi: isHindi ? summary : null,
-            category: "general",
-            source_url: r.url,
-            source_name: r.sourceName ?? null,
-          };
-        });
-
-      articles = [...articles, ...raw];
-    }
-
-
-
-
-
-
-    // 3. Cache in the database
-
-
-    const pubMap = new Map(
-      results.filter((r) => r.publishedAt).map((r) => [r.url, r.publishedAt!]),
-    );
-    let inserted = 0;
-    if (articles.length > 0) {
-      const urls = articles.map((a) => a.source_url);
-      const { data: existingRows } = await supabase
-        .from("news_articles")
-        .select("source_url, published_at, title_en, title_hi, summary_en, summary_hi, category")
-        .in("source_url", urls);
-      const existing = new Map(
-        (existingRows ?? []).map((r) => [r.source_url, r]),
-      );
-      const rows = articles.map((a) => {
-        const prev = existing.get(a.source_url);
-        // Never let a later non-AI refresh wipe bilingual text a previous
-        // AI run already produced for the same story.
-        const keepPrev = !a.title_hi && prev?.title_hi;
-        // Keep a real English translation instead of falling back to the raw
-        // Hindi RSS headline.
-        const prevEnglish = prev?.title_en && !DEVANAGARI.test(prev.title_en);
-        const keepEnglish = DEVANAGARI.test(a.title_en) && prevEnglish;
-        return {
-          city,
-          title_en: keepPrev || keepEnglish ? prev!.title_en : a.title_en,
-          title_hi: a.title_hi ?? prev?.title_hi ?? null,
-          summary_en: keepPrev || keepEnglish ? prev!.summary_en : a.summary_en,
-          summary_hi: a.summary_hi ?? prev?.summary_hi ?? null,
-
-          category: a.category || prev?.category || "general",
-          source_url: a.source_url,
-          source_name: a.source_name || new URL(a.source_url).hostname.replace("www.", ""),
-          published_at: pubMap.get(a.source_url) ?? prev?.published_at ?? new Date().toISOString(),
-        };
-      });
-
-
-      // Update matching URLs too. A story may first be cached by the non-AI
-      // fallback and gain its Hindi fields on a later successful AI run.
-      const { data: insertedRows, error } = await supabase
-        .from("news_articles")
-        .upsert(rows, { onConflict: "source_url", ignoreDuplicates: false })
-        .select("id");
-      if (error) console.error("Cache write failed:", error.message);
-      inserted = insertedRows?.length ?? 0;
-    }
+    // deno-lint-ignore no-explicit-any
+    const runtime = (globalThis as any).EdgeRuntime;
+    if (runtime?.waitUntil) runtime.waitUntil(enrich());
+    else enrich().catch((e) => console.error("enrich failed:", e));
 
     const { data: stored } = await supabase
       .from("news_articles")
@@ -394,7 +344,7 @@ Deno.serve(async (req) => {
       .order("published_at", { ascending: false })
       .limit(30);
 
-    return json({ articles: stored ?? [], inserted, notice: notice ?? aiError }, 200);
+    return json({ articles: stored ?? [], inserted, notice }, 200);
   } catch (e) {
     console.error("fetch-city-news error:", e);
     return json({ error: e instanceof Error ? e.message : "Unexpected error" }, 500);
@@ -521,7 +471,10 @@ function isRealStory(
 ): boolean {
   const t = (title ?? "").replace(/\s+/g, " ").trim();
   if (t.length < 15 || t.split(/\s+/).length < 3) return false;
-  if (/(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page)/i.test(t)) {
+  if (
+    /(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page|news in hindi|news in english|ताज़ा ?ख़?बरे|ताजा ?ख़?बरें|समाचार in hindi|news updates?$)/i
+      .test(t)
+  ) {
     return false;
   }
   if ((topicMode ? TOPIC_PROMO_WORDS : PROMO_WORDS).test(t)) return false;

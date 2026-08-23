@@ -34,21 +34,29 @@ function tag(block: string, name: string): string | undefined {
 
 async function fetchFeed(url: string): Promise<NewsHit[]> {
   let res: Response | null = null;
-  for (let attempt = 0; attempt < 4; attempt++) {
-    res = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; LocalNewsBot/1.0; +https://localnews.meenai.in)",
-        Accept: "application/rss+xml, application/xml, text/xml",
-      },
-    });
-    if (res.ok || (res.status !== 429 && res.status < 500)) break;
-    // Google throttles bursts from datacentre IPs with 429/503; back off.
-    await new Promise((resolve) => setTimeout(resolve, 700 * 2 ** attempt));
+  // Two quick tries only: a throttled feed stays throttled, and readers
+  // should never wait on long back-offs.
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      res = await fetch(url, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36",
+          Accept: "application/rss+xml, application/xml, text/xml, */*",
+          "Accept-Language": "en-IN,en;q=0.9,hi;q=0.8",
+        },
+        signal: AbortSignal.timeout(8000),
+      });
+    } catch (e) {
+      console.error(`Feed request failed ${url}:`, (e as Error).message);
+      res = null;
+    }
+    if (res && (res.ok || (res.status !== 429 && res.status < 500))) break;
+    await new Promise((resolve) => setTimeout(resolve, 600));
   }
   if (!res) return [];
   if (!res.ok) {
-    console.error(`Google News RSS failed [${res.status}] ${url}`);
+    console.error(`News RSS failed [${res.status}] ${url}`);
     return [];
   }
   const xml = await res.text();
@@ -100,30 +108,44 @@ export async function googleNewsSearch(
   const enFeed = `https://news.google.com/rss/search?q=${
     encodeURIComponent(enQuery)
   }&${enLocale}`;
+  // Google News answers 503 to a lot of datacentre traffic, so Bing News RSS
+  // runs as a free, always-available backup for the same queries.
+  const bing = (q: string, hindi: boolean) =>
+    `https://www.bing.com/news/search?q=${encodeURIComponent(q)}&format=RSS&cc=${
+      queries ? "US" : "IN"
+    }${hindi ? "&setlang=hi" : ""}`;
   // Topic feeds (custom queries) are English-first — and English-only when no
   // Hindi query is supplied.
   const feeds = (queries
-    ? [enFeed, ...(queries.extraFeeds ?? []), hiFeed]
-    : [hiFeed, enFeed]).filter(Boolean) as string[];
+    ? [enFeed, ...(queries.extraFeeds ?? []), hiFeed, bing(enQuery, false)]
+    : [
+      hiFeed,
+      enFeed,
+      hiQuery ? bing(hiQuery, true) : null,
+      bing(enQuery, false),
+    ]).filter(Boolean) as string[];
 
   const seen = new Set<string>();
   const out: NewsHit[] = [];
   const cutoff = Date.now() - maxAgeHours * 3600_000;
 
-  for (const feed of feeds) {
-    let hits: NewsHit[] = [];
-    try {
-      hits = await fetchFeed(feed);
-    } catch (e) {
-      console.error("Google News RSS error:", e);
-    }
+  // All feeds run at once: one throttled source can no longer delay the rest.
+  const perFeed = await Promise.all(
+    feeds.map((feed) =>
+      fetchFeed(feed).catch((e) => {
+        console.error("News RSS error:", e);
+        return [] as NewsHit[];
+      })
+    ),
+  );
+
+  for (const hits of perFeed) {
     for (const h of hits) {
       if (seen.has(h.url)) continue;
       if (h.publishedAt && new Date(h.publishedAt).getTime() < cutoff) continue;
       seen.add(h.url);
       out.push(h);
     }
-    if (out.length >= (queries ? 24 : 12)) break;
   }
 
   return out
