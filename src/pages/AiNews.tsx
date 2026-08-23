@@ -17,7 +17,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import type { NewsArticle } from "@/lib/newsTypes";
+import { dedupeArticles, type NewsArticle } from "@/lib/newsTypes";
 import { SITE_NAME, SITE_URL, cityPath, homePath } from "@/lib/geo";
 
 /** Pseudo-city key used by the news pipeline for this topic feed. */
@@ -52,7 +52,7 @@ const AiNews = () => {
       .eq("city", AI_TOPIC)
       .order("published_at", { ascending: false })
       .limit(36);
-    setArticles((data as NewsArticle[]) ?? []);
+    setArticles(dedupeArticles((data as NewsArticle[]) ?? []));
     setLoading(false);
     return (data ?? []).length;
   }, []);
@@ -69,9 +69,9 @@ const AiNews = () => {
         setArticles((current) => {
           const byId = new Map(current.map((a) => [a.id, a]));
           for (const a of fresh) byId.set(a.id, a);
-          return [...byId.values()]
-            .sort((a, b) => b.published_at.localeCompare(a.published_at))
-            .slice(0, 36);
+          return dedupeArticles(
+            [...byId.values()].sort((a, b) => b.published_at.localeCompare(a.published_at)),
+          ).slice(0, 36);
         });
         if (!silent) toast.success("Feed synced");
       }
