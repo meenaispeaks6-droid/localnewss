@@ -471,7 +471,10 @@ function isRealStory(
 ): boolean {
   const t = (title ?? "").replace(/\s+/g, " ").trim();
   if (t.length < 15 || t.split(/\s+/).length < 3) return false;
-  if (/(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page)/i.test(t)) {
+  if (
+    /(e-?paper|ई-?पेपर|epaper|live tv|photo gallery|web stories|latest news|breaking news|top stories|होम|home page|news in hindi|news in english|ताज़ा ?ख़?बरे|ताजा ?ख़?बरें|समाचार in hindi|news updates?$)/i
+      .test(t)
+  ) {
     return false;
   }
   if ((topicMode ? TOPIC_PROMO_WORDS : PROMO_WORDS).test(t)) return false;
