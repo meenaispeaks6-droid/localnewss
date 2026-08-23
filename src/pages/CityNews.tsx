@@ -12,7 +12,7 @@ import CityWeather from "@/components/CityWeather";
 import SiteFooter from "@/components/SiteFooter";
 import NotFound from "@/pages/NotFound";
 import { supabase } from "@/integrations/supabase/client";
-import { categoryHi, type Lang, type NewsArticle } from "@/lib/newsTypes";
+import { categoryHi, dedupeArticles, type Lang, type NewsArticle } from "@/lib/newsTypes";
 import { NEWS_CATEGORIES } from "@/pages/CityCategory";
 import {
   SITE_NAME,
