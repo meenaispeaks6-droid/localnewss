@@ -129,20 +129,23 @@ export async function googleNewsSearch(
   const out: NewsHit[] = [];
   const cutoff = Date.now() - maxAgeHours * 3600_000;
 
-  for (const feed of feeds) {
-    let hits: NewsHit[] = [];
-    try {
-      hits = await fetchFeed(feed);
-    } catch (e) {
-      console.error("Google News RSS error:", e);
-    }
+  // All feeds run at once: one throttled source can no longer delay the rest.
+  const perFeed = await Promise.all(
+    feeds.map((feed) =>
+      fetchFeed(feed).catch((e) => {
+        console.error("News RSS error:", e);
+        return [] as NewsHit[];
+      })
+    ),
+  );
+
+  for (const hits of perFeed) {
     for (const h of hits) {
       if (seen.has(h.url)) continue;
       if (h.publishedAt && new Date(h.publishedAt).getTime() < cutoff) continue;
       seen.add(h.url);
       out.push(h);
     }
-    if (out.length >= (queries ? 24 : 12)) break;
   }
 
   return out
