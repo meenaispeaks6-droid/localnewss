@@ -1,0 +1,1 @@
+revoke execute on function public.purge_old_news() from public, anon, authenticated;
